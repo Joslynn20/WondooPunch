@@ -2,8 +2,8 @@ package mvc.dto;
 
 public class Product {
           
-	       private String  categoryId;
-           private String  productId;
+	       private String  category;
+           private String  productCode;
            private String  productName;   
 	       private int productPrice;
 	       private String productDetail;
@@ -12,10 +12,10 @@ public class Product {
 	       /* 상품 등록 할때 쓸 생성자
 	        * 
 	        * */   
-	       public Product(String categoryId, String productId, String productName, int productPrice,String productDetail) {
+	       public Product(String category, String productCode, String productName, int productPrice,String productDetail) {
 			
-	    	this.categoryId = categoryId;
-			this.productId = productId;
+	    	this.category = category;
+			this.productCode = productCode;
 			this.productName = productName;
 			this.productPrice = productPrice;
 			this.productDetail = productDetail;
@@ -24,16 +24,17 @@ public class Product {
 	       
 	       /* 
  	        * 상품 정보 조회 할때 쓸 생성자 
+ 	        *
  	        * */  
 
-		    public Product(String categoryId, String productId, String productName, int productQty, int productPrice,
+		    public Product(String category, String productCode, String productName, int productQty, int productPrice,
 				String productDetail, String productRegDate) {
-			   this(categoryId, productId, productName,  productPrice, productDetail);
+			   this(category, productCode, productName,  productPrice, productDetail);
 			   this.productRegDate = productRegDate;
 		  
 		    }      
  
-          /*  상품 정보 수정 가격, 설명
+          /*  상품 정보 ,수정 가격할때 쓸 생성자
            * 
            * */    
  	     
@@ -46,31 +47,31 @@ public class Product {
 
 		
 		  
-		    public String getCategoryId() {
+		    public String getCategory() {
 			
-			   return categoryId;
+			   return category;
 		   
 		   }
 
 		 
 		   
-		    public void setCategoryId(String categoryId) {
+		    public void setCategory(String category) {
 			
-			  this.categoryId = categoryId;
+			  this.category = category;
 		 
 		   }
 		  
 
 		  
-		    public String getProductId() {
-		 	 return productId;
+		    public String getProductCode() {
+		 	 return productCode;
 		
 		  }
 
 		   
-		    public void setProductId(String productId) {
+		    public void setProductCode(String productCode) {
 			
-		    	this.productId = productId;
+		    	this.productCode = productCode;
 		    }
 
 	 
@@ -125,17 +126,29 @@ public class Product {
 		    public void setProductRegDate(String productRegDate) {
 			this.productRegDate = productRegDate;
 		}
+
+			@Override
+			public String toString() {
+				StringBuilder builder = new StringBuilder();
+				builder.append("Product [category=");
+				builder.append(category);
+				builder.append(", productCode=");
+				builder.append(productCode);
+				builder.append(", productName=");
+				builder.append(productName);
+				builder.append(", productPrice=");
+				builder.append(productPrice);
+				builder.append(", productDetail=");
+				builder.append(productDetail);
+				builder.append(", productRegDate=");
+				builder.append(productRegDate);
+				builder.append("]");
+				return builder.toString();
+			}
 	       
 	       
 	        
-		    @Override
-		    public String toString() {
-		    
-		    	// TODO Auto-generated method stub
-		    return categoryId+"|"+productId+"|"+productName+"|"+productPrice+"원|"+productDetail+"|"+productRegDate;
-		    
-		    
-		    } 
+	
 	       
 	       
 	       

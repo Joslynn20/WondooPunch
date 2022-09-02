@@ -16,7 +16,7 @@ public interface ProductDao {
     /*
 	 * 카테고리 별 상품을 조회 하는 기능 
 	 * */
-    List<Product> searchByProductCategoryId(String categoryId );
+    List<Product> searchByProductCategory(String category );
     
 	 
     /*  
