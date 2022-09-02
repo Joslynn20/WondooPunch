@@ -1,14 +1,14 @@
 package mvc.dto;
 
-public class DesertOptionDTO {
+public class DesertOption {
 	private int desertOptionNo; // 디저트상세옵션번호
 	private int superNo; // 주문상세번호
 	private int hotQty; // 데우기
 	private int cheeseQty; // 크림치즈추가
 	
-	public DesertOptionDTO() {}
+	public DesertOption() {}
 
-	public DesertOptionDTO(int desertOptionNo, int superNo, int hotQty, int cheeseQty) {
+	public DesertOption(int desertOptionNo, int superNo, int hotQty, int cheeseQty) {
 		super();
 		this.desertOptionNo = desertOptionNo;
 		this.superNo = superNo;

@@ -1,6 +1,6 @@
 package mvc.dto;
 
-public class CouponDTO {
+public class Coupon {
 	private String couponCode; // 쿠폰코드
 	private String couponName; // 쿠폰명
 	private int couponDC; // 할인율
@@ -8,10 +8,10 @@ public class CouponDTO {
 	private int couponRegDate; // 발행일자
 	
 	
-	public CouponDTO() {}
+	public Coupon() {}
 	
 	
-	public CouponDTO(String couponCode, String couponName, int couponDC, int couponExpDate, int couponRegDate) {
+	public Coupon(String couponCode, String couponName, int couponDC, int couponExpDate, int couponRegDate) {
 		super();
 		this.couponCode = couponCode;
 		this.couponName = couponName;

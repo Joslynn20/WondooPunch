@@ -1,15 +1,15 @@
 package mvc.dto;
 
-public class CoffeeOptionDTO {
+public class CoffeeOption {
 	private int coffeeOptionNo; // 커피상세옵션번호
 	private int superQty; // 주문상세번호
 	private int shotQty; // 샷추가
 	private int creamQty; // 휘핑크림추가
 	private int syrupQty; // 시럽추가
 	
-	public CoffeeOptionDTO() { }
+	public CoffeeOption() { }
 
-	public CoffeeOptionDTO(int coffeeOptionNo, int superQty, int shotQty, int creamQty, int syrupQty) {
+	public CoffeeOption(int coffeeOptionNo, int superQty, int shotQty, int creamQty, int syrupQty) {
 		super();
 		this.coffeeOptionNo = coffeeOptionNo;
 		this.superQty = superQty;

@@ -1,22 +1,29 @@
 package mvc.dto;
 
-public class OptionDTO {
+public class Option {
 	private String optionCategory; // 옵션카테고리
 	private String optionCode; // 옵션코드
 	private String optionName;  // 옵션이름
 	private int optionPrice; // 옵션가격
 		
-	public OptionDTO() { }
+	public Option() { }
 
-	public OptionDTO(String optionCategory, String optionCode, String optionName, int optionPrice) {
+	public Option(String optionCategory, String optionCode, String optionName, int optionPrice) { // 옵션 등록생성자
 		super();
 		this.optionCategory = optionCategory;
 		this.optionCode = optionCode;
 		this.optionName = optionName;
 		this.optionPrice = optionPrice;		
+	}	
+	
+	public Option(String optionCode, int optionPrice) { // 옵션 수정생성자
+		this.optionCode = optionCode;
+		this.optionPrice = optionPrice;
 	}
-	
-	
+
+	public Option(String optionCode) {	// 옵션 삭제생성자
+		this.optionCode = optionCode;
+	}
 
 	public String getOptionCategory() {
 		return optionCategory;
@@ -67,7 +74,7 @@ public class OptionDTO {
 
 	@Override
 	public boolean equals(Object obj) {
-		OptionDTO other = (OptionDTO) obj;
+		Option other = (Option) obj;
 		if(optionCode.equals(other.optionCode)) {
 			return true;
 		} else {
