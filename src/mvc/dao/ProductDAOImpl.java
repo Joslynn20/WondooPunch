@@ -132,7 +132,7 @@ public class ProductDAOImpl implements ProductDAO {
 		  PreparedStatement ps=null;
 		  ResultSet rs =null; 
 		  Connection con =null;
-		  String sql="SELECT * FROM V_PRODUCT WHERE P_NAME= ?";	
+		  String sql="SELECT * FROM PRODUCT WHERE P_NAME= ?";	
 		   
 		  try {			    
 			    con=DbUtil.getConnection();
@@ -142,7 +142,7 @@ public class ProductDAOImpl implements ProductDAO {
 				     
 				   if(rs.next()) {       
 				      product=new Product(rs.getString("P_CODE"), rs.getString("P_NAME"), 
-				 	  rs.getInt("P_PRICE"),rs.getString("P_DETAIL"), rs.getString("CT_NAME"),rs.getString("P_REG_DATE"));
+				 	  rs.getInt("P_PRICE"),rs.getString("P_DETAIL"), rs.getString("CT_CODE"),rs.getString("P_REG_DATE"));
 				    }    	   
 				     
 			  }finally {
