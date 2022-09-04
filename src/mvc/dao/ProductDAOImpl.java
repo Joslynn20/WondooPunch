@@ -15,7 +15,9 @@ public class ProductDAOImpl implements ProductDAO {
 	public ProductDAOImpl() {
 		// TODO Auto-generated constructor stub
 	}
-
+ 
+	
+	
 	@Override
 	public List<Product> productSelectAll() throws SQLException {
 		// TODO Auto-generated method stub
@@ -122,7 +124,9 @@ public class ProductDAOImpl implements ProductDAO {
 		 return list;
 		
 	 }
-
+ 
+	
+	 //수정했어요  !!
 	@Override
 	public Product productSelectByproductName(String productName) throws SQLException {
 		// TODO Auto-generated method stub
