@@ -2,23 +2,24 @@ package mvc.dto;
 
 public class Product {
           
-	       private String  category;
-           private String  productCode;
-           private String  productName;   
-	       private int productPrice;
-	       private String productDetail;
-	       private String productRegDate;
-		    
+	      
+           private String  productCode; //pk 상품코드
+           private String  productName; //상품 이름  
+	       private int productPrice;   //상품가격
+	       private String productDetail;//상품 설명 
+	       private String  categoryCode;//카케고리 코드
+	       private String productRegDate;//상품등록일
+	       
 	       /* 상품 등록 할때 쓸 생성자
 	        * 
 	        * */   
-	       public Product(String category, String productCode, String productName, int productPrice,String productDetail) {
-			
-	    	this.category = category;
+	       public Product(String productCode, String productName, int productPrice,String productDetail, String  categoryCode) {
+	
 			this.productCode = productCode;
 			this.productName = productName;
 			this.productPrice = productPrice;
 			this.productDetail = productDetail;
+			this.categoryCode =categoryCode;
 		
 		   }
 	       
@@ -27,18 +28,24 @@ public class Product {
  	        *
  	        * */  
 
-		    public Product(String category, String productCode, String productName, int productQty, int productPrice,
-				String productDetail, String productRegDate) {
-			   this(category, productCode, productName,  productPrice, productDetail);
-			   this.productRegDate = productRegDate;
-		  
-		    }      
+	       public Product(String productCode, String productName, int productPrice,String productDetail, String  categoryCode,String productRegDate) {
+	    		
+			 this(productCode, productName, productPrice,productDetail, categoryCode );	
+	    	 this.productRegDate=productRegDate; 
+	    	   
+			
+			}
+	       
+	       
+	       
  
           /*  상품 정보 ,수정 가격할때 쓸 생성자
            * 
            * */    
  	     
-		    public  Product( int productPrice  , String productDetail ) {
+		    public Product(String productCode  ,int productPrice  , String productDetail ) {
+		     
+		     this.productCode=productCode;
 		     this.productPrice= productPrice;
 		     this.productDetail =productDetail; 
 		    	
@@ -47,17 +54,17 @@ public class Product {
 
 		
 		  
-		    public String getCategory() {
+		    public String getCategoryCode() {
 			
-			   return category;
+			   return categoryCode;
 		   
 		   }
 
 		 
 		   
-		    public void setCategory(String category) {
+		    public void setCategoryCode(String categoryCode) {
 			
-			  this.category = category;
+			  this.categoryCode = categoryCode;
 		 
 		   }
 		  
@@ -119,20 +126,21 @@ public class Product {
 		    
 		    public String getProductRegDate() {
 			return productRegDate;
-		}
+		     }
 
 		
 		    
 		    public void setProductRegDate(String productRegDate) {
 			this.productRegDate = productRegDate;
-		}
+		   
+		     }
 
-			@Override
+		
+		    
+		    @Override
 			public String toString() {
 				StringBuilder builder = new StringBuilder();
-				builder.append("Product [category=");
-				builder.append(category);
-				builder.append(", productCode=");
+				builder.append("Product [productCode=");
 				builder.append(productCode);
 				builder.append(", productName=");
 				builder.append(productName);
@@ -145,7 +153,11 @@ public class Product {
 				builder.append("]");
 				return builder.toString();
 			}
-	       
+
+		
+		  
+			
+			 
 	       
 	        
 	
