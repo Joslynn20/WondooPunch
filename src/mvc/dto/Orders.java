@@ -12,7 +12,7 @@ public class Orders {
 	private String userId; // fk
 	private String couponCode; // fk
 	
-	private List<OrderLine> list = new ArrayList<OrderLine>();
+	private List<OrderLine> orderLinelist = new ArrayList<OrderLine>();
 	
 	public Orders() {
 		
@@ -76,26 +76,14 @@ public class Orders {
 	public void setCouponCode(String couponCode) {
 		this.couponCode = couponCode;
 	}
+	
 
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("Orders [orderNo=");
-		builder.append(orderNo);
-		builder.append(", orderTotalPrice=");
-		builder.append(orderTotalPrice);
-		builder.append(", orderTotalQty=");
-		builder.append(orderTotalQty);
-		builder.append(", orderDate=");
-		builder.append(orderDate);
-		builder.append(", userId=");
-		builder.append(userId);
-		builder.append(", couponCode=");
-		builder.append(couponCode);
-		builder.append("]");
-		return builder.toString();
+	public List<OrderLine> getOrderLinelist() {
+		return orderLinelist;
 	}
-	
-	
+
+	public void setOrderLinelist(List<OrderLine> orderLinelist) {
+		this.orderLinelist = orderLinelist;
+	}
 
 }
