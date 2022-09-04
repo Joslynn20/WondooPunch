@@ -14,6 +14,7 @@ public class Customer {
 		
 	}
 	
+	
 	public Customer(String userId, String userPw, String userName, String userBirth, String userPhoneNo) {
 		this.userId = userId;
 		this.userPw = userPw;
@@ -23,12 +24,11 @@ public class Customer {
 		
 	}
 
-
 	public Customer(String userId, String userPw, String userName, String userBirth, String userPhoneNo,
-			String regDate) {
+			String userRegDate) {
 		this(userId, userPw, userName, userBirth, userPhoneNo);
-		this.userRegDate = regDate;
-	}
+		this.userRegDate = userRegDate;
+	}	
 
 	
 	public String getUserId() {

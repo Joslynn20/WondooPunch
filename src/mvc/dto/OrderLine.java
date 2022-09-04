@@ -1,25 +1,32 @@
 package mvc.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class OrderLine {
 	
 	  private int orderLineNo; // pk
-	  private int orderNo; // fk
-	  private String productCode;
 	  private int orderQty;
 	  private int orderPrice;
-	  private int categoryCode; //fk
+	  private int orderNo; // fk
+	  private String productCode;
+	  private String categoryCode; //fk
+	  
+	  private DesertOption dessertOption = new DesertOption();
+	  private CoffeeOption coffeOption = new CoffeeOption();
 	
 	public OrderLine() {
 		
 	}
 	
-	public OrderLine(int orderLineNo, int orderNo, String productCode, int orderQty, int orderPrice, int categoryCode) {
+	
+	public OrderLine(int orderLineNo, int orderQty, int orderPrice, int orderNo, String productCode, String categoryCode) {
 		super();
 		this.orderLineNo = orderLineNo;
-		this.orderNo = orderNo;
-		this.productCode = productCode;
 		this.orderQty = orderQty;
 		this.orderPrice = orderPrice;
+		this.orderNo = orderNo;
+		this.productCode = productCode;
 		this.categoryCode = categoryCode;
 	}
 
@@ -53,16 +60,38 @@ public class OrderLine {
 	public void setOrderPrice(int orderPrice) {
 		this.orderPrice = orderPrice;
 	}
-	public int getCategoryCode() {
+	public String getCategoryCode() {
 		return categoryCode;
 	}
-	public void setCategoryCode(int categoryCode) {
+	public void setCategoryCode(String categoryCode) {
 		this.categoryCode = categoryCode;
 	}
+	
+
+	public DesertOption getDessertOption() {
+		return dessertOption;
+	}
+
+
+	public void setDessertOption(DesertOption dessertOption) {
+		this.dessertOption = dessertOption;
+	}
+
+
+	public CoffeeOption getCoffeOption() {
+		return coffeOption;
+	}
+
+
+	public void setCoffeOption(CoffeeOption coffeOption) {
+		this.coffeOption = coffeOption;
+	}
+
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("orderLine [orderLineNo=");
+		builder.append("OrderLine [orderLineNo=");
 		builder.append(orderLineNo);
 		builder.append(", orderNo=");
 		builder.append(orderNo);
