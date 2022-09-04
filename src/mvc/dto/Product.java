@@ -7,8 +7,8 @@ public class Product {
            private String  productName; //상품 이름  
 	       private int productPrice;   //상품가격
 	       private String productDetail;//상품 설명 
-	       private String  categoryCode;//카케고리 코드
 	       private String productRegDate;//상품등록일
+	       private String  categoryCode;//카케고리 코드
 	       
 	       /* 상품 등록 할때 쓸 생성자
 	        * 
@@ -28,7 +28,7 @@ public class Product {
  	        *
  	        * */  
 
-	       public Product(String productCode, String productName, int productPrice,String productDetail, String  categoryCode,String productRegDate) {
+	        public Product(String productCode, String productName, int productPrice,String productDetail, String productRegDate,String categoryCode ) {
 	    		
 			 this(productCode, productName, productPrice,productDetail, categoryCode );	
 	    	 this.productRegDate=productRegDate; 
