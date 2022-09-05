@@ -96,7 +96,7 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	public String searchPw(String userId, String userPhoneNo) throws NotFoundException, SQLException {
 		String userPw = customerDao.searchPw(userId, userPhoneNo);
-		if (userPw != null) {
+		if (userPw == null) {
 			throw new NotFoundException("입력하신 회원 정보가 존재하지 않습니다.");
 		}
 		return userPw;

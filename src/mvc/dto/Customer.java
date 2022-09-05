@@ -14,6 +14,10 @@ public class Customer {
 		
 	}
 	
+	/**
+	 * 고객 수정 생성자
+	 * */
+	
 	
 	public Customer(String userId, String userPw, String userName, String userBirth, String userPhoneNo) {
 		this.userId = userId;

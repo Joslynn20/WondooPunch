@@ -3,10 +3,9 @@ package mvc.controller;
 import java.sql.SQLException;
 import java.util.List;
 
-import jdy.dto.Option;
-import jdy.exception.NotFoundException;
-import jdy.service.OptionService;
-//import kosta.mvc.view.FailView;
+import mvc.dto.Option;
+import mvc.exception.NotFoundException;
+import mvc.service.OptionService;
 
 public class OptionController {
 	public static OptionService optionservice = new OptionService();

@@ -48,9 +48,9 @@ public class OrderDAOImpl implements OrderDAO {
 				con.rollback();
 			} 
 			else{
-				int [] orderLineResult = insertOrderLine(con, order);
+				List<Integer> orderLineResult = insertOrderLine(con, order);
 				for(int i : orderLineResult) {
-					if (i != 1) {
+					if (i == 0) {
 						con.rollback();
 						throw new AddException("주문 상세를 등록할 수 없습니다.");
 					}
@@ -68,15 +68,19 @@ public class OrderDAOImpl implements OrderDAO {
 		return result;
 	}
 	
-	public int[] insertOrderLine(Connection con, Orders order) throws SQLException, AddException{
+	/**
+	 * 주문 상세 옵션 추가
+	 * */
+	public List<Integer> insertOrderLine(Connection con, Orders order) throws SQLException, AddException{
 		PreparedStatement ps = null;
 		String sql = "insert into order_detail values(OD_NO_SEQ.NEXTVAL, ?, ?,  ORDER_NO_SEQ.CURRVAL, ?, ?)";
-		int result [] = null;
-		int count = 0;
+		// 리스트로 변경
+		List<Integer> result = new ArrayList<Integer>();
 		
 		try{
 			ps = con.prepareStatement(sql);
 			for (OrderLine orderLine : order.getOrderLinelist()) {
+				// 수정 예정 (메소드 수정 ProductDAO)
 				Product product = productDAO.productSelectByproductCode(orderLine.getProductCode());
 				
 				ps.setInt(1, orderLine.getOrderQty());
@@ -90,7 +94,7 @@ public class OrderDAOImpl implements OrderDAO {
 					throw new AddException("주문 상세 등록 실패입니다.");
 				}
 				else {
-					result[count++] = orderLineResult;
+					result.add(orderLineResult);
 					int optionResult = insertOrderOption(con, orderLine);
 					if(optionResult == 0){
 							con.rollback();
@@ -113,8 +117,8 @@ public class OrderDAOImpl implements OrderDAO {
 		int result = 0;
 		
 		try {
-			String productCode = orderLine.getProductCode();
-			if(productCode.toUpperCase().equals("D")) {
+			String categoryCode = orderLine.getCategoryCode();
+			if(categoryCode.toUpperCase().equals("D")) {
 				ps = con.prepareStatement(dessertOptionSql);
 				ps.setInt(1, orderLine.getDessertOption().getHotQty());
 				ps.setInt(2, orderLine.getDessertOption().getCheeseQty());
@@ -173,7 +177,7 @@ public class OrderDAOImpl implements OrderDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		List<Orders> list = new ArrayList<Orders>();
-		String sql = "select * from orders where m_id = ?";
+		String sql = "select * from orders where m_id = ? desc order_no";
 		
 		try {
 			con = DbUtil.getConnection();
@@ -211,8 +215,8 @@ public class OrderDAOImpl implements OrderDAO {
 	        while(rs.next()) {
 	        	OrderLine orderLine  = new OrderLine(rs.getInt(1), rs.getInt(2), rs.getInt(3), 
 	        			rs.getInt(4), rs.getString(5), rs.getString(6));
-	        	String productCode = orderLine.getProductCode();
-	        	if (productCode.toUpperCase().equals("D")) {
+	        	String categoryCode = orderLine.getCategoryCode();
+	        	if (categoryCode.toUpperCase().equals("D")) {
 	        		DesertOption dessertOpion = selectDessertOption(con, orderLine);
 	        		orderLine.setDessertOption(dessertOpion);
 	        	}
@@ -257,7 +261,7 @@ public class OrderDAOImpl implements OrderDAO {
 	 * 주문 옵션 가져오기
 	 * @throws SQLException 
 	 * */
-	public CoffeeOption selectCoffeeOption(Connection con, OrderLine orderLine) throws SQLException {
+	private CoffeeOption selectCoffeeOption(Connection con, OrderLine orderLine) throws SQLException {
 		PreparedStatement ps=null;
 		ResultSet rs=null;
 		CoffeeOption coffeeOption = null;
@@ -278,6 +282,38 @@ public class OrderDAOImpl implements OrderDAO {
 		return coffeeOption;
 		
 	}
+	
+	/**
+	 * 퀵오더 - 주문 내역 3건 조회
+	 * */
+	@Override
+	public List<Orders> QuickOrder(String userId) throws SQLException{
+		Connection con = null;
+		PreparedStatement ps=null;
+		ResultSet rs=null;
+		List <Orders> list = new ArrayList<Orders>();
+		String Sql = "select * from (select * from orders order by order_no desc) where rownum<=3";
+		try {
+			con = DbUtil.getConnection();
+			ps = con.prepareStatement(Sql);
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				Orders orders = new Orders(rs.getInt(1), rs.getInt(2), rs.getInt(3), 
+						rs.getString(4), rs.getString(5), rs.getString(6));
+				
+				List<OrderLine> orderLineList = selectOrderLine(con, orders.getOrderNo());
+				orders.setOrderLinelist(orderLineList);
+				list.add(orders);
+			}
+			
+		} finally {
+			DbUtil.dbClose(con, ps, rs);
+		}
+		
+		return list;
+	}
+	
 	
 
 

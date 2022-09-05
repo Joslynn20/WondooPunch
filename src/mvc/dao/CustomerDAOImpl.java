@@ -15,7 +15,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 	 * ID 중복 체크 
 	 * true면 중복, false면 중복X
 	 * */
-	public boolean IDDuplicateCheck(Connection con, Customer customer) throws SQLException{
+	private boolean IDDuplicateCheck(Connection con, Customer customer) throws SQLException{
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		boolean result = false;

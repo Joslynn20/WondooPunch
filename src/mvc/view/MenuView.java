@@ -88,7 +88,7 @@ public class MenuView {
 	public static void printSubMenu() {
 		System.out.println("1. 회원가입 정보 입력하기  |   9. 되돌아가기");
 		System.out.print("입력 > ");
-		//기능으로 이동
+		//기능  입력
 	}
 		
 	public static void printCustomerMenu() {
@@ -103,7 +103,7 @@ public class MenuView {
 		//기능으로 이동
 	}
 	
-	public static void printAllOrders() {
+	public static void printAllOrders(String userId) {
 		System.out.println("1.주문하기  |   2. 퀵오더   |  3. 장바구니   |   9. 되돌아가기");
 		System.out.print("입력 > ");
 		
@@ -113,7 +113,7 @@ public class MenuView {
 
 	}
 	
-	public static void printCart() {
+	public static void printCart(String userId) {
 		System.out.println("1.장바구니 조회하기  |  2. 장바구니 수정하기   |   3. 장바구니 비우기  |  9. 되돌아가기");
 		System.out.print("입력 > ");
 		
@@ -137,7 +137,7 @@ public class MenuView {
 		
 	}
 	
-	public static void printPay() {
+	public static void printPay(String userId) {
 		while(true) {
 		 System.out.print("카드사 > ");
 		 String cardCompany = sc.nextLine();
@@ -176,7 +176,7 @@ public class MenuView {
 			 
 	}
 	
-	public void printMyPage() {
+	public void printMyPage(String userId) {
 		System.out.println("1. 개인정보조회   |   2. 개인정보 변경   |  3. 주문 내역   |  4. 쿠폰 조회   |  9. 되돌아가기");
 		System.out.print("입력 > ");
 		int menu = Integer.parseInt( sc.nextLine());
@@ -565,7 +565,7 @@ public class MenuView {
 		System.out.print("입력 > ");
 		int menu = Integer.parseInt(sc.nextLine());
 		if(menu == 1) {
-			MenuView.printPay();
+			MenuView.printPay(userId);
 		} else {
 			MenuView.printCustomerMenu();//고객 로그인 이후 메뉴단으로 되돌아감
 		}

@@ -18,7 +18,7 @@ public interface OrderController {
 	/**
 	 * 퀵오더
 	 * */
-	void insertQuickOrder(String userId);
+	void QuickOrder(String userId);
 	
 	/**
 	 * 주문 내역 보기 - 고객

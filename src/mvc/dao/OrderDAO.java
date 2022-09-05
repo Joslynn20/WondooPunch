@@ -22,9 +22,15 @@ public interface OrderDAO {
 	
 	
 	/**
+	 * 퀵오더 주문 내역 3건 조회
+	 * */
+	List<Orders> QuickOrder(String userId) throws SQLException;
+	
+	/**
 	 * 전체 주문 내역 보기 - 관리자
 	 * */
 	List <Orders> selectAllOrders() throws SQLException;
+	
 	
 
 }
