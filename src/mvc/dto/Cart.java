@@ -9,39 +9,40 @@ public class Cart {
 	private int cartNo; // 장바구니 번호
 	private String productCode; // 상품 코드
 	private int cartQty; // 장바구니 수량
-	private int cartPrice; // 장바구니에 담긴 상품 가격 
-	private int productPrice; // 상품 가격 
-    private String  productName;   // 상품 이름 
+	private int cartPrice; // 장바구니에 담긴 상품 가격
+	private int productPrice; // 상품 가격
+	private String productName; // 상품 이름
 
-    private int shotQty; // 샷추가
+	private int shotQty; // 샷추가
+	
 	private int creamQty; // 휘핑크림추가
 	private int syrupQty; // 시럽추가
-    
+
 	private int hotQty; // 데우기
 	private int cheeseQty; // 크림치즈추가
-	
-    private CoffeeOption coffeeOption = new CoffeeOption();
-    private DesertOption desertOption = new DesertOption();
 
- // 장바구니번호,상품코드,상품명,가격,개수,샷,크림,시럽,핫,치즈
+	private CoffeeOption coffeeOption = new CoffeeOption();
+	private DesertOption desertOption = new DesertOption();
 
-	public Cart(int cartNo, String productCode, String productName, int productPrice, int cartQty, int shotQty, int creamQty, int syrupQty, int hotQty, int cheeseQty) {
+	// 장바구니번호,상품코드,상품명,가격,개수,샷,크림,시럽,핫,치즈
+
+	public Cart(int cartNo, String productCode, String productName, int productPrice, int cartQty, int shotQty,
+			int creamQty, int syrupQty, int hotQty, int cheeseQty) {
 		super();
 		this.cartNo = cartNo;
 		this.productCode = productCode;
 		this.productName = productName;
 		this.productPrice = productPrice;
 		this.cartQty = cartQty;
-		
+
 		this.shotQty = shotQty;
 		this.creamQty = creamQty;
 		this.syrupQty = syrupQty;
-		
+
 		this.hotQty = hotQty;
 		this.cheeseQty = cheeseQty;
 	}
-    
-    
+
 	public Cart(String userId, int cartNo, String productCode, int cartQty, int cartPrice) {
 		super();
 		this.userId = userId;
@@ -62,8 +63,8 @@ public class Cart {
 		this.cartPrice = cartPrice;
 		this.productPrice = productPrice;
 		this.productName = productName;
-		this.coffeeOption = cfo;
-		this.desertOption = deo;
+		this.coffeeOption = coffeeOption;
+		this.desertOption = desertOption;
 	}
 
 	public int getProductPrice() {
@@ -137,22 +138,62 @@ public class Cart {
 	public void setCartPrice(int cartPrice) {
 		this.cartPrice = cartPrice;
 	}
+	public int getShotQty() {
+		return shotQty;
+	}
 
-	public CoffeeOption getCfo() {
+	public void setShotQty(int shotQty) {
+		this.shotQty = shotQty;
+	}
+
+	public int getCreamQty() {
+		return creamQty;
+	}
+
+	public void setCreamQty(int creamQty) {
+		this.creamQty = creamQty;
+	}
+
+	public int getSyrupQty() {
+		return syrupQty;
+	}
+
+	public void setSyrupQty(int syrupQty) {
+		this.syrupQty = syrupQty;
+	}
+
+	public int getHotQty() {
+		return hotQty;
+	}
+
+	public void setHotQty(int hotQty) {
+		this.hotQty = hotQty;
+	}
+
+	public int getCheeseQty() {
+		return cheeseQty;
+	}
+
+	public void setCheeseQty(int cheeseQty) {
+		this.cheeseQty = cheeseQty;
+	}
+
+	public CoffeeOption getCoffeeOption() {
 		return coffeeOption;
 	}
 
-	public void setCfo(CoffeeOption cfo) {
+	public void setCoffeeOption(CoffeeOption coffeeOption) {
 		this.coffeeOption = coffeeOption;
 	}
 
-	public DesertOption getDeo() {
+	public DesertOption getDesertOption() {
 		return desertOption;
 	}
 
-	public void setDeo(DesertOption deo) {
+	public void setDesertOption(DesertOption desertOption) {
 		this.desertOption = desertOption;
 	}
+
 
 	@Override
 	public String toString() {
@@ -160,7 +201,5 @@ public class Cart {
 				+ ", cartPrice=" + cartPrice + ", productPrice=" + productPrice + ", productName=" + productName
 				+ ", coffeeOption=" + coffeeOption + ", desertOption=" + desertOption + "]";
 	}
-
-	
 
 }
