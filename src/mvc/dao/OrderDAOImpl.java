@@ -48,7 +48,7 @@ public class OrderDAOImpl implements OrderDAO {
 				con.rollback();
 			} 
 			else{
-				int [] orderLineResult = insertOrderLine(con, order);
+				List<Integer> orderLineResult = insertOrderLine(con, order);
 				for(int i : orderLineResult) {
 					if (i == 0) {
 						con.rollback();
@@ -68,12 +68,14 @@ public class OrderDAOImpl implements OrderDAO {
 		return result;
 	}
 	
-	public int[] insertOrderLine(Connection con, Orders order) throws SQLException, AddException{
+	/**
+	 * 주문 상세 옵션 추가
+	 * */
+	public List<Integer> insertOrderLine(Connection con, Orders order) throws SQLException, AddException{
 		PreparedStatement ps = null;
 		String sql = "insert into order_detail values(OD_NO_SEQ.NEXTVAL, ?, ?,  ORDER_NO_SEQ.CURRVAL, ?, ?)";
 		// 리스트로 변경
-		int result [] = null;
-		int count = 0;
+		List<Integer> result = new ArrayList<Integer>();
 		
 		try{
 			ps = con.prepareStatement(sql);
@@ -92,8 +94,7 @@ public class OrderDAOImpl implements OrderDAO {
 					throw new AddException("주문 상세 등록 실패입니다.");
 				}
 				else {
-					// 리스트로 변경
-					result[count++] = orderLineResult;
+					result.add(orderLineResult);
 					int optionResult = insertOrderOption(con, orderLine);
 					if(optionResult == 0){
 							con.rollback();
@@ -260,7 +261,7 @@ public class OrderDAOImpl implements OrderDAO {
 	 * 주문 옵션 가져오기
 	 * @throws SQLException 
 	 * */
-	public CoffeeOption selectCoffeeOption(Connection con, OrderLine orderLine) throws SQLException {
+	private CoffeeOption selectCoffeeOption(Connection con, OrderLine orderLine) throws SQLException {
 		PreparedStatement ps=null;
 		ResultSet rs=null;
 		CoffeeOption coffeeOption = null;
@@ -281,6 +282,38 @@ public class OrderDAOImpl implements OrderDAO {
 		return coffeeOption;
 		
 	}
+	
+	/**
+	 * 퀵오더 - 주문 내역 3건 조회
+	 * */
+	@Override
+	public List<Orders> QuickOrder(String userId) throws SQLException{
+		Connection con = null;
+		PreparedStatement ps=null;
+		ResultSet rs=null;
+		List <Orders> list = new ArrayList<Orders>();
+		String Sql = "select * from (select * from orders order by order_no desc) where rownum<=3";
+		try {
+			con = DbUtil.getConnection();
+			ps = con.prepareStatement(Sql);
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				Orders orders = new Orders(rs.getInt(1), rs.getInt(2), rs.getInt(3), 
+						rs.getString(4), rs.getString(5), rs.getString(6));
+				
+				List<OrderLine> orderLineList = selectOrderLine(con, orders.getOrderNo());
+				orders.setOrderLinelist(orderLineList);
+				list.add(orders);
+			}
+			
+		} finally {
+			DbUtil.dbClose(con, ps, rs);
+		}
+		
+		return list;
+	}
+	
 	
 
 

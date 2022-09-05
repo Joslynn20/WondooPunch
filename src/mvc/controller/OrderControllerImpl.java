@@ -22,9 +22,9 @@ public class OrderControllerImpl implements OrderController{
 	}
 
 	@Override
-	public void insertQuickOrder(String userId) {
+	public void QuickOrder(String userId) {
 		try {
-			orderService.insertQuickOrder(userId);
+			orderService.QuickOrder(userId);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

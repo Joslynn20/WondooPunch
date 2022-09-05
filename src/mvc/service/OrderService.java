@@ -18,7 +18,7 @@ public interface OrderService {
 	/**
 	 * 퀵오더
 	 * */
-	public List<Orders> insertQuickOrder(String userId) throws SQLException, AddException, NotFoundException;
+	public List<Orders> QuickOrder(String userId) throws SQLException, AddException, NotFoundException;
 	
 	/**
 	 * 주문 내역 보기 - 고객
