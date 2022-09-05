@@ -27,7 +27,7 @@ public class OptionDAOImpl implements OptionDAO {
 		List<Option> list = new ArrayList<>();
 		try {
 			con = DbUtil.getConnection();
-			ps = con.prepareStatement("SELECT * FROM OPTIONS ORDER BY O_CODE");
+			ps = con.prepareStatement("SELECT * FROM OPTIONS");
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
@@ -94,7 +94,7 @@ public class OptionDAOImpl implements OptionDAO {
 		} // finally end
 		return result;
 	} // optionInsert end
-
+	
 	/**
 	 * 옵션 수정
 	 */
@@ -198,6 +198,8 @@ public class OptionDAOImpl implements OptionDAO {
 		} // finally end
 		return result;
 	}// orderDesertOption end
+
+	
 	
 	
 	
