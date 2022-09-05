@@ -50,7 +50,7 @@ public class OrderDAOImpl implements OrderDAO {
 			else{
 				int [] orderLineResult = insertOrderLine(con, order);
 				for(int i : orderLineResult) {
-					if (i != 1) {
+					if (i == 0) {
 						con.rollback();
 						throw new AddException("주문 상세를 등록할 수 없습니다.");
 					}
@@ -71,12 +71,14 @@ public class OrderDAOImpl implements OrderDAO {
 	public int[] insertOrderLine(Connection con, Orders order) throws SQLException, AddException{
 		PreparedStatement ps = null;
 		String sql = "insert into order_detail values(OD_NO_SEQ.NEXTVAL, ?, ?,  ORDER_NO_SEQ.CURRVAL, ?, ?)";
+		// 리스트로 변경
 		int result [] = null;
 		int count = 0;
 		
 		try{
 			ps = con.prepareStatement(sql);
 			for (OrderLine orderLine : order.getOrderLinelist()) {
+				// 수정 예정 (메소드 수정 ProductDAO)
 				Product product = productDAO.productSelectByproductCode(orderLine.getProductCode());
 				
 				ps.setInt(1, orderLine.getOrderQty());
@@ -90,6 +92,7 @@ public class OrderDAOImpl implements OrderDAO {
 					throw new AddException("주문 상세 등록 실패입니다.");
 				}
 				else {
+					// 리스트로 변경
 					result[count++] = orderLineResult;
 					int optionResult = insertOrderOption(con, orderLine);
 					if(optionResult == 0){
@@ -113,8 +116,8 @@ public class OrderDAOImpl implements OrderDAO {
 		int result = 0;
 		
 		try {
-			String productCode = orderLine.getProductCode();
-			if(productCode.toUpperCase().equals("D")) {
+			String categoryCode = orderLine.getCategoryCode();
+			if(categoryCode.toUpperCase().equals("D")) {
 				ps = con.prepareStatement(dessertOptionSql);
 				ps.setInt(1, orderLine.getDessertOption().getHotQty());
 				ps.setInt(2, orderLine.getDessertOption().getCheeseQty());
@@ -173,7 +176,7 @@ public class OrderDAOImpl implements OrderDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		List<Orders> list = new ArrayList<Orders>();
-		String sql = "select * from orders where m_id = ?";
+		String sql = "select * from orders where m_id = ? desc order_no";
 		
 		try {
 			con = DbUtil.getConnection();
@@ -211,8 +214,8 @@ public class OrderDAOImpl implements OrderDAO {
 	        while(rs.next()) {
 	        	OrderLine orderLine  = new OrderLine(rs.getInt(1), rs.getInt(2), rs.getInt(3), 
 	        			rs.getInt(4), rs.getString(5), rs.getString(6));
-	        	String productCode = orderLine.getProductCode();
-	        	if (productCode.toUpperCase().equals("D")) {
+	        	String categoryCode = orderLine.getCategoryCode();
+	        	if (categoryCode.toUpperCase().equals("D")) {
 	        		DesertOption dessertOpion = selectDessertOption(con, orderLine);
 	        		orderLine.setDessertOption(dessertOpion);
 	        	}

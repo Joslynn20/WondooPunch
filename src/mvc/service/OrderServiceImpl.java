@@ -22,12 +22,15 @@ public class OrderServiceImpl implements OrderService {
 		
 	}
 
+	/**
+	 *OrderNo 시퀀스 currVal = 최대값 -- orderDAO에 추가
+	 * */
 	@Override
 	public List <Orders> insertQuickOrder(String userId) throws SQLException, AddException, NotFoundException {
 		List <Orders> list = orderDAO.selectOrdersByUserId(userId);
 		List <Orders> resultList = new ArrayList<Orders>();
 		
-		if(list==null || list.size()==0) {
+		if(list==null || list.isEmpty()) {
 			throw new NotFoundException(userId+"님의 최근 주문내역이 없습니다.");
 		}
 		else {

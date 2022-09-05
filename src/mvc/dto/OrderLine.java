@@ -9,7 +9,7 @@ public class OrderLine {
 	  private int orderQty;
 	  private int orderPrice;
 	  private int orderNo; // fk
-	  private String productCode;
+	  private String productCode; //fk
 	  private String categoryCode; //fk
 	  
 	  private DesertOption dessertOption = new DesertOption();

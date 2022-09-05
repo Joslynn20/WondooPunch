@@ -9,11 +9,6 @@ import mvc.exception.DuplicatedException;
 public interface CustomerDAO {
 	
 	/**
-	 * ID 중복 체크 
-	 * */
-	boolean IDDuplicateCheck(Connection con, Customer customer) throws SQLException;
-	
-	/**
 	 * 회원 가입
 	 * */
 	int insertCustomer(Customer customer) throws SQLException, DuplicatedException;
