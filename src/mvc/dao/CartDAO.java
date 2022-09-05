@@ -18,4 +18,11 @@ public interface CartDAO {
 
 	Boolean addCartDesertOption(Integer cartNo, Integer hot, Integer cheese) throws SQLException;
 
+	Boolean updateCart(Integer cartNo, String productCode, Integer cartQty, Integer shot, Integer syrup, Integer cream,
+			Integer hot, Integer cheese) throws SQLException;
+
+	Boolean removeCart(Integer cartNo) throws SQLException;
+
+	Boolean removeAllCart(String userId) throws SQLException;
+
 }
