@@ -38,7 +38,7 @@ public interface OptionService {
 	/**
 	 * 옵션삭제
 	 * */
-	void optionDelete(String optionCode) throws SQLException;
+	void optionDelete(String optionCode) throws SQLException, NotFoundException;
 	
 	/**
 	 * 고객 주문에서 커피옵션추가

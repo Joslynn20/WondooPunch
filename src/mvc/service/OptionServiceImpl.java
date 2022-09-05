@@ -67,11 +67,12 @@ public class OptionServiceImpl implements OptionService {
 
 	/**
 	 * 옵션삭제
+	 * @throws NotFoundException 
 	 */
-	public void optionDelete(String optionCode) throws SQLException {
+	public void optionDelete(String optionCode) throws SQLException, NotFoundException {
 		int result = optiondao.optionDelete(optionCode);
 		if (result == 0)
-			throw new SQLException();
+			throw new NotFoundException();
 
 	}
 
@@ -86,7 +87,7 @@ public class OptionServiceImpl implements OptionService {
 	}
 	
 	/**
-	 * 고객 주문에서 디저트옵션추가.
+	 * 고객 주문에서 디저트옵션추가
 	 * */
 	
 	public void orderDesertOption(DesertOption desertoption) throws SQLException, AddException {

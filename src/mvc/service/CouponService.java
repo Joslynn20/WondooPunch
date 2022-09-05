@@ -32,8 +32,9 @@ public interface CouponService {
 	void couponInsert(Coupon coupon) throws SQLException, AddException ;
 	/**
 	 * 쿠폰 삭제
+	 * @throws NotFoundException 
 	 */
-	void couponDelete(String couponCode) throws SQLException;
+	void couponDelete(String couponCode) throws SQLException, NotFoundException;
 		
 	/**
 	 * 가입쿠폰발행

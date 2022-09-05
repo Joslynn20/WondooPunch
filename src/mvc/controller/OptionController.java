@@ -83,8 +83,9 @@ public class OptionController {
 
 	/**
 	 * 옵션삭제
+	 * @throws NotFoundException 
 	 */
-	public static void optionDelete(String optionCode) {
+	public static void optionDelete(String optionCode) throws SQLException, NotFoundException {
 		try {
 			optionservice.optionDelete(optionCode);
 			

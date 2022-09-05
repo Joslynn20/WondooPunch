@@ -45,15 +45,20 @@ public class CouponServiceImpl implements CouponService {
 	 * @throws AddException
 	 */
 	public void couponInsert(Coupon coupon) throws SQLException, AddException {
-		
+		int result = coupondao.couponInsert(coupon);
+		if(result ==0)
+			throw new AddException();		
 		
 	}// couponCode end
 
 	/**
 	 * 쿠폰 삭제
+	 * @throws NotFoundException 
 	 */
-	public void couponDelete(String couponCode) throws SQLException {
+	public void couponDelete(String couponCode) throws SQLException, NotFoundException {
 		int result = coupondao.couponDelete(couponCode);
+		if(result ==0)
+			throw new NotFoundException();	
 		
 	}
 	/**
@@ -61,7 +66,9 @@ public class CouponServiceImpl implements CouponService {
 	 * */
 	@Override
 	public void joinCoupon(Customer customer) throws SQLException, AddException {
-		// TODO Auto-generated method stub
+		int result = coupondao.joinCoupon(customer);
+		if(result ==0)
+			throw new AddException();	
 		
 	}	
 	

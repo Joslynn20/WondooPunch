@@ -50,7 +50,7 @@ public class CouponDAOImpl implements CouponDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		Coupon coupon = null;
-		String sql = "SELECT * FROM COUPON WHERE O_CODE = ?";
+		String sql = "SELECT * FROM COUPON WHERE CP_CODE = ?";
 		
 		try {
 			con = DbUtil.getConnection();
@@ -102,7 +102,7 @@ public class CouponDAOImpl implements CouponDAO {
 		Connection con = null;
 		PreparedStatement ps = null;
 		int result = 0;
-		String sql = "DELETE FROM COUPON WHERE O_CODE = ?";
+		String sql = "DELETE FROM COUPON WHERE CP_CODE = ?";
 
 		try {
 			con = DbUtil.getConnection();

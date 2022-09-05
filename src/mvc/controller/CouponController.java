@@ -64,8 +64,9 @@ public class CouponController {
 	/**
 	 * 쿠폰 삭제
 	 * @throws SQLException 
+	 * @throws NotFoundException 
 	 */
-	public static void couponDelete(String couponCode) throws SQLException {
+	public static void couponDelete(String couponCode) throws SQLException, NotFoundException {
 		try {
 			couponservice.couponDelete(couponCode);
 			
