@@ -3,19 +3,14 @@ package mvc.controller;
 import java.sql.SQLException;
 import java.util.List;
 
-<<<<<<< HEAD
-import jdy.dto.CoffeeOption;
-import jdy.dto.DesertOption;
-import jdy.dto.Option;
-import jdy.exception.AddException;
-import jdy.exception.NotFoundException;
-import jdy.service.OptionService;
-import jdy.service.OptionServiceImpl;
-=======
+import mvc.dto.CoffeeOption;
+import mvc.dto.DesertOption;
 import mvc.dto.Option;
+import mvc.exception.AddException;
 import mvc.exception.NotFoundException;
 import mvc.service.OptionService;
->>>>>>> 493f710e2b0965d3aa215314dcee6f54cc403f3a
+import mvc.service.OptionServiceImpl;
+
 
 public class OptionController {
 	public static OptionService optionservice = new OptionServiceImpl();

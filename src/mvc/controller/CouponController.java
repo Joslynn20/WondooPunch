@@ -4,9 +4,10 @@ import java.util.List;
 
 import mvc.dto.Coupon;
 import mvc.service.CouponService;
+import mvc.service.CouponServiceImpl;
 
 public class CouponController {
-	public static CouponService couponservice = new CouponService();
+	public static CouponService couponservice = new CouponServiceImpl();
 
 	/**
 	 * 쿠폰목록
@@ -52,5 +53,12 @@ public class CouponController {
 
 		}
 	} // couponDelete end
+	
+	/**
+	 * 쿠폰 발행
+	 * */
+	public static void issuedCoupon() {
+		
+	}
 
 }
