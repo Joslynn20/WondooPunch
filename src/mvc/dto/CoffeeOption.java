@@ -17,6 +17,11 @@ public class CoffeeOption {
 		this.creamQty = creamQty;
 		this.syrupQty = syrupQty;
 	}
+	public CoffeeOption(int shotQty, int creamQty, int syrupQty) { // 고객 커피옵션추가생성자
+		this.shotQty = shotQty;
+		this.creamQty = creamQty;
+		this.syrupQty = syrupQty;
+	}
 
 	public int getCoffeeOptionNo() {
 		return coffeeOptionNo;

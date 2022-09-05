@@ -3,31 +3,37 @@ package mvc.dto;
 public class Coupon {
 	private String couponCode; // 쿠폰코드
 	private String couponName; // 쿠폰명
-	private int couponDC; // 할인율
-	private String couponExpDate; // 유효기간
-	private String couponRegDate; // 발행일자
-	private int icCode;//발행쿠폰
+	private int couponDC; // 할인율	
+	private String couponRegDate; // 등록일
+	private String icCode;//발행쿠폰
 	private String memberId; // 회원아이디
+	private String couponExpDate; // 유효기간
+	private String issuedDate;// 발행일
 	
 	
-	public Coupon() {}	
+	public Coupon() { }
 	
-	public Coupon(String couponCode, String couponName, int couponDC, String couponExpDate,String couponRegDate) { // 전체 쿠폰 확인 생성자
+	public Coupon(int couponDC) { 
+		this.couponDC = couponDC;
+	}	
+	
+	public Coupon(String couponCode, String couponName, int couponDC, String couponRegDate) { // 전체 쿠폰 확인 생성자
 		super();
 		this.couponCode = couponCode;
 		this.couponName = couponName;
-		this.couponDC = couponDC;
-		this.couponExpDate = couponExpDate;
+		this.couponDC = couponDC;		
 		this.couponRegDate = couponRegDate;
 	}
 	
-	public Coupon(int icCode, String memberId, String couponCode) { // 발행쿠폰 생성자
+	public Coupon(String icCode, String memberId, String couponCode, String issuedDate, String couponExpDate, int couponDC) { // 발행쿠폰 생성자
 		super();
 		this.icCode = icCode;
 		this.memberId = memberId;
 		this.couponCode = couponCode;
-	}
-
+		this.issuedDate = issuedDate;
+		this.couponExpDate = couponExpDate;
+		this.couponCode = couponCode;
+	}	
 
 	public String getCouponCode() {
 		return couponCode;
@@ -53,14 +59,6 @@ public class Coupon {
 		this.couponDC = couponDC;
 	}
 
-	public String getCouponExpDate() {
-		return couponExpDate;
-	}
-
-	public void setCouponExpDate(String couponExpDate) {
-		this.couponExpDate = couponExpDate;
-	}
-
 	public String getCouponRegDate() {
 		return couponRegDate;
 	}
@@ -69,11 +67,11 @@ public class Coupon {
 		this.couponRegDate = couponRegDate;
 	}
 
-	public int getIcCode() {
+	public String getIcCode() {
 		return icCode;
 	}
 
-	public void setIcCode(int icCode) {
+	public void setIcCode(String icCode) {
 		this.icCode = icCode;
 	}
 
@@ -83,6 +81,22 @@ public class Coupon {
 
 	public void setMemberId(String memberId) {
 		this.memberId = memberId;
+	}
+
+	public String getCouponExpDate() {
+		return couponExpDate;
+	}
+
+	public void setCouponExpDate(String couponExpDate) {
+		this.couponExpDate = couponExpDate;
+	}
+
+	public String getIssuedDate() {
+		return issuedDate;
+	}
+
+	public void setIssuedDate(String issuedDate) {
+		this.issuedDate = issuedDate;
 	}
 
 	@Override

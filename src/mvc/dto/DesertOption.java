@@ -16,6 +16,14 @@ public class DesertOption {
 		this.cheeseQty = cheeseQty;
 	}
 
+	
+
+	public DesertOption(int hotQty, int cheeseQty) { // 고객 주문에서 디저트옵션추가
+		super();
+		this.hotQty = hotQty;
+		this.cheeseQty = cheeseQty;
+	}
+
 	public int getDesertOptionNo() {
 		return desertOptionNo;
 	}

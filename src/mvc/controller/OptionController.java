@@ -3,13 +3,24 @@ package mvc.controller;
 import java.sql.SQLException;
 import java.util.List;
 
+<<<<<<< HEAD
+import jdy.dto.CoffeeOption;
+import jdy.dto.DesertOption;
+import jdy.dto.Option;
+import jdy.exception.AddException;
+import jdy.exception.NotFoundException;
+import jdy.service.OptionService;
+import jdy.service.OptionServiceImpl;
+=======
 import mvc.dto.Option;
 import mvc.exception.NotFoundException;
 import mvc.service.OptionService;
+>>>>>>> 493f710e2b0965d3aa215314dcee6f54cc403f3a
 
 public class OptionController {
-	public static OptionService optionservice = new OptionService();
+	public static OptionService optionservice = new OptionServiceImpl();
 	public static Option option;
+	public static CoffeeOption coffeeoption;
 	private static List<Option> list;
 
 	/**
@@ -41,10 +52,8 @@ public class OptionController {
 		
 		}catch(NotFoundException e) {
 			e.printStackTrace();
-		}
-		
-	}
-	
+		}		
+	}	
 	
 	/**
 	 * 옵션추가
@@ -90,6 +99,44 @@ public class OptionController {
 			System.out.println("삭제 실패");
 //			FailView.errorMessage(e.getMessage());
 		}
-	}
+	} // optionDelete
+	
+	/**
+	 * 고객 주문에서 커피옵션추가
+	 * @throws SQLException, AddException 
+	 * */
+	public static void orderCoffeeOption(CoffeeOption coffeeoption) throws SQLException, AddException {
+		try {
+		optionservice.orderCoffeeOption(coffeeoption);
+		System.out.println("커피옵션추가 성공");
+		}catch (AddException e) {
+			System.out.println("커피옵션추가 실패");
+			e.printStackTrace();
+		}
+	} // orderCoffeeOption end
+	
+	/**
+	 * 고객 주문에서 디저트옵션추가
+	 * */
+	public static void orderDesertOption(DesertOption desertoption) throws SQLException, AddException {
+		try {
+		optionservice.orderDesertOption(desertoption);
+		System.out.println("커피옵션추가 성공");
+		}catch (AddException e) {
+			System.out.println("커피옵션추가 실패");
+			e.printStackTrace();
+		}
+	} // orderDesertOption end
+	
+	/**
+	 *  장바구니커피옵션확인
+	 * */
+	
+	
+	
+	
+	
+	
+	
 
 }// class end

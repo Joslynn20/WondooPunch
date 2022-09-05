@@ -7,8 +7,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import mvc.dbutil.DbUtil;
-import mvc.dto.Option;
+import jdy.dto.CoffeeOption;
+import jdy.dto.DesertOption;
+import jdy.dto.Option;
+import jdy.exception.AddException;
+import jdy.util.DbUtil;
 
 
 public class OptionDAOImpl implements OptionDAO {
@@ -24,7 +27,7 @@ public class OptionDAOImpl implements OptionDAO {
 		List<Option> list = new ArrayList<>();
 		try {
 			con = DbUtil.getConnection();
-			ps = con.prepareStatement("SELECT * FROM OPTIONE ORDER BY O_CODE");
+			ps = con.prepareStatement("SELECT * FROM OPTIONS ORDER BY O_CODE");
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
@@ -48,7 +51,7 @@ public class OptionDAOImpl implements OptionDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		Option option = null;
-		String sql = "SELECT * FROM OPTIONE WHERE O_CODE = ?";
+		String sql = "SELECT * FROM OPTIONS WHERE O_CODE = ?";
 		
 		try {
 			con = DbUtil.getConnection();
@@ -74,7 +77,7 @@ public class OptionDAOImpl implements OptionDAO {
 		Connection con = null;
 		PreparedStatement ps = null;
 		int result = 0;
-		String sql = "INSERT INTO OPTIONE(O_CODE, O_NAME, O_PRICE, CT_CODE) VALUES(?,?,?,?)"; // 옵션추가
+		String sql = "INSERT INTO OPTIONS(O_CODE, O_NAME, O_PRICE, CT_CODE) VALUES(?,?,?,?)"; // 옵션추가
 
 		try {
 			con = DbUtil.getConnection();
@@ -100,7 +103,7 @@ public class OptionDAOImpl implements OptionDAO {
 		Connection con = null;
 		PreparedStatement ps = null;
 		int result = 0;
-		String sql = "UPDATE OPTIONE SET O_NAME = ?, O_PRICE = ?, CT_CODE = ? WHERE O_CODE = ?";
+		String sql = "UPDATE OPTIONS SET O_NAME = ?, O_PRICE = ?, CT_CODE = ? WHERE O_CODE = ?";
 
 		try {
 			con = DbUtil.getConnection();
@@ -131,7 +134,7 @@ public class OptionDAOImpl implements OptionDAO {
 		Connection con = null;
 		PreparedStatement ps = null;
 		int result = 0;
-		String sql = "DELETE FROM OPTIONE WHERE O_CODE = ?";
+		String sql = "DELETE FROM OPTIONS WHERE O_CODE = ?";
 
 		try {
 			con = DbUtil.getConnection();
@@ -144,6 +147,59 @@ public class OptionDAOImpl implements OptionDAO {
 			DbUtil.dbClose(con, ps);
 		}
 		return result;
-	}
+	} // optionDelete
+	
+	/**
+	 * 고객 주문에서 커피옵션추가
+	 * */
+	public int orderCoffeeOption(CoffeeOption coffeeoption) throws SQLException,AddException{
+		Connection con = null;
+		PreparedStatement ps = null;
+		int result = 0;
+		String sql = "INSERT INTO OPTIONS(?,?,?)"; // 옵션추가
+
+		try {
+			con = DbUtil.getConnection();
+			ps = con.prepareStatement(sql);
+			
+			ps.setInt(1,coffeeoption.getShotQty());
+			ps.setInt(2, coffeeoption.getCreamQty());
+			ps.setInt(3, coffeeoption.getSyrupQty());
+
+			result = ps.executeUpdate();
+			
+		} finally {
+			DbUtil.dbClose(con, ps);
+		} // finally end
+		return result;
+	} // orderCoffeeOption end
+	
+	/**
+	 * 고객 주문에서 디저트옵션추가
+	 * */	
+	public int orderDesertOption(DesertOption desertoption) throws SQLException,AddException{
+		Connection con = null;
+		PreparedStatement ps = null;
+		int result = 0;
+		String sql = "INSERT INTO OPTIONS(?,?)"; // 옵션추가
+
+		try {
+			con = DbUtil.getConnection();
+			ps = con.prepareStatement(sql);
+			
+			ps.setInt(1,desertoption.getHotQty());
+			ps.setInt(2, desertoption.getCheeseQty());
+			
+
+			result = ps.executeUpdate();
+			
+		} finally {
+			DbUtil.dbClose(con, ps);
+		} // finally end
+		return result;
+	}// orderDesertOption end
+	
+	
+	
 	
 } // OptionDAOImpl end
