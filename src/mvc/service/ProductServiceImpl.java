@@ -14,14 +14,10 @@ import mvc.exception.NotFoundException;
 public class ProductServiceImpl implements ProductService {
  
   	private ProductDAO productDAO  =  new ProductDAOImpl();
-    private static ProductService  ProductService    =  new   ProductServiceImpl(); 
+   
  	
 	
-	private ProductServiceImpl() {};
-    public static ProductService getInstance() {
-    	
-    	return ProductService ;
-    }
+	
    	
 	
 	@Override
@@ -29,7 +25,7 @@ public class ProductServiceImpl implements ProductService {
 		
 		
 		   List<Product> list =productDAO.productSelectAll();
-		   if(list.isEmpty()||list.size()==0) throw new NotFoundException("상품이 존재하지 않습니다");
+		   if(list==null||list.isEmpty()) throw new NotFoundException("상품이 존재하지 않습니다");
 		
 		return list;
 	}
@@ -40,7 +36,7 @@ public class ProductServiceImpl implements ProductService {
 	
 
 		   List<Product> list =productDAO.productSelectBycategoryName(categoryName);
-		   if(list.isEmpty()||list.size()==0) throw new NotFoundException("존재 하지 않는 카테고리 입니다");
+		   if(list==null||list.isEmpty())  throw new NotFoundException("존재 하지 않는 카테고리 입니다");
 		
 		return list;
 	}
@@ -49,7 +45,7 @@ public class ProductServiceImpl implements ProductService {
 	public List<Product> productSelectBykeyword(String keyword) throws SQLException, NotFoundException {
 		
 		   List<Product> list =productDAO.productSelectBykeyword(keyword);
-		   if(list.isEmpty()||list.size()==0) throw new NotFoundException("입력하신 키워드 :"+keyword+"에 대한 정보가 존재 하지 않습니다");
+		   if(list==null||list.isEmpty()) throw new NotFoundException("입력하신 키워드 :"+keyword+"에 대한 정보가 존재 하지 않습니다");
 		
 		
 		return list;

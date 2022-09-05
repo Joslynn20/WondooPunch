@@ -51,18 +51,18 @@ public class ProductDAOImpl implements ProductDAO {
 
 	
 	
-	 private  String getCategoryCode( String categoryName ) throws SQLException{
+	 private  String getCategoryCode( Connection con,String categoryName ) throws SQLException{
 			
-			Connection con =null;
+		
 		    PreparedStatement ps =null;
-		    String sql  = "select  CT_CODE from CATEGORY where LOWER(CT_NAME) =LOWER(?)";
+		    String sql  = "select  CT_CODE from CATEGORY where UPPER(CT_NAME) =?";
 		    ResultSet rs =null;
 		    String categoryCode=null;
-		       
+		      System.out.println(categoryName.toUpperCase()); 
 		    try {
-		      con = DbUtil.getConnection();
+		      
 		      ps= con.prepareCall(sql);      
-		      ps.setString(1, categoryName); 
+		      ps.setString(1, categoryName.toUpperCase()); 
 		      rs =ps.executeQuery(); 
 		    	
 		      if(rs.next())        
@@ -72,7 +72,7 @@ public class ProductDAOImpl implements ProductDAO {
 		    }finally {
 		    	
 		    	
-		    	DbUtil.dbClose(con, ps, rs);
+		    	DbUtil.dbClose(null, ps, rs);
 		    	
 		    }
 		 
@@ -93,11 +93,13 @@ public class ProductDAOImpl implements ProductDAO {
 			    List<Product> list = new ArrayList<Product>(); 
 			    
 			    try {	    
-			    	 String caregoryCode =this.getCategoryCode(categoryName);
+			    	
+			    	  con=DbUtil.getConnection();
+			    	  String caregoryCode =this.getCategoryCode(con,categoryName);
 			    	  
 			    	  if(caregoryCode!=null) {
 			    		    
-			    		  con=DbUtil.getConnection();
+			    		  
 						  ps=con.prepareStatement(sql);
 			    	      ps.setString(1,caregoryCode);   	 
 			    		  rs = ps.executeQuery();
@@ -126,45 +128,8 @@ public class ProductDAOImpl implements ProductDAO {
 			}
 		
 	  
-		  //그냥만들어 본것
-		public List<Product> productSelectBycategoryName2(String categoryCode)throws SQLException {
-			// TODO Auto-generated method stub
-			
-			Connection con =null;
-		    PreparedStatement ps =null;
-		    String sql  = "select * from PRODUCT where CT_CODE =?";
-		    ResultSet rs =null;
-		    List<Product> list = new ArrayList<Product>(); 
-		    
-		    try {	    
-		   
-		    		  con=DbUtil.getConnection();
-					  ps=con.prepareStatement(sql);
-		    	      ps.setString(1,categoryCode);   	 
-		    		  rs = ps.executeQuery();
-		    		   
-		    		 while(rs.next()) {
-			    		 
-		    		 	 Product product=new Product(rs.getString("P_CODE"), rs.getString("P_NAME"), 
-		    		 	 rs.getInt("P_PRICE"),rs.getString("P_DETAIL"),rs.getString("P_REG_DATE"),rs.getString("CT_CODE")); 	   
-		    		 	 list.add(product);
-		    		 		         	 	 
-		    		    } 	 
-		    	  	
-		    }finally {
-		    	DbUtil.dbClose(con, ps, rs);	
-		    
-		    }
-			
-		    return list;
-				
-		}
-	
-	
-	
-	
-
-	
+		  
+		
 	
 	
 	@Override
@@ -360,11 +325,48 @@ public class ProductDAOImpl implements ProductDAO {
 	
 	 }//함수 끝
 
-  
-	
-	
-	
 
+
+	@Override
+	public Product productSelectByproductCodeOrproductName(String productCodeOrproductName) throws SQLException {
+		// TODO Auto-generated method stub
+		
+          Product product=null;;	     
+
+		  PreparedStatement ps =null;
+		  ResultSet rs =null; 
+		  Connection con =null;
+		  String sql = "select * from PRODUCT where P_CODE=? or P_NAME=?";
+		 try { 
+			   con=DbUtil.getConnection();
+			   ps= con.prepareStatement(sql);
+			   ps.setString(1,productCodeOrproductName);   
+			   ps.setString(2,productCodeOrproductName);   
+			   rs=ps.executeQuery();
+			   
+			     
+				if(rs.next()) {  
+				  product=new Product(rs.getString("P_CODE"), rs.getString("P_NAME"), 
+				  rs.getInt("P_PRICE"),rs.getString("P_DETAIL"),rs.getString("P_REG_DATE"), rs.getString("CT_CODE")); 
+				 }    	   
+				     
+			   
+			   
+		        
+		  
+		     }finally {
+			
+			 DbUtil.dbClose(con, ps, rs);  
+		 }  
+		 
+		 return product;
+		
+
+	
+	
+	}
+
+  
 
 
 

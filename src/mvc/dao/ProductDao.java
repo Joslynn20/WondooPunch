@@ -100,6 +100,19 @@ public interface ProductDAO {
      Product productSelectByproductCode (String productCode) throws SQLException ;
      
      
+     /*
+      * 
+      * 새로 추가된 부분 
+      * 
+      * 
+      * */ 
+      
+     
+     
+   
+     Product productSelectByproductCodeOrproductName(String productCodeOrproductName) throws SQLException;
+     
+     
     
 	/* 
 	 *  기능:  상품을 등록하는 기능  
@@ -111,6 +124,10 @@ public interface ProductDAO {
 	 *  등록 실패시 0
 	 * */
 	  
+     
+     
+     
+     
 	public  int productInsert(Product  product) throws SQLException  ;
 
     

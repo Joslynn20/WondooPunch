@@ -12,7 +12,7 @@ import mvc.service.ProductServiceImpl;
 
 public class ProductController {
          
-	   private  static ProductService productService = ProductServiceImpl.getInstance();
+	   private static  ProductService productService =new ProductServiceImpl();
 	
 	   public  static void  productSelectAll() {
 		
