@@ -61,7 +61,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 			ps.setString(2, customer.getUserPw());
 			ps.setString(3, customer.getUserName());
 			ps.setString(4, customer.getUserBirth());
-			ps.setString(5, customer.getUserPhoneNo()); // unique key 등록
+			ps.setString(5, customer.getUserPhoneNo());
 			
 			result = ps.executeUpdate();
 			

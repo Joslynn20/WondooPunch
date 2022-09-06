@@ -86,17 +86,17 @@ public class Customer {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("[userId=");
+		builder.append("[Id: ");
 		builder.append(userId);
-		builder.append(", userPw=");
+		builder.append(", Password: ");
 		builder.append(userPw);
-		builder.append(", userName=");
+		builder.append(", 이름: ");
 		builder.append(userName);
-		builder.append(", userBirth=");
+		builder.append(", 생년월일: ");
 		builder.append(userBirth);
-		builder.append(", userPhoneNo=");
+		builder.append(", 전화번호=");
 		builder.append(userPhoneNo);
-		builder.append(", regDate=");
+		builder.append(", 가입일=");
 		builder.append(userRegDate);
 		builder.append("]");
 		return builder.toString();
