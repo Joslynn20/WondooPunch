@@ -9,6 +9,7 @@ import mvc.exception.ModifyException;
 import mvc.exception.NotFoundException;
 import mvc.service.ProductService;
 import mvc.service.ProductServiceImpl;
+import mvc.view.FailView;
 
 public class ProductController {
          
@@ -20,18 +21,15 @@ public class ProductController {
 
 			      List<Product> list  =productService.productSelectAll();
                     
-			       for(  Product p  :list ) {
-			    	   
-			    	   System.out.println(p);
-			       }
-			       
+			      
+			      
 			 
 		 }catch (SQLException e ) {
 			 
 			 e.printStackTrace();
 		 }catch(NotFoundException es) {
 			 
-			 System.out.println(es.getMessage());
+			 FailView.errorMessage(es.getMessage());
 			 
 		 
 		 
@@ -45,9 +43,7 @@ public class ProductController {
 		   try {
 			   List<Product> list   = productService.productSelectBycategoryName(categoryName);
 		    
-			   for ( Product p : list ) {  
-				   System.out.println(p);   
-			   }
+			  
 		   
 		   }catch(SQLException e ) {
 			   
@@ -55,7 +51,7 @@ public class ProductController {
 		   
 		   }catch( NotFoundException es) {
 			   
-			   System.out.println(es.getMessage());
+			   FailView.errorMessage(es.getMessage());
 		  
 		   }   
 	   
@@ -66,17 +62,13 @@ public class ProductController {
 		    try {
 		      List<Product>  list   = productService.productSelectBykeyword(keyword);
 	    
-		       for(Product p   :list) {
-		    	   
-		    	   System.out.println(p);
-		       }
 		      
 		    }catch( SQLException e ) {
 		    	
 		    	e.printStackTrace();
 		    }catch( NotFoundException es) {
 		    	
-		    	System.out.println(es.getMessage());
+		    	FailView.errorMessage(es.getMessage());
 		    }
 	   
 	   
@@ -92,7 +84,7 @@ public class ProductController {
 		    	e.printStackTrace();
 		    }catch(NotFoundException es) {
 		    	 
-		    	System.out.println(es.getMessage()); 
+		    	FailView.errorMessage(es.getMessage()); 
 		    	
 		    }
 	   
@@ -109,9 +101,9 @@ public class ProductController {
         	 e.printStackTrace();
         	
         	
-        }catch(AddException e ) {
+        }catch(AddException es ) {
         	
-        	System.out.println(e.getMessage());
+        	FailView.errorMessage(es.getMessage());
         }
 	  
 	
@@ -127,7 +119,7 @@ public class ProductController {
 		        	e.printStackTrace();
 		        }catch(NotFoundException es ) {
 		        	
-		        	System.out.println(es.getMessage());
+		        	FailView.errorMessage(es.getMessage());
 		        }
 	   
 	   
@@ -147,7 +139,7 @@ public class ProductController {
 		           e.printStackTrace();	
 		    }catch( ModifyException es ) {
 		    	
-		    	 System.out.println(es.getMessage());
+		    	FailView.errorMessage(es.getMessage());
 		    }
 		   
 	   
@@ -155,6 +147,35 @@ public class ProductController {
 	   
 	   }
 	
+	   
+	   
+	   
+	   public static void productSelectByproductCode(String productCode) {
+		   
+		   
+		   try {
+			    
+			    
+			   Product product  =productService.productSelectByproductCode(productCode);
+			    
+			   
+		   }catch(SQLException e) {
+			   
+			   e.printStackTrace();
+			   
+		   }catch(NotFoundException es) {
+			   
+			   FailView.errorMessage(es.getMessage());
+			   
+			   
+		   }
+		   
+		   
+		   
+		   
+	   }
+	   
+	   
 	
 	public ProductController() {
 		// TODO Auto-generated constructor stub
