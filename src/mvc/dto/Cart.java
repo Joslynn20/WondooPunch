@@ -1,8 +1,5 @@
 package mvc.dto;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Cart {
 
 	private String userId; // 회원 아이디
@@ -12,23 +9,60 @@ public class Cart {
 	private int cartPrice; // 장바구니에 담긴 상품 가격
 	private int productPrice; // 상품 가격
 	private String productName; // 상품 이름
-
-	private int shotQty; // 샷추가
 	
+	private int shotQty; // 샷추가
 	private int creamQty; // 휘핑크림추가
 	private int syrupQty; // 시럽추가
 
 	private int hotQty; // 데우기
 	private int cheeseQty; // 크림치즈추가
+	
+	public Cart() {
+		
+	}
 
-	private CoffeeOption coffeeOption = new CoffeeOption();
-	private DesertOption desertOption = new DesertOption();
+	public Cart(int cartNo, int cartQty, int cartPrice, String productCode, String userId) {
+		this.cartNo = cartNo;
+		this.cartQty = cartQty;
+		this.cartNo = cartPrice;
+		this.productCode = productCode;
+		this.userId = userId;
+
+	}
+
+	public Cart(int cartNo, int shotQty, int creamQty, int syrupQty) {
+		this.cartNo = cartNo;
+		this.shotQty = shotQty;
+		this.creamQty = creamQty;
+		this.syrupQty = syrupQty;
+
+	}
+
+	public Cart(int hotQty, int cheeseQty) {
+		this.hotQty = hotQty;
+		this.cheeseQty = cheeseQty;
+	}
 
 	// 장바구니번호,상품코드,상품명,가격,개수,샷,크림,시럽,핫,치즈
+	public Cart(String userId, int cartNo, String productCode, String productName, int productPrice, int cartQty,
+			int shotQty, int creamQty, int syrupQty, int hotQty, int cheeseQty) {
+		this.userId = userId;
+		this.cartNo = cartNo;
+		this.productCode = productCode;
+		this.productName = productName;
+		this.productPrice = productPrice;
+		this.cartQty = cartQty;
+
+		this.shotQty = shotQty;
+		this.creamQty = creamQty;
+		this.syrupQty = syrupQty;
+
+		this.hotQty = hotQty;
+		this.cheeseQty = cheeseQty;
+	}
 
 	public Cart(int cartNo, String productCode, String productName, int productPrice, int cartQty, int shotQty,
 			int creamQty, int syrupQty, int hotQty, int cheeseQty) {
-		super();
 		this.cartNo = cartNo;
 		this.productCode = productCode;
 		this.productName = productName;
@@ -44,7 +78,6 @@ public class Cart {
 	}
 
 	public Cart(String userId, int cartNo, String productCode, int cartQty, int cartPrice) {
-		super();
 		this.userId = userId;
 		this.cartNo = cartNo;
 		this.productCode = productCode;
@@ -54,7 +87,7 @@ public class Cart {
 	}
 
 	public Cart(String userId, int cartNo, String productCode, int cartQty, int cartPrice, int productPrice,
-			String productName, CoffeeOption cfo, DesertOption deo) {
+			String productName) {
 		super();
 		this.userId = userId;
 		this.cartNo = cartNo;
@@ -63,8 +96,6 @@ public class Cart {
 		this.cartPrice = cartPrice;
 		this.productPrice = productPrice;
 		this.productName = productName;
-		this.coffeeOption = coffeeOption;
-		this.desertOption = desertOption;
 	}
 
 	public int getProductPrice() {
@@ -81,22 +112,6 @@ public class Cart {
 
 	public void setProductName(String productName) {
 		this.productName = productName;
-	}
-
-	public Cart(String userId, int cartNo, String productCode, int cartQty, int cartPrice, int productPrice,
-			String productName) {
-		super();
-		this.userId = userId;
-		this.cartNo = cartNo;
-		this.productCode = productCode;
-		this.cartQty = cartQty;
-		this.cartPrice = cartPrice;
-		this.productPrice = productPrice;
-		this.productName = productName;
-	}
-
-	public Cart() {
-		Cart cart = new Cart();
 	}
 
 	public String getUserId() {
@@ -138,6 +153,7 @@ public class Cart {
 	public void setCartPrice(int cartPrice) {
 		this.cartPrice = cartPrice;
 	}
+
 	public int getShotQty() {
 		return shotQty;
 	}
@@ -178,28 +194,11 @@ public class Cart {
 		this.cheeseQty = cheeseQty;
 	}
 
-	public CoffeeOption getCoffeeOption() {
-		return coffeeOption;
-	}
-
-	public void setCoffeeOption(CoffeeOption coffeeOption) {
-		this.coffeeOption = coffeeOption;
-	}
-
-	public DesertOption getDesertOption() {
-		return desertOption;
-	}
-
-	public void setDesertOption(DesertOption desertOption) {
-		this.desertOption = desertOption;
-	}
-
-
 	@Override
 	public String toString() {
 		return "Cart [userId=" + userId + ", cartNo=" + cartNo + ", productCode=" + productCode + ", cartQty=" + cartQty
-				+ ", cartPrice=" + cartPrice + ", productPrice=" + productPrice + ", productName=" + productName
-				+ ", coffeeOption=" + coffeeOption + ", desertOption=" + desertOption + "]";
+				+ ", cartPrice=" + cartPrice + ", productPrice=" + productPrice + ", productName=" + productName + "];";
+
 	}
 
 }

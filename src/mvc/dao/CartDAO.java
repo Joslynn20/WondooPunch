@@ -4,25 +4,24 @@ import java.sql.SQLException;
 import java.util.List;
 
 import mvc.dto.Cart;
+import mvc.exception.AddException;
+import mvc.exception.NotFoundException;
 
 public interface CartDAO {
 
-	Boolean addCart(Integer cartNo, Integer cartQty, Integer cartPrice, String productCode, String userId)
-			throws SQLException;
+	// 장바구니 추가 기능
+	int addCart(Cart cart) throws SQLException, AddException, NotFoundException;
 
-	Integer generateCartKey() throws SQLException;
+	// 장바구니 조회
+	List<Cart> getCart(String userId) throws SQLException, NotFoundException;
 
-	List<Cart> getCart(String userId) throws SQLException;
+	// 장바구니 업데이트
+	int updateCart(Cart cart) throws SQLException;
 
-	Boolean addCartCoffeeOption(Integer cartNo, Integer shot, Integer cream, Integer syrp) throws SQLException;
+	// 카트번호로 장바구니 삭제
+	int removeCart(int cartNo) throws SQLException, NotFoundException;
 
-	Boolean addCartDesertOption(Integer cartNo, Integer hot, Integer cheese) throws SQLException;
-
-	Boolean updateCart(Integer cartNo, String productCode, Integer cartQty, Integer shot, Integer syrup, Integer cream,
-			Integer hot, Integer cheese) throws SQLException;
-
-	Boolean removeCart(Integer cartNo) throws SQLException;
-
-	Boolean removeAllCart(String userId) throws SQLException;
+	// 유저 아이디로 장바구니 전체 삭제
+	boolean removeAllCart(String userId) throws SQLException, NotFoundException;
 
 }
