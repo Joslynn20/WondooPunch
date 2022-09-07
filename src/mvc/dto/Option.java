@@ -17,35 +17,35 @@ public class Option {
 		this.productCode = productCode;
 	}
 
-	String getOptionCode() {
+	public String getOptionCode() {
 		return optionCode;
 	}
 
-	void setOptionCode(String optionCode) {
+	public void setOptionCode(String optionCode) {
 		this.optionCode = optionCode;
 	}
 
-	String getOptionName() {
+	public String getOptionName() {
 		return optionName;
 	}
 
-	void setOptionName(String optionName) {
+	public void setOptionName(String optionName) {
 		this.optionName = optionName;
 	}
 
-	int getOptionPrice() {
+	public int getOptionPrice() {
 		return optionPrice;
 	}
 
-	void setOptionPrice(int optionPrice) {
+	public void setOptionPrice(int optionPrice) {
 		this.optionPrice = optionPrice;
 	}
 
-	String getProductCode() {
+	public String getProductCode() {
 		return productCode;
 	}
 
-	void setProductCode(String productCode) {
+	public void setProductCode(String productCode) {
 		this.productCode = productCode;
 	}
 

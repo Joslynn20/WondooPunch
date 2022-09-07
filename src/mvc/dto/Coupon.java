@@ -26,69 +26,69 @@ public class Coupon {
 		this.couponIssuedDate = couponIssuedDate;
 	}
 
-	String getCouponCode() {
+	public String getCouponCode() {
 		return couponCode;
 	}
 
-	void setCouponCode(String couponCode) {
+	public void setCouponCode(String couponCode) {
 		this.couponCode = couponCode;
 	}
 
-	String getCouponName() {
+	public String getCouponName() {
 		return couponName;
 	}
 
-	void setCouponName(String couponName) {
+	public void setCouponName(String couponName) {
 		this.couponName = couponName;
 	}
 
-	int getCouponDC() {
+	public int getCouponDC() {
 		return couponDC;
 	}
 
-	void setCouponDC(int couponDC) {
+	public void setCouponDC(int couponDC) {
 		this.couponDC = couponDC;
 	}
 
-	String getCouponRegDate() {
+	public String getCouponRegDate() {
 		return couponRegDate;
 	}
 
-	void setCouponRegDate(String couponRegDate) {
+	public void setCouponRegDate(String couponRegDate) {
 		this.couponRegDate = couponRegDate;
 	}
 
-	String getIcCode() {
+	public String getIcCode() {
 		return icCode;
 	}
 
-	void setIcCode(String icCode) {
+	public void setIcCode(String icCode) {
 		this.icCode = icCode;
 	}
 
-	String getUserId() {
+	public String getUserId() {
 		return userId;
 	}
 
-	void setUserId(String userId) {
+	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 
-	String getCouponExpDate() {
+	public String getCouponExpDate() {
 		return couponExpDate;
 	}
 
-	void setCouponExpDate(String couponExpDate) {
+	public void setCouponExpDate(String couponExpDate) {
 		this.couponExpDate = couponExpDate;
 	}
 
-	String getCouponIssuedDate() {
+	public String getCouponIssuedDate() {
 		return couponIssuedDate;
 	}
 
-	void setCouponIssuedDate(String couponIssuedDate) {
+	public void setCouponIssuedDate(String couponIssuedDate) {
 		this.couponIssuedDate = couponIssuedDate;
 	}
 
-	//toString
+	// toString
 }
