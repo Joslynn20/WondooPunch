@@ -8,12 +8,14 @@ import mvc.service.OrderServiceImpl;
 import mvc.view.EndView;
 import mvc.view.FailView;
 
-public class OrderController{
+public class OrderController {
 	private static OrderService orderService = new OrderServiceImpl();
-	
+
 	/**
 	 * 주문하기
-	 * */
+	 * 
+	 * @param order
+	 */
 	public static void insertOrder(Orders order) {
 		try {
 			orderService.insertOrder(order);
@@ -21,45 +23,51 @@ public class OrderController{
 		} catch (Exception e) {
 			FailView.errorMessage(e.getMessage());
 		}
-		
+
 	}
 
 	/**
 	 * 퀵오더
-	 * */
+	 * 
+	 * @param userId
+	 */
 	public static void QuickOrder(String userId) {
 		try {
-			List <Orders> list = orderService.QuickOrder(userId);
-			
+			List<Orders> list = orderService.selectQuickOrder(userId);
+			// EndView.printOrder(list);
+			// 주문하기 다시 호출
 		} catch (Exception e) {
-			e.printStackTrace();
+			FailView.errorMessage(e.getMessage());
 		}
-		
+
 	}
 
 	/**
 	 * 주문 내역 보기 - 고객
-	 * */
-	public void selectOrdersByUserId(String userId) {
+	 * 
+	 * @param userId
+	 */
+	public static void selectOrdersByUserId(String userId) {
 		try {
-			orderService.selectOrdersByUserId(userId);
+			List<Orders> list = orderService.selectOrdersByUserId(userId);
+			// EndView.printOrder(list);
 		} catch (Exception e) {
-			e.printStackTrace();
+			FailView.errorMessage(e.getMessage());
 		}
-		
+
 	}
 
 	/**
 	 * 주문 내역 보기 - 관리자
-	 * */
-	public void selectAllOrders() {
+	 */
+	public static void selectAllOrders() {
 		try {
-			orderService.selectAllOrders();
+			List<Orders> list = orderService.selectAllOrders();
+			// EndView.printOrder(list);
 		} catch (Exception e) {
-			e.printStackTrace();
+			FailView.errorMessage(e.getMessage());
 		}
-		
+
 	}
-	
 
 }

@@ -41,20 +41,20 @@ public class CouponServiceImpl implements CouponService {
 	/**
 	 * 고객 - 쿠폰 코드에 대한 쿠폰 정보 검색
 	 */
-	public List<IssuedCoupon> selectCouponByCouponCodeByGuest(String userId) throws NotFoundException, SQLException {
-		List<IssuedCoupon> list = coupondao.selectCouponByCouponCodeByGuest(userId);
-		if (list.isEmpty() || list.size() == 0)
-			throw new NotFoundException();
-		return list;
+	public Coupon selectCouponByCouponCode(String couponCode) throws NotFoundException, SQLException {
+		Coupon coupon = coupondao.selectCouponByCouponCode(couponCode);
+		if (coupon == null)
+			throw new NotFoundException("쿠폰이 없습니다");
+		return coupon;
 	}
 
 	/**
 	 * 관리자메뉴 - 쿠폰 코드에 대한 쿠폰 정보 검색
 	 */
-	public List<Coupon> selectCouponByCouponCode(String couponCode) throws NotFoundException, SQLException {
-		List<Coupon> list = coupondao.selectCouponByCouponCode(couponCode);
+	public List<Coupon> selectCouponByCouponCodeByAdmin(String couponCode) throws NotFoundException, SQLException {
+		List<Coupon> list = coupondao.selectCouponByCouponCodeByAdmin(couponCode);
 		if (list.isEmpty() || list.size() == 0)
-			throw new NotFoundException();
+			throw new NotFoundException("쿠폰목록이 없습니다");
 		return list;
 	}
 

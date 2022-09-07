@@ -30,19 +30,25 @@ public interface CouponService {
 	List<IssuedCoupon> selectCouponByUserId(String userId) throws SQLException, NotFoundException;
 
 	/**
-	 * 관리자메뉴 - 쿠폰 코드에 대한 쿠폰 정보 검색
+	 * 고객메뉴 - 쿠폰 코드에 대한 쿠폰 정보 검색
 	 * 
 	 * @param couponCode
 	 * @return
 	 * @throws SQLException
 	 * @throws NotFoundException
 	 */
-	List<Coupon> selectCouponByCouponCode(String couponCode) throws SQLException, NotFoundException;
+	Coupon selectCouponByCouponCode(String couponCode) throws SQLException, NotFoundException;
 
 	/**
-	 * 고객 - 쿠폰 코드에 대한 쿠폰 정보 검색
+	 * 관리자 - 쿠폰 코드에 대한 쿠폰 정보 검색
+	 * 
+	 * @param userId
+	 * @return
+	 * @throws SQLException
+	 * @throws NotFoundException
 	 */
-	List<IssuedCoupon> selectCouponByCouponCodeByGuest(String userId) throws SQLException, NotFoundException;
+	 
+	List<Coupon> selectCouponByCouponCodeByAdmin(String couponCode) throws SQLException, NotFoundException;
 
 	/**
 	 * 쿠폰등록
@@ -70,5 +76,7 @@ public interface CouponService {
 	 * @throws AddException
 	 */
 	void insertJoinCoupon(String userId) throws SQLException, AddException;
+	
+	
 
 } // CouponService end
