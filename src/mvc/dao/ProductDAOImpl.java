@@ -19,7 +19,7 @@ public class ProductDAOImpl implements ProductDAO {
 	
 	
 	@Override
-	public List<Product> productSelectAll() throws SQLException {
+	public List<Product> selectAllProduct() throws SQLException {
 		// TODO Auto-generated method stub
 		 
 		 List<Product> list = new ArrayList<Product>(); 
@@ -83,7 +83,7 @@ public class ProductDAOImpl implements ProductDAO {
 	
 	 
 	    ////버전1 정석 버전
-		 public List<Product> productSelectBycategoryName(String categoryName)throws SQLException {
+		 public List<Product> selectProductByCategoryName(String categoryName)throws SQLException {
 				// TODO Auto-generated method stub
 				
 				Connection con =null;
@@ -133,7 +133,7 @@ public class ProductDAOImpl implements ProductDAO {
 	
 	
 	@Override
-	public List<Product> productSelectBykeyword(String keyword) throws SQLException  {
+	public List<Product> selectProductByKeyword (String keyword) throws SQLException  {
 		// TODO Auto-generated method stub
 	
 		  List<Product> list =new ArrayList<Product>(); 
@@ -169,7 +169,7 @@ public class ProductDAOImpl implements ProductDAO {
 	
 	 //수정했어요  !!
 	@Override
-	public Product productSelectByproductName(String productName) throws SQLException {
+	public Product  selectProductByProductName(String productName)throws SQLException {
 		// TODO Auto-generated method stub
 		  
 		  Product product=null;
@@ -202,7 +202,7 @@ public class ProductDAOImpl implements ProductDAO {
 	}
 
 	@Override
-	public Product productSelectByproductCode(String productCode) throws SQLException {
+	public Product selectProductByProductCode(String productCode) throws SQLException {
 		// TODO Auto-generated method stub
 	
 		  PreparedStatement ps=null;
@@ -238,7 +238,7 @@ public class ProductDAOImpl implements ProductDAO {
 	
 	
 	@Override
-	public int productInsert(Product product) throws SQLException {
+	public int insertProduct(Product product) throws SQLException {
 		// TODO Auto-generated method stub
 		
 
@@ -272,7 +272,7 @@ public class ProductDAOImpl implements ProductDAO {
 	
 	
 	@Override
-	public int productDelete(String productCode) throws SQLException {
+	public int deleteProduct(String productCode) throws SQLException {
 		// TODO Auto-generated method stub
 		
 		  Connection con =null;
@@ -299,7 +299,7 @@ public class ProductDAOImpl implements ProductDAO {
 	
 	
 	@Override
-	public int productUpdate(Product product) throws SQLException {
+	public int updateProduct(Product product) throws SQLException {
 		// TODO Auto-generated method stub
 		
 		  Connection con =null;
@@ -327,45 +327,8 @@ public class ProductDAOImpl implements ProductDAO {
 
 
 
-	@Override
-	public Product productSelectByproductCodeOrproductName(String productCodeOrproductName) throws SQLException {
-		// TODO Auto-generated method stub
-		
-          Product product=null;;	     
-
-		  PreparedStatement ps =null;
-		  ResultSet rs =null; 
-		  Connection con =null;
-		  String sql = "select * from PRODUCT where P_CODE=? or P_NAME=?";
-		 try { 
-			   con=DbUtil.getConnection();
-			   ps= con.prepareStatement(sql);
-			   ps.setString(1,productCodeOrproductName);   
-			   ps.setString(2,productCodeOrproductName);   
-			   rs=ps.executeQuery();
-			   
-			     
-				if(rs.next()) {  
-				  product=new Product(rs.getString("P_CODE"), rs.getString("P_NAME"), 
-				  rs.getInt("P_PRICE"),rs.getString("P_DETAIL"),rs.getString("P_REG_DATE"), rs.getString("CT_CODE")); 
-				 }    	   
-				     
-			   
-			   
-		        
-		  
-		     }finally {
-			
-			 DbUtil.dbClose(con, ps, rs);  
-		 }  
-		 
-		 return product;
-		
-
 	
 	
-	}
-
   
 
 

@@ -3,8 +3,8 @@ package mvc.dto;
 public class DetailOption {
 
 	private int detailOptionNo; // 상세옵션번호
-	private int superNo; // 장바구니 or 주문상세번호
-	private String optionCode; // 옵션코드
+	private int superNo; //장바구니 or 주문상세번호
+	private int optionCode; // 옵션코드
 	private int detailOtionQty; // 옵션수량
 	private int detailOptionPrice; // 옵션 총 가격
 
@@ -12,7 +12,7 @@ public class DetailOption {
 
 	}
 
-	public DetailOption(int detailOptionNo, int superNo, String optionCode, int detailOtionQty, int detailOptionPrice) {
+	public DetailOption(int detailOptionNo, int superNo, int optionCode, int detailOtionQty, int detailOptionPrice) {
 		super();
 		this.detailOptionNo = detailOptionNo;
 		this.superNo = superNo;
@@ -21,43 +21,43 @@ public class DetailOption {
 		this.detailOptionPrice = detailOptionPrice;
 	}
 
-	public int getDetailOptionNo() {
+	int getDetailOptionNo() {
 		return detailOptionNo;
 	}
 
-	public void setDetailOptionNo(int detailOptionNo) {
+	void setDetailOptionNo(int detailOptionNo) {
 		this.detailOptionNo = detailOptionNo;
 	}
 
-	public int getSuperNo() {
+	int getSuperNo() {
 		return superNo;
 	}
 
-	public void setSuperNo(int superNo) {
+	void setSuperNo(int superNo) {
 		this.superNo = superNo;
 	}
 
-	public String getOptionCode() {
+	int getOptionCode() {
 		return optionCode;
 	}
 
-	public void setOptionCode(String string) {
-		this.optionCode = string;
+	void setOptionCode(int optionCode) {
+		this.optionCode = optionCode;
 	}
 
-	public int getDetailOtionQty() {
+	int getDetailOtionQty() {
 		return detailOtionQty;
 	}
 
-	public void setDetailOtionQty(int detailOtionQty) {
+	void setDetailOtionQty(int detailOtionQty) {
 		this.detailOtionQty = detailOtionQty;
 	}
 
-	public int getDetailOptionPrice() {
+	int getDetailOptionPrice() {
 		return detailOptionPrice;
 	}
 
-	public void setDetailOptionPrice(int detailOptionPrice) {
+	void setDetailOptionPrice(int detailOptionPrice) {
 		this.detailOptionPrice = detailOptionPrice;
 	}
 
