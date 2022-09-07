@@ -4,7 +4,7 @@ public class DetailOption {
 
 	private int detailOptionNo; // 상세옵션번호
 	private int superNo; //장바구니 or 주문상세번호
-	private int optionCode; // 옵션코드
+	private String optionCode; // 옵션코드
 	private int detailOtionQty; // 옵션수량
 	private int detailOptionPrice; // 옵션 총 가격
 
@@ -12,7 +12,7 @@ public class DetailOption {
 
 	}
 
-	public DetailOption(int detailOptionNo, int superNo, int optionCode, int detailOtionQty, int detailOptionPrice) {
+	public DetailOption(int detailOptionNo, int superNo, String optionCode, int detailOtionQty, int detailOptionPrice) {
 		super();
 		this.detailOptionNo = detailOptionNo;
 		this.superNo = superNo;
@@ -21,44 +21,61 @@ public class DetailOption {
 		this.detailOptionPrice = detailOptionPrice;
 	}
 
-	int getDetailOptionNo() {
+	public int getDetailOptionNo() {
 		return detailOptionNo;
 	}
 
-	void setDetailOptionNo(int detailOptionNo) {
+	public void setDetailOptionNo(int detailOptionNo) {
 		this.detailOptionNo = detailOptionNo;
 	}
 
-	int getSuperNo() {
+	public int getSuperNo() {
 		return superNo;
 	}
 
-	void setSuperNo(int superNo) {
+	public void setSuperNo(int superNo) {
 		this.superNo = superNo;
 	}
 
-	int getOptionCode() {
+	public String getOptionCode() {
 		return optionCode;
 	}
 
-	void setOptionCode(int optionCode) {
+	public void setOptionCode(String optionCode) {
 		this.optionCode = optionCode;
 	}
 
-	int getDetailOtionQty() {
+	public int getDetailOtionQty() {
 		return detailOtionQty;
 	}
 
-	void setDetailOtionQty(int detailOtionQty) {
+	public void setDetailOtionQty(int detailOtionQty) {
 		this.detailOtionQty = detailOtionQty;
 	}
 
-	int getDetailOptionPrice() {
+	public int getDetailOptionPrice() {
 		return detailOptionPrice;
 	}
 
-	void setDetailOptionPrice(int detailOptionPrice) {
+	public void setDetailOptionPrice(int detailOptionPrice) {
 		this.detailOptionPrice = detailOptionPrice;
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("주문상세 옵션 [주문옵션번호: ");
+		builder.append(detailOptionNo);
+		builder.append(", 옵션코드: ");
+		builder.append(optionCode);
+		builder.append(", 옵션 수량: ");
+		builder.append(detailOtionQty);
+		builder.append(", 옵션 가격: ");
+		builder.append(detailOptionPrice);
+		builder.append("]");
+		return builder.toString();
+	}
+
+
 
 }
