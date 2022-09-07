@@ -47,7 +47,7 @@ public class OrderController {
 	 * 
 	 * @param userId
 	 */
-	public void selectOrdersByUserId(String userId) {
+	public static void selectOrdersByUserId(String userId) {
 		try {
 			List<Orders> list = orderService.selectOrdersByUserId(userId);
 			// EndView.printOrder(list);
@@ -60,7 +60,7 @@ public class OrderController {
 	/**
 	 * 주문 내역 보기 - 관리자
 	 */
-	public void selectAllOrders() {
+	public static void selectAllOrders() {
 		try {
 			List<Orders> list = orderService.selectAllOrders();
 			// EndView.printOrder(list);

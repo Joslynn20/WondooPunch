@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mvc.dbutil.DbUtil;
-import mvc.dto.Coupon;
 import mvc.dto.DetailOption;
 import mvc.dto.Option;
 import mvc.dto.OrderLine;
@@ -87,11 +86,8 @@ public class OrderDAOImpl implements OrderDAO {
 		List<OrderLine> orderLineList = order.getOrderLinelist(); // 주문 상세 리스트
 
 		int totalPrice = 0; // 전체 총 구매가격
-		int orderPrice = 0; // 주문 상세 구매 가격
-		int optionPrice = 0; // 옵션 가격 * 수량
-
-		Coupon coupon = couponDAO.selectCouponByCouponCode(order.getCouponCode());
-		int dc = coupon.getCouponDC(); // 쿠폰 할인율
+		int optionTotalPrice = 0; // 옵션 총 가격
+		int dc = couponDAO.couponDC(order.getCouponCode()); // 쿠폰 할인율
 
 		for (OrderLine orderLine : orderLineList) { // 주문상세 리스트
 			String productCode = orderLine.getProductCode();
@@ -99,13 +95,18 @@ public class OrderDAOImpl implements OrderDAO {
 			int productPrice = orderLine.getOrderQty() * product.getProductPrice();
 
 			for (DetailOption detailOption : orderLine.getList()) { // 주문 상세 옵션 리스트
-				Option option = optionDao.selectOptionByProductCode(productCode);
-				optionPrice = option.getOptionPrice() * detailOption.getDetailOtionQty();
-				detailOption.setOptionCode(option.getOptionCode()); // 주문상세 옵션에 옵션코드 저장
-				detailOption.setDetailOptionPrice(optionPrice); // 주문상세옵션에 옵션 가격 저장
+				List<Option> optionList = optionDao.selectOptionByProductCode(productCode);
+				for (Option option : optionList) {
+					if (detailOption.getOptionCode().equals(option.getOptionCode())) { //주문상세옵션코드와 옵션테이블의 옵션코드 비교
+						
+						int optionPrice = option.getOptionPrice() * detailOption.getDetailOtionQty(); // 옵션가격*수량
+						detailOption.setDetailOptionPrice(optionPrice); // 주문상세옵션에 옵션 가격 저장
+						optionTotalPrice += optionPrice;
+					}
+				}
 			}
 
-			orderPrice = productPrice + optionPrice;
+			int orderPrice = productPrice + optionTotalPrice; // 주문상세 구매 가격
 			int dcPrice = orderPrice * dc / 100;
 			orderPrice -= dcPrice;
 
@@ -135,7 +136,7 @@ public class OrderDAOImpl implements OrderDAO {
 	}
 
 	/**
-	 * 주문 상세 옵션 추가
+	 * 주문 상세 추가
 	 * 
 	 * @param Connection
 	 * @param Order      객체
@@ -252,7 +253,7 @@ public class OrderDAOImpl implements OrderDAO {
 				orderLine.setList(selectOrderOption(con, orderLine)); // 주문상세에 주문옵션 정보 넣기
 				list.add(orderLine);
 			}
-			
+
 		} finally {
 			DbUtil.dbClose(null, ps, rs);
 		}
@@ -279,8 +280,8 @@ public class OrderDAOImpl implements OrderDAO {
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				DetailOption option = new DetailOption(rs.getInt(1), rs.getInt(2), rs.getString(3), 
-						rs.getInt(4), rs.getInt(5));
+				DetailOption option = new DetailOption(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getInt(4),
+						rs.getInt(5));
 				detailOption.add(option);
 			}
 
@@ -300,10 +301,15 @@ public class OrderDAOImpl implements OrderDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		List<Orders> list = new ArrayList<Orders>();
-		String Sql = "select * from (select * from orders order by order_no desc) where rownum<=3";
+		/**
+		 * userId로 검색
+		 */
+		String Sql = "select * from (select * from orders where m_id = ? order by order_no desc) where rownum<=3";
 		try {
 			con = DbUtil.getConnection();
 			ps = con.prepareStatement(Sql);
+			ps.setString(1, userId);
+			
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
