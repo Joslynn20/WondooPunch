@@ -4,28 +4,25 @@ public class Coupon {
 	private String couponCode; // 쿠폰코드
 	private String couponName; // 쿠폰명
 	private int couponDC; // 할인율
-	private String couponRegDate; // 등록일
-	private String icCode;// 발행쿠폰코드
-	private String userId; // 회원아이디
-	private String couponExpDate; // 유효기간
-	private String couponIssuedDate;// 발행일
+	private String couponRegDate; // 등록일	
 
-	public Coupon() {
-	}
-
-	public Coupon(String couponCode, String couponName, int couponDC, String couponRegDate, String icCode,
-			String userId, String couponExpDate, String couponIssuedDate) {
+public Coupon() { }
+	
+	public Coupon(int couponDC) { 
+		this.couponDC = couponDC;
+	}	
+	
+	/**
+	 * 전체쿠폰 확인 생성자
+	 * */	
+	public Coupon(String couponCode, String couponName, int couponDC, String couponRegDate) { 
 		super();
 		this.couponCode = couponCode;
 		this.couponName = couponName;
-		this.couponDC = couponDC;
+		this.couponDC = couponDC;		
 		this.couponRegDate = couponRegDate;
-		this.icCode = icCode;
-		this.userId = userId;
-		this.couponExpDate = couponExpDate;
-		this.couponIssuedDate = couponIssuedDate;
-	}
-
+	}			
+	
 	public String getCouponCode() {
 		return couponCode;
 	}
@@ -58,37 +55,11 @@ public class Coupon {
 		this.couponRegDate = couponRegDate;
 	}
 
-	public String getIcCode() {
-		return icCode;
+	@Override
+	public String toString() {
+		return couponCode + " | " + couponName + " | " + couponDC + " | " + " | " + couponRegDate;
 	}
+	
 
-	public void setIcCode(String icCode) {
-		this.icCode = icCode;
-	}
-
-	public String getUserId() {
-		return userId;
-	}
-
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
-
-	public String getCouponExpDate() {
-		return couponExpDate;
-	}
-
-	public void setCouponExpDate(String couponExpDate) {
-		this.couponExpDate = couponExpDate;
-	}
-
-	public String getCouponIssuedDate() {
-		return couponIssuedDate;
-	}
-
-	public void setCouponIssuedDate(String couponIssuedDate) {
-		this.couponIssuedDate = couponIssuedDate;
-	}
-
-	// toString
+	
 }
