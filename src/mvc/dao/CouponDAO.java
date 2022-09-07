@@ -29,18 +29,18 @@ public interface CouponDAO {
 	List<IssuedCoupon> selectCouponByUserId(String userId) throws SQLException;
 
 	/**
-	 * 관리자메뉴 - 쿠폰 코드에 대한 쿠폰 정보 검색
+	 * 고객 - 쿠폰 코드에 대한 쿠폰 정보 검색
 	 * 
 	 * @param couponCode
 	 * @return
 	 * @throws SQLException
 	 */
-	List<Coupon> selectCouponByCouponCode(String couponCode) throws SQLException;
+	Coupon selectCouponByCouponCode(String couponCode) throws SQLException;
 
 	/**
-	 * 고객 - 쿠폰 코드에 대한 쿠폰 정보 검색
+	 * 관리자 - 쿠폰 코드에 대한 쿠폰 정보 검색
 	 */
-	List<IssuedCoupon> selectCouponByCouponCodeByGuest(String userId) throws SQLException;
+	List<Coupon> selectCouponByCouponCodeByAdmin(String couponCode) throws SQLException;
 
 	/**
 	 * 쿠폰등록

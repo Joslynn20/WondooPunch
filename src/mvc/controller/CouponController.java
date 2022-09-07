@@ -54,12 +54,12 @@ public class CouponController {
 	}
 
 	/**
-	 * 관리자메뉴 - 쿠폰 코드에 대한 쿠폰 정보 검색
+	 * 고객메뉴 - 쿠폰 코드에 대한 쿠폰 정보 검색
 	 */
 	public static void selectCouponByCouponCode(String couponCode) throws NotFoundException, SQLException {
 		try {
-			List<Coupon> list = couponservice.selectCouponByCouponCode(couponCode);
-			System.out.println(list); // 메뉴단에서 수정 출력
+			Coupon coupon = couponservice.selectCouponByCouponCode(couponCode);
+			System.out.println(coupon); // 메뉴단에서 수정 출력
 
 		} catch (NotFoundException e) {
 			System.out.println(e.getMessage());
@@ -67,11 +67,11 @@ public class CouponController {
 	}
 
 	/**
-	 * 고객 - 쿠폰 코드에 대한 쿠폰 정보 검색
+	 * 관리자 - 쿠폰 코드에 대한 쿠폰 정보 검색
 	 */
-	public static void selectCouponByCouponCodeByGuest(String userId) throws SQLException, NotFoundException {
+	public static void selectCouponByCouponCodeByAdmin(String couponCode) throws SQLException, NotFoundException {
 		try {
-			List<IssuedCoupon> list = couponservice.selectCouponByCouponCodeByGuest(userId);
+			List<Coupon> list = couponservice.selectCouponByCouponCodeByAdmin(couponCode);
 
 			/*
 			 * EndView.selectCouponByUserId(list);
@@ -130,6 +130,6 @@ public class CouponController {
 		} catch (AddException e) {
 			System.out.println(e.getMessage());
 		}
-	}
+	}	
 
 }

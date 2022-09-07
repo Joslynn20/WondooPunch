@@ -49,8 +49,8 @@ public class OptionDAOImpl implements OptionDAO {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		List<Option> list = new ArrayList<>();
-		;
+		List<Option> list = new ArrayList<Option>();
+		
 		String sql = "SELECT * FROM OPTIONS WHERE O_CODE = ?";
 
 		try {
@@ -59,7 +59,7 @@ public class OptionDAOImpl implements OptionDAO {
 			ps.setString(1, optionCode);
 
 			rs = ps.executeQuery();
-			if (rs.next()) {
+			while (rs.next()) {
 				option = new Option(rs.getString(1), rs.getString(2), rs.getInt(3));
 				list.add(option);
 			} // if end
@@ -88,7 +88,7 @@ public class OptionDAOImpl implements OptionDAO {
 
 			rs = ps.executeQuery();
 
-			if (rs.next() == true) {
+			if (rs.next()) {
 
 				if (product.getCategoryCode().equals("B")) { // B는 음료
 					option = new Option(rs.getString(1), rs.getString(2), rs.getInt(3));
@@ -96,7 +96,7 @@ public class OptionDAOImpl implements OptionDAO {
 
 				} else
 					option = new Option(rs.getString(1), rs.getString(2), rs.getInt(3));
-				list.add(option);
+					list.add(option);
 			} // if end
 		} finally {
 			DbUtil.dbClose(con, ps, rs);
