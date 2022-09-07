@@ -70,5 +70,12 @@ public interface CouponDAO {
 	 * @throws AddException
 	 */
 	int insertJoinCoupon(String userId) throws SQLException;
-
+	
+	/** 쿠폰코드 검색후 할인율 갖고오기
+	 * 
+	 * @return
+	 * @throws SQLException 
+	 */	 
+	
+	int couponDC(String couponCode) throws SQLException ;
 }
