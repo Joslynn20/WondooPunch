@@ -21,10 +21,10 @@ public class ProductServiceImpl implements ProductService {
    	
 	
 	@Override
-	public List<Product> productSelectAll() throws SQLException, NotFoundException {
+	public List<Product> selectAllProduct() throws SQLException, NotFoundException {
 		
 		
-		   List<Product> list =productDAO.productSelectAll();
+		   List<Product> list =productDAO.selectAllProduct();
 		   if(list==null||list.isEmpty()) throw new NotFoundException("상품이 존재하지 않습니다");
 		
 		return list;
@@ -32,19 +32,19 @@ public class ProductServiceImpl implements ProductService {
 
 	
 	@Override
-	public List<Product> productSelectBycategoryName(String categoryName) throws SQLException, NotFoundException {
+	public List<Product> selectProductByCategoryName(String categoryName) throws SQLException, NotFoundException {
 	
 
-		   List<Product> list =productDAO.productSelectBycategoryName(categoryName);
+		   List<Product> list =productDAO.selectProductByCategoryName(categoryName);
 		   if(list==null||list.isEmpty())  throw new NotFoundException("존재 하지 않는 카테고리 입니다");
 		
 		return list;
 	}
 
 	@Override
-	public List<Product> productSelectBykeyword(String keyword) throws SQLException, NotFoundException {
+	public List<Product> selectProductByKeyword(String keyword) throws SQLException, NotFoundException {
 		
-		   List<Product> list =productDAO.productSelectBykeyword(keyword);
+		   List<Product> list =productDAO.selectProductByKeyword(keyword);
 		   if(list==null||list.isEmpty()) throw new NotFoundException("입력하신 키워드 :"+keyword+"에 대한 정보가 존재 하지 않습니다");
 		
 		
@@ -52,27 +52,27 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public Product productSelectByproductName(String productName) throws SQLException, NotFoundException {
-		 Product product  =productDAO.productSelectByproductName(productName);
+	public Product selectProductByProductName(String productName) throws SQLException, NotFoundException {
+		 Product product  =productDAO.selectProductByProductName(productName);
 		if( product ==null  ) throw new NotFoundException("입력하신 상품이름 에 대한 정보가 존재 하지 않습니다");	
 		return product;
 	
 	}
 
 	@Override
-	public Product productSelectByproductCode(String productCode) throws SQLException, NotFoundException {
+	public Product selectProductByProductCode(String productCode)throws SQLException, NotFoundException {
 		    
-		Product product   =productDAO.productSelectByproductCode(productCode);
+		Product product   =productDAO.selectProductByProductCode(productCode);
 		if( product ==null     ) throw new NotFoundException("입력하신 상품코드 에 대한 정보가 존재 하지 않습니다");
 		
 		return product;
 	}
 
 	@Override
-	public void productInsert(Product product) throws SQLException, AddException {
+	public void insertProduct(Product product) throws SQLException, AddException {
 		
 
-		   int result =productDAO.productInsert(product);
+		   int result =productDAO.insertProduct(product);
 	       if(result==0) throw new AddException("상품 등록 실패 하였습니다");   
 	     
 	  
@@ -80,18 +80,18 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public void productDelete(String productCode) throws SQLException, NotFoundException {
+	public void deleteProduct(String productCode) throws SQLException, NotFoundException {
 	
 
-		if(productDAO.productDelete(productCode)==0)
+		if(productDAO.deleteProduct(productCode)==0)
 		 throw new NotFoundException("삭제 실패 했습니다");
 	
 	}
 
 	@Override
-	public void productUpdate(Product product) throws SQLException, ModifyException {
+	public void updateProduct(Product product) throws SQLException, ModifyException {
 	
-		if(productDAO.productUpdate(product)==0)
+		if(productDAO.updateProduct(product)==0)
 			throw new ModifyException("상품 수정 실패 하였습니다");
 	
 	}

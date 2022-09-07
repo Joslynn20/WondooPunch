@@ -15,11 +15,11 @@ public class ProductController {
          
 	   private static  ProductService productService =new ProductServiceImpl();
 	
-	   public  static void  productSelectAll() {
+	   public  static void selectAllProduct() {
 		
 		  try {
 
-			      List<Product> list  =productService.productSelectAll();
+			 List<Product> list  =productService.selectAllProduct();
                     
 			      
 			      
@@ -38,10 +38,10 @@ public class ProductController {
 		
 	}
 	
-	   public  static void  productSelectBycategoryName(String categoryName){
+	   public  static void  selectProductByCategoryName(String categoryName){
 		    
 		   try {
-			   List<Product> list   = productService.productSelectBycategoryName(categoryName);
+			   List<Product> list   = productService.selectProductByCategoryName(categoryName);
 		    
 			  
 		   
@@ -58,9 +58,9 @@ public class ProductController {
 	   }
 	   
 	   
-	   public static void  productSelectBykeyword(String keyword) {
+	   public static void  selectProductByKeyword(String keyword) {
 		    try {
-		      List<Product>  list   = productService.productSelectBykeyword(keyword);
+		      List<Product>  list   = productService.selectProductByKeyword(keyword);
 	    
 		      
 		    }catch( SQLException e ) {
@@ -74,10 +74,10 @@ public class ProductController {
 	   
 	   }
 	
-	   public static void  productSelectByproductName(String productName){
+	   public static void  selectProductByProductName(String productName){
 		   
 		    try {
-		      Product product  = productService.productSelectByproductName(productName);
+		      Product product  = productService.selectProductByProductName(productName);
 	   
 		    }catch(SQLException e ) {
 		    	
@@ -92,10 +92,10 @@ public class ProductController {
 	   }
 	
 	   
-	   public static void  productInsert(Product product)  {
+	   public static void insertProduct(Product product)  {
 		
         try { 
-		    productService.productInsert(product);
+		    productService.insertProduct(product);
 	     
         }catch(SQLException e ) {
         	 e.printStackTrace();
@@ -110,9 +110,9 @@ public class ProductController {
 	} 
 	   
 	   
-	   public static void productDelete(String productCode) {
+	   public static void deleteProduct(String productCode) {
 		        try {
-		                productService.productDelete(productCode);
+		                productService.deleteProduct(productCode);
 	   
 		        }catch(SQLException e) {
 		        	
@@ -128,11 +128,11 @@ public class ProductController {
 	    
 	   
 	  
-	   public static void productUpdate( Product product) {
+	   public static void updateProduct( Product product) {
 		   
 		    try {
 		    
-		    	productService.productUpdate(product);
+		    	productService.updateProduct(product);
 		    	
 		    }catch(SQLException e  ) {
 		    	
@@ -150,13 +150,13 @@ public class ProductController {
 	   
 	   
 	   
-	   public static void productSelectByproductCode(String productCode) {
+	   public static void selectProductByproductCode(String productCode) {
 		   
 		   
 		   try {
 			    
 			    
-			   Product product  =productService.productSelectByproductCode(productCode);
+			   Product product  =productService.selectProductByProductCode(productCode);
 			    
 			   
 		   }catch(SQLException e) {
