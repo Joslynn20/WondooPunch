@@ -15,73 +15,6 @@ public class SalesDAOImpl implements SalesDAO {
 		// TODO Auto-generated constructor stub
 	}
 
-	@Override
-	public String selectSalesBydate(String date) throws SQLException {
-		// TODO Auto-generated method stub
-	 
-		
-		 Connection con =null;
-	     PreparedStatement ps =null;
-	     String sql="SELECT  SUM(OTP) S_PRICE, SUM(OTQ) S_QTY FROM "
-	     		+ "( SELECT ORDER_TOTAL_PRICE AS OTP ,TO_CHAR(ORDER_DATE,'YYYY-MM-DD')"
-	     		+ " C_ODER_DATE ,ORDER_TOTAL_QTY AS OTQ   FROM ORDERS )  "
-	     		+ "WHERE  C_ODER_DATE= ?  GROUP BY C_ODER_DATE ";
-		      	
-	     ResultSet rs =null;
-	     String sales=null;
-	    try {	    
-	    	 con=DbUtil.getConnection();
-	    	 ps =con.prepareStatement(sql);    
-	    	 ps.setString(1,date); 
-	    	 rs = ps.executeQuery(); 
-	    	 if(rs.next()) {
-	    		 
-	    	    sales= date+"에 대힌 총 판매액:"+rs.getInt(1)+"총 판매수량:"+rs.getInt(2)+"입니다";         
-	    		 
-	    		 
-	    		 
-	    	 }
-	    	  	
-	    }finally {
-	    	
-	    	DbUtil.dbClose(con, ps, rs);	
-	    }
-		
-	  return sales;	 
-	 }
-		
-		
-		
-	
-	@Override
-	public String selectSalesAll() throws SQLException{ 
-	  
-	 Connection con =null;
-      PreparedStatement ps =null;
-      String sql="SELECT   SUM(ORDER_TOTAL_PRICE) S_PRICE   , SUM(ORDER_TOTAL_QTY) S_QTY"
-    		    +"FROM ORDERS";         
-      ResultSet rs =null;
-      String sales=null;
-   try {	    
-   	  con=DbUtil.getConnection();
-   	  ps =con.prepareStatement(sql);    
-   	  rs = ps.executeQuery(); 
-   	 if(rs.next()) {
-   		 
-   	    sales= " 누적 판매액:"+rs.getInt(1)+"총 판매수량:"+rs.getInt(2)+"입니다";         
-   		 
-   		 
-   	 }
-   	  	
-   }finally {
-   	
-   	DbUtil.dbClose(con, ps, rs);	
-   }
-	
-  return sales;	 
-  } 
-		// TODO Auto-generated method stub
-		
 	
 	
 	
@@ -89,110 +22,106 @@ public class SalesDAOImpl implements SalesDAO {
 	
 	
 	
+	//완료
 	
-	
-
-	@Override
-	public List<String> selectSalesRateBydate(String date) throws SQLException {
-		// TODO Auto-generated method stub
+  public List<String> selectSalesRateBydate(String date) throws SQLException{
 		 
-		 List<String> list = new ArrayList<String>();
-		  Connection con =null;
-	      PreparedStatement ps =null;
-	      String sql ="SELECT  P_NAME,TOTAL_SALES"
-	    		       +"FROM(SELECT  P_NAME, C_ORDER_DATE ,SUM(OD_QTY) TOTAL_SALES"  
-	    		       +"FROM V_SALES_RATE"
-	    		       + "GROUP BY C_ORDER_DATE,P_NAME"
-	    		       + "ORDER BY TOTAL_SALES DESC"
-	    		       + ")"
-	    		       + "WHERE C_ORDER_DATE= ?";
-	      ResultSet rs =null;
-	      
-	   try {	    
-	   	  con=DbUtil.getConnection();
-	   	  ps =con.prepareStatement(sql);
-	   	  ps.setString(1, date);
-	   	  rs = ps.executeQuery(); 
-	   	  
-	    	 while(rs.next()) {
-	   		  
-	   	        String result ="상품명:"+rs.getString("P_NAME")+" 판매량:"+rs.getInt("TOTAL_SALES");            
-	   		    list.add(result);  
-	   		 
-	   	 }
-	   	  	
-	   }finally {
-	   	
-	   	DbUtil.dbClose(con, ps, rs);	
-	   }
+		List<String> list = new ArrayList<String>(); 
 		
-	 
-	  return list;
-	
-	
-	 } 
-	  
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+		Connection con =null;
+	    PreparedStatement ps =null;
+	    ResultSet rs =null;
+	    
+		String sql ="SELECT P_CODE,P_NAME ,SUM(OD_QTY) TOTAL_QTY\r\n"
+		  		+ "FROM  VIEW_SALES_RANKINGS\r\n"
+		  		+ "WHERE  C_ORDER_DATE =? \r\n"
+		  		+ "GROUP BY C_ORDER_DATE,P_CODE,P_NAME";
+		
+		    try {	    
+		    	 con=DbUtil.getConnection();
+		    	 ps =con.prepareStatement(sql);
+		         ps.setString(1, date);	
+		         rs =ps.executeQuery();
+		    
+		         
+		    	 while(rs.next()) {
+		    	
+		    	    
+		 	     String result	=  rs.getString("P_CODE")+"|"+rs.getString("P_NAME")+"|\t"
+		 	    		+ ""+rs.getInt("TOTAL_QTY");
+		 		  
+		 	    
+		 	     list.add(result);
+		 		         
+		    	 
+		    	 
+		    	 }
+		    	 
+		    	  	
+		    }finally {
+		    	DbUtil.dbClose(con, ps, rs);	
+		    }
+			
+			return list;
+		
+		
+	}
 	
 	
 	
 
-	@Override
-	public List<String> selectSalesRankRateBydate(String date) throws SQLException{
+  private List<String> getProductCodeRankBydate(String date) throws SQLException{
+		
+		List<String> list = new ArrayList<String>(); 
+		Connection con =null;
+	    PreparedStatement ps =null;
+	    ResultSet rs =null;	
+		String sql ="SELECT P_CODE\r\n"
+				+ "FROM (\r\n"
+				+ "SELECT P_CODE, SUM(OD_QTY) TOTAL_QTY\r\n"
+				+ "FROM  VIEW_SALES_RANKINGS\r\n"
+				+ "WHERE  C_ORDER_DATE = ? \r\n"
+				+ "GROUP BY C_ORDER_DATE,P_CODE,P_NAME\r\n"
+				+ "ORDER BY  TOTAL_QTY DESC    \r\n"
+				+ ")  WHERE ROWNUM<=5";
+		
+		
+		   try {	    
+		    	 con=DbUtil.getConnection();
+		    	 ps =con.prepareStatement(sql);
+		    	 ps.setString(1, date);
+		         rs =ps.executeQuery();		         
+		    	 while(rs.next()) {
+		 	     String result	=  rs.getString("P_CODE");
+		 	     list.add(result);
+		 		         
+		    	 }
+		    	 
+		    	  	
+		    }finally {
+		    	DbUtil.dbClose(con, ps, rs);	
+		    }
+			
+			return list;
 		
 		
 		
-		
-		List<String> list = new ArrayList<String>();
-		  Connection con =null;
-	      PreparedStatement ps =null;
-	      String sql ="SELECT ROWNUM AS RANKINGS ,P_NAME, C_ORDER_DATE ,TOTAL_SALES"
-	    		      +"FROM("
-	    		      +"SELECT  P_NAME, C_ORDER_DATE ,SUM(OD_QTY) TOTAL_SALES"
-	    		      +"FROM V_SALES_RATE"
-	    		      +"GROUP BY C_ORDER_DATE,P_NAME"
-	    		      +"ORDER BY TOTAL_SALES DESC"
-	    		      +")"
-	    		      +"WHERE ROWNUM <=5 AND C_ORDER_DATE= ?";
-	    		      			    		      		
-	      ResultSet rs =null;
-	      
-	   try {	    
-	   	  con=DbUtil.getConnection();
-	   	  ps =con.prepareStatement(sql);
-	   	  ps.setString(1, date);
-	   	  rs = ps.executeQuery(); 
-	   	  
-	    	 while(rs.next()) {
-	   		  
-	    		 String result = "순위:"+rs.getInt("RANKINGS")+"상품명:"+rs.getString("P_NAME")+" 판매량:"+rs.getInt("TOTAL_SALES");            
-	   		    list.add(result);  
-	   		 
-	   	 }
-	   	  	
-	   }finally {
-	   	
-	   	DbUtil.dbClose(con, ps, rs);	
-	   }
-		
-	 
-	  return list;
+	}
 	
 	
-	 } 
 	
-		// TODO Auto-generated method stub
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+		
+		
 		
 	
 	
