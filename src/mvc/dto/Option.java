@@ -9,6 +9,9 @@ public class Option {
 	public Option() {
 	}
 
+	/**
+	 * 옵션전체검색 & 옵션등록
+	 */
 	public Option(String optionCode, String optionName, int optionPrice, String productCode) {
 		super();
 		this.optionCode = optionCode;
@@ -17,41 +20,50 @@ public class Option {
 		this.productCode = productCode;
 	}
 
-	String getOptionCode() {
-		return optionCode;
-	}
-
-	void setOptionCode(String optionCode) {
+	/**
+	 * 상품코드 & 옵션코드 검색으로 수정하기
+	 */
+	public Option(String optionCode, String optionName, int optionPrice) {
 		this.optionCode = optionCode;
-	}
-
-	String getOptionName() {
-		return optionName;
-	}
-
-	void setOptionName(String optionName) {
 		this.optionName = optionName;
-	}
-
-	int getOptionPrice() {
-		return optionPrice;
-	}
-
-	void setOptionPrice(int optionPrice) {
 		this.optionPrice = optionPrice;
 	}
 
-	String getProductCode() {
+	public String getOptionCode() {
+		return optionCode;
+	}
+
+	public void setOptionCode(String optionCode) {
+		this.optionCode = optionCode;
+	}
+
+	public String getOptionName() {
+		return optionName;
+	}
+
+	public void setOptionName(String optionName) {
+		this.optionName = optionName;
+	}
+
+	public int getOptionPrice() {
+		return optionPrice;
+	}
+
+	public void setOptionPrice(int optionPrice) {
+		this.optionPrice = optionPrice;
+	}
+
+	public String getProductCode() {
 		return productCode;
 	}
 
-	void setProductCode(String productCode) {
+	public void setProductCode(String productCode) {
 		this.productCode = productCode;
 	}
 
 	@Override
 	public String toString() {
-		return optionCode + " | " + optionName + " | " + optionPrice + " | " + productCode;
+		return "옵션 목록 : " + optionCode + " | " + optionName + " | " + optionPrice + " | " + productCode;
 	}
 
 } // class end

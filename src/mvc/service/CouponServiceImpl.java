@@ -6,37 +6,56 @@ import java.util.List;
 import mvc.dao.CouponDAO;
 import mvc.dao.CouponDAOImpl;
 import mvc.dto.Coupon;
-import mvc.dto.Customer;
+import mvc.dto.IssuedCoupon;
 import mvc.exception.AddException;
 import mvc.exception.NotFoundException;
 
 public class CouponServiceImpl implements CouponService {
 	CouponDAO coupondao = new CouponDAOImpl();
-	
+
 	/**
-	 * 쿠폰목록
+	 * 관리자메뉴 - 쿠폰 전체 목록 조회
 	 * 
 	 * @throws NotFoundException
 	 */
-	public List<Coupon> couponSelect() throws SQLException, NotFoundException {
-		List<Coupon> list = coupondao.couponSelect();
-		if(list.isEmpty()||list.size()==0)
+	public List<Coupon> selectAllCoupon() throws SQLException, NotFoundException {
+		List<Coupon> list = coupondao.selectAllCoupon();
+		if (list.isEmpty() || list.size() == 0)
 			throw new NotFoundException();
 		return list;
 	} // couponSelect end
-	
+
 	/**
-	 * 쿠폰번호에 해당하는 옵션검색
+	 * 고객 - 전체 발행쿠폰 목록 조회
 	 * 
 	 * @throws SQLException
 	 * @throws NotFoundException
 	 */
-	public Coupon couponSelectByCouponCode(String couponCode) throws NotFoundException, SQLException {
-		Coupon coupon = coupondao.couponSelectByCouponCode(couponCode);
-		if (coupon == null)
+	public List<IssuedCoupon> selectCouponByUserId(String userId) throws NotFoundException, SQLException {
+		List<IssuedCoupon> list = coupondao.selectCouponByUserId(userId);
+		if (list.isEmpty() || list.size() == 0)
 			throw new NotFoundException();
-		return coupon;
+		return list;
+	}
 
+	/**
+	 * 고객 - 쿠폰 코드에 대한 쿠폰 정보 검색
+	 */
+	public List<IssuedCoupon> selectCouponByCouponCodeByGuest(String userId) throws NotFoundException, SQLException {
+		List<IssuedCoupon> list = coupondao.selectCouponByCouponCodeByGuest(userId);
+		if (list.isEmpty() || list.size() == 0)
+			throw new NotFoundException();
+		return list;
+	}
+
+	/**
+	 * 관리자메뉴 - 쿠폰 코드에 대한 쿠폰 정보 검색
+	 */
+	public List<Coupon> selectCouponByCouponCode(String couponCode) throws NotFoundException, SQLException {
+		List<Coupon> list = coupondao.selectCouponByCouponCode(couponCode);
+		if (list.isEmpty() || list.size() == 0)
+			throw new NotFoundException();
+		return list;
 	}
 
 	/**
@@ -44,33 +63,34 @@ public class CouponServiceImpl implements CouponService {
 	 * 
 	 * @throws AddException
 	 */
-	public void couponInsert(Coupon coupon) throws SQLException, AddException {
-		int result = coupondao.couponInsert(coupon);
-		if(result ==0)
-			throw new AddException();		
-		
+	public void insertCoupon(Coupon coupon) throws SQLException, AddException {
+		int result = coupondao.insertCoupon(coupon);
+		if (result == 0)
+			throw new AddException();
+
 	}// couponCode end
 
 	/**
 	 * 쿠폰 삭제
-	 * @throws NotFoundException 
+	 * 
+	 * @throws NotFoundException
 	 */
-	public void couponDelete(String couponCode) throws SQLException, NotFoundException {
-		int result = coupondao.couponDelete(couponCode);
-		if(result ==0)
-			throw new NotFoundException();	
-		
-	}
-	/**
-	 * 회원가입쿠폰
-	 * */
 	@Override
-	public void joinCoupon(Customer customer) throws SQLException, AddException {
-		int result = coupondao.joinCoupon(customer);
-		if(result ==0)
-			throw new AddException();	
-		
-	}	
-	
-	
+	public void deletecoupon(String couponCode) throws SQLException, NotFoundException {
+		int result = coupondao.deleteCoupon(couponCode);
+		if (result == 0)
+			throw new NotFoundException();
+
+	}
+
+	/**
+	 * 가입쿠폰발행
+	 */
+	@Override
+	public void insertJoinCoupon(String userId) throws SQLException, AddException {
+		int result = coupondao.insertJoinCoupon(userId);
+		if (result == 0)
+			throw new AddException();
+
+	}
 }

@@ -27,7 +27,7 @@ public interface OptionService {
 	 * @throws NotFoundException
 	 * @throws SQLException
 	 */
-	Option optionSelectByOptionCode(String optionCode) throws NotFoundException, SQLException;
+	List<Option> optionSelectByOptionCode(String optionCode) throws NotFoundException, SQLException;
 
 	/**
 	 * 상품코드에 대한 옵션정보 검색
@@ -35,8 +35,9 @@ public interface OptionService {
 	 * @param productCode
 	 * @return Option
 	 * @throws SQLException
+	 * @throws NotFoundException
 	 */
-	Option selectOptionByProductCode(String productCode) throws SQLException;
+	List<Option> selectOptionByProductCode(String productCode) throws SQLException, NotFoundException;
 
 	/**
 	 * 옵션추가

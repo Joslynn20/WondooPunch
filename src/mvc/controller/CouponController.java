@@ -5,6 +5,7 @@ import java.util.List;
 
 import mvc.dto.Coupon;
 import mvc.dto.Customer;
+import mvc.dto.IssuedCoupon;
 import mvc.exception.AddException;
 import mvc.exception.NotFoundException;
 import mvc.service.CouponService;
@@ -16,44 +17,85 @@ public class CouponController {
 	public static List<Coupon> list;
 
 	/**
-	 * 쿠폰목록
-	 * @throws SQLException 
+	 * 관리자메뉴 - 쿠폰 전체 목록 조회
+	 * 
+	 * @throws SQLException
 	 */
-	public static void couponSelect() throws SQLException, NotFoundException {
+	public static void selectAllCoupon() throws SQLException, NotFoundException {
 		try {
-			List<Coupon> list = couponservice.couponSelect();		
+			List<Coupon> list = couponservice.selectAllCoupon();
 			System.out.println(list);
-			
+
 		} catch (NotFoundException e) {
-			
-		System.out.println(e.getMessage());
-			
+
+			System.out.println(e.getMessage());
 
 		} // catch end
 	} // optionSelect end
-	
+
 	/**
-	 * 쿠폰번호에 해당하는 쿠폰검색
-	 * */
-	public static void couponSelectByCouponCode(String couponCode) throws NotFoundException, SQLException {
-		try {	
-		Coupon coupon = couponservice.couponSelectByCouponCode(couponCode);
-		System.out.println(coupon);
-		
-		}catch(NotFoundException e) {
+	 * 고객 - 전체 발행쿠폰 목록 조회
+	 */
+	public static void selectCouponByUserId(String userId) throws SQLException, NotFoundException {
+		try {
+			List<IssuedCoupon> list = couponservice.selectCouponByUserId(userId);
+
+			/*
+			 * EndView.selectCouponByUserId(list);
+			 * EndView.selectCouponByUserId(list.size());
+			 */
+
+			System.out.println(list); // endview에서 출력할 예정 // 쿠폰내역
+			System.out.println(list.size());// endview에서 출력할 예정 // 쿠폰수 출력
+
+		} catch (NotFoundException e) {
 			System.out.println(e.getMessage());
-		}		
-	}	
-	
+		}
+	}
+
+	/**
+	 * 관리자메뉴 - 쿠폰 코드에 대한 쿠폰 정보 검색
+	 */
+	public static void selectCouponByCouponCode(String couponCode) throws NotFoundException, SQLException {
+		try {
+			List<Coupon> list = couponservice.selectCouponByCouponCode(couponCode);
+			System.out.println(list); // 메뉴단에서 수정 출력
+
+		} catch (NotFoundException e) {
+			System.out.println(e.getMessage());
+		}
+	}
+
+	/**
+	 * 고객 - 쿠폰 코드에 대한 쿠폰 정보 검색
+	 */
+	public static void selectCouponByCouponCodeByGuest(String userId) throws SQLException, NotFoundException {
+		try {
+			List<IssuedCoupon> list = couponservice.selectCouponByCouponCodeByGuest(userId);
+
+			/*
+			 * EndView.selectCouponByUserId(list);
+			 * EndView.selectCouponByUserId(list.size());
+			 */
+
+			System.out.println(list); // endview에서 출력할 예정 // 쿠폰내역
+			System.out.println(list.size());// endview에서 출력할 예정 // 쿠폰수 출력
+
+		} catch (NotFoundException e) {
+			System.out.println(e.getMessage());
+		}
+	}
 
 	/**
 	 * 쿠폰등록
-	 * @throws SQLException 
+	 * 
+	 * @throws SQLException
 	 */
-	public static void couponInsert(Coupon coupon) throws SQLException, AddException {
+	public static void insertCoupon(Coupon coupon) throws SQLException, AddException {
 		try {
-			couponservice.couponInsert(coupon);
-			
+			couponservice.insertCoupon(coupon);
+			System.out.println("등록됐습니다");
+
 		} catch (AddException e) {
 
 			System.out.println(e.getMessage());
@@ -63,31 +105,31 @@ public class CouponController {
 
 	/**
 	 * 쿠폰 삭제
-	 * @throws SQLException 
-	 * @throws NotFoundException 
+	 * 
+	 * @throws SQLException
+	 * @throws NotFoundException
 	 */
-	public static void couponDelete(String couponCode) throws SQLException, NotFoundException {
+	public static void deleteCoupon(String couponCode) throws SQLException, NotFoundException {
 		try {
-			couponservice.couponDelete(couponCode);
-			
-		} catch (SQLException e) {	
+			couponservice.deletecoupon(couponCode);
+			System.out.println("쿠폰 삭제됐습니다");
+
+		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
 	} // couponDelete end
-	
+
 	/**
-	 * 회원가입쿠폰발행
-	 * @throws SQLException 
-	 * */
-	public static void joinCoupon(Customer customer) throws SQLException,AddException {
+	 * 가입쿠폰발행
+	 * 
+	 * @throws SQLException
+	 */
+	public static void insertJoinCoupon(String userId) throws SQLException, AddException {
 		try {
-		couponservice.joinCoupon(customer);
-		}catch(AddException e) {
+			couponservice.insertJoinCoupon(userId);
+		} catch (AddException e) {
 			System.out.println(e.getMessage());
-		}		
+		}
 	}
-	
-	
-	
 
 }

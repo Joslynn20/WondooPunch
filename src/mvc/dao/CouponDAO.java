@@ -4,7 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import mvc.dto.Coupon;
-import mvc.dto.Customer;
+import mvc.dto.IssuedCoupon;
 import mvc.exception.AddException;
 import mvc.exception.NotFoundException;
 
@@ -26,16 +26,21 @@ public interface CouponDAO {
 	 * @throws SQLException
 	 * @throws NotFoundException
 	 */
-	List<Coupon> selectCouponByUserId(String userId) throws SQLException;
+	List<IssuedCoupon> selectCouponByUserId(String userId) throws SQLException;
 
 	/**
-	 * 쿠폰 코드에 대한 쿠폰 정보 검색
+	 * 관리자메뉴 - 쿠폰 코드에 대한 쿠폰 정보 검색
 	 * 
 	 * @param couponCode
 	 * @return
 	 * @throws SQLException
 	 */
-	Coupon selectCouponByCouponCode(String couponCode) throws SQLException;
+	List<Coupon> selectCouponByCouponCode(String couponCode) throws SQLException;
+
+	/**
+	 * 고객 - 쿠폰 코드에 대한 쿠폰 정보 검색
+	 */
+	List<IssuedCoupon> selectCouponByCouponCodeByGuest(String userId) throws SQLException;
 
 	/**
 	 * 쿠폰등록
@@ -58,6 +63,7 @@ public interface CouponDAO {
 
 	/**
 	 * 가입쿠폰발행
+	 * 
 	 * @param userId
 	 * @return
 	 * @throws SQLException

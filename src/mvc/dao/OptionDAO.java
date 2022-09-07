@@ -24,7 +24,7 @@ public interface OptionDAO {
 	 * @return Option
 	 * @throws SQLException
 	 */
-	Option selectOptionByOptionCode(String optionCode) throws SQLException;
+	List<Option> optionSelectByOptionCode(String optionCode) throws SQLException;
 
 	/**
 	 * 상품코드에 대한 옵션정보 검색
@@ -33,7 +33,7 @@ public interface OptionDAO {
 	 * @return Option
 	 * @throws SQLException
 	 */
-	Option selectOptionByProductCode(String productCode) throws SQLException;
+	List<Option> selectOptionByProductCode(String productCode) throws SQLException;
 
 	/**
 	 * 옵션추가
