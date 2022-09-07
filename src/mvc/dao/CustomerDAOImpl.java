@@ -159,7 +159,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 	 * 마이페이지 회원정보 조회
 	 * */
 	@Override
-	public Customer searchCustomer(String userId, String userPw) throws SQLException {
+	public Customer selectCustomer(String userId, String userPw) throws SQLException {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -222,7 +222,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 	 * ID 찾기
 	 * */
 	@Override
-	public String searchID(String userName, String userPhoneNo) throws SQLException {
+	public String selectID(String userName, String userPhoneNo) throws SQLException {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -248,7 +248,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 	 * 비밀번호 찾기
 	 * */
 	@Override
-	public String searchPw(String userId, String userPhoneNo) throws SQLException {
+	public String selectPw(String userId, String userPhoneNo) throws SQLException {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
