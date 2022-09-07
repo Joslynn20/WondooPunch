@@ -5,12 +5,12 @@ import java.util.List;
 
 public class Orders {
 	
-	private int orderNo; //pk
-	private int orderTotalPrice;
-	private int orderTotalQty;
-	private String orderDate;
-	private String userId; // fk
-	private String couponCode; // fk
+	private int orderNo; //주문정보
+	private int orderTotalPrice; //총 구매금액
+	private int orderTotalQty; //총 구매수량
+	private String orderDate; //주문일
+	private String userId; //회원 ID
+	private String couponCode; //발행쿠폰코드
 	
 	private List<OrderLine> orderLinelist = new ArrayList<OrderLine>();
 	

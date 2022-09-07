@@ -8,28 +8,46 @@ import mvc.exception.AddException;
 import mvc.exception.NotFoundException;
 
 public interface OrderService {
-	
+
 	/**
 	 * 주문하기
-	 * */
-	public void insertOrder(Orders order) throws SQLException, AddException, NotFoundException;
-	
-	
-	/**
-	 * 퀵오더
-	 * */
-	public List<Orders> QuickOrder(String userId) throws SQLException, AddException, NotFoundException;
-	
+	 * 
+	 * @param order
+	 * @throws SQLException
+	 * @throws AddException
+	 * @throws NotFoundException
+	 */
+	void insertOrder(Orders order) throws SQLException, AddException, NotFoundException;
+
 	/**
 	 * 주문 내역 보기 - 고객
-	 * */
-	public List<Orders> selectOrdersByUserId(String userId) throws SQLException, NotFoundException;
-	
+	 * 
+	 * @param userId
+	 * @return
+	 * @throws SQLException
+	 * @throws NotFoundException
+	 */
+
+	List<Orders> selectOrdersByUserId(String userId) throws SQLException, NotFoundException;
+
+	/**
+	 * 퀵오더
+	 * 
+	 * @param userId
+	 * @return
+	 * @throws SQLException
+	 * @throws AddException
+	 * @throws NotFoundException
+	 */
+	List<Orders> selectQuickOrder(String userId) throws SQLException, AddException, NotFoundException;
+
 	/**
 	 * 주문 내역 보기 - 관리자
-	 * */
-	public List<Orders> selectAllOrders() throws SQLException, NotFoundException;
-		
-	
+	 * 
+	 * @return
+	 * @throws SQLException
+	 * @throws NotFoundException
+	 */
+	List<Orders> selectAllOrders() throws SQLException, NotFoundException;
 
 }

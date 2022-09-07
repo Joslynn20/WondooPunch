@@ -10,33 +10,80 @@ import mvc.exception.NotFoundException;
 
 public interface ProductService {
 
+	/**
+	 * 전체 상품 조회
+	 * 
+	 * @return
+	 * @throws SQLException
+	 * @throws NotFoundException
+	 */
+	List<Product> selectAllProduct() throws SQLException, NotFoundException;
 
+	/**
+	 * 카테고리별 상품조회
+	 * 
+	 * @param categoryName
+	 * @return
+	 * @throws SQLException
+	 * @throws NotFoundException
+	 */
+	List<Product> selectProductByCategoryName(String categoryName) throws SQLException, NotFoundException;
 
-	List<Product> productSelectAll() throws SQLException ,NotFoundException; 
+	/**
+	 * 키워드로 상품 검색
+	 * 
+	 * @param keyword
+	 * @return
+	 * @throws SQLException
+	 * @throws NotFoundException
+	 */
+	List<Product> selectProductByKeyword(String keyword) throws SQLException, NotFoundException;
 
-   
-	
-	List<Product> productSelectBycategoryName (String categoryName )throws SQLException ,NotFoundException;
+	/**
+	 * 상품명으로 상품 검색
+	 * 
+	 * @param productName
+	 * @return
+	 * @throws SQLException
+	 * @throws NotFoundException
+	 */
+	Product selectProductByProductName(String productName) throws SQLException, NotFoundException;
 
+	/**
+	 * 상품 코드로 상품 검색
+	 * 
+	 * @param productCode
+	 * @return
+	 * @throws SQLException
+	 * @throws NotFoundException
+	 */
+	Product selectProductByProductCode(String productCode) throws SQLException, NotFoundException;
 
-	
-	List<Product> productSelectBykeyword(String keyword) throws SQLException,NotFoundException;
-	
-   
-	 Product productSelectByproductName(String productName) throws SQLException,NotFoundException;
-	
+	/**
+	 * 상품 등록
+	 * 
+	 * @param product
+	 * @throws SQLException
+	 * @throws AddException
+	 */
+	void insertProduct(Product product) throws SQLException, AddException;
 
-	 Product productSelectByproductCode (String productCode) throws SQLException,NotFoundException;
+	/**
+	 * 상품 삭제
+	 * 
+	 * @param productCode
+	 * @throws SQLException
+	 * @throws NotFoundException
+	 */
+	void deleteProduct(String productCode) throws SQLException, NotFoundException;
 
-
-	 public  void productInsert(Product  product) throws SQLException ,AddException ;
-
-
-	 public void  productDelete(String  productCode) throws SQLException,NotFoundException;
-
-	 public  void productUpdate( Product product ) throws SQLException ,ModifyException ; 
-
-
-
+	/**
+	 * 상품 수정
+	 * 
+	 * @param product
+	 * @throws SQLException
+	 * @throws ModifyException
+	 */
+	void updateProduct(Product product) throws SQLException, ModifyException;
 
 }

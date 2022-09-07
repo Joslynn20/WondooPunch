@@ -9,38 +9,59 @@ import mvc.exception.AddException;
 import mvc.exception.NotFoundException;
 
 public interface CouponService {
-	
 
 	/**
-	 * 쿠폰목록
+	 * 관리자메뉴 - 쿠폰 전체 목록 조회
 	 * 
+	 * @return List<Coupon>
+	 * @throws SQLException
 	 * @throws NotFoundException
 	 */
-	List<Coupon> couponSelect() throws SQLException, NotFoundException;
-	
+	List<Coupon> selectAllCoupon() throws SQLException, NotFoundException;
+
 	/**
-	 * 쿠폰번호에 해당하는 옵션검색
-	 * */
-	Coupon couponSelectByCouponCode(String couponCode) throws NotFoundException, SQLException;
-	
-	
-	/**
-	 * 쿠폰등록
+	 * 고객 - 전체 발행쿠폰 목록 조회
 	 * 
+	 * @param userId
+	 * @return
+	 * @throws SQLException
+	 * @throws NotFoundException
+	 */
+	List<Coupon> selectCouponByUserId(String userId) throws SQLException, NotFoundException;
+
+	/**
+	 *  쿠폰 코드에 대한 쿠폰 정보 검색
+	 * @param couponCode
+	 * @return
+	 * @throws SQLException
+	 * @throws NotFoundException
+	 */
+	Coupon selectCouponByCouponCode(String couponCode) throws SQLException, NotFoundException;
+
+	/**
+	 *  쿠폰등록
+	 * @param coupon
+	 * @throws SQLException
 	 * @throws AddException
 	 */
-	void couponInsert(Coupon coupon) throws SQLException, AddException ;
+	void insertCoupon(Coupon coupon) throws SQLException, AddException;
+
 	/**
 	 * 쿠폰 삭제
-	 * @throws NotFoundException 
+	 * 
+	 * @param couponCode
+	 * @throws SQLException
+	 * @throws NotFoundException
 	 */
-	void couponDelete(String couponCode) throws SQLException, NotFoundException;
-		
-	/**
-	 * 가입쿠폰발행
-	 * */
-	void joinCoupon(Customer customer) throws SQLException, AddException;
+	void deletecoupon(String couponCode) throws SQLException, NotFoundException;
 
-	
-	
+	/**
+	 * 가입쿠폰 발행
+	 * 
+	 * @param userId
+	 * @throws SQLException
+	 * @throws AddException
+	 */
+	void insertJoinCoupon(String userId) throws SQLException, AddException;
+
 } // CouponService end

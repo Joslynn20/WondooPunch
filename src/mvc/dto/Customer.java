@@ -1,40 +1,37 @@
 package mvc.dto;
 
 public class Customer {
-	
-	private String userId;
-	private String userPw;
-	private String userName;
-	private String userBirth;
-	private String userPhoneNo;
-	private String userRegDate;
-	
-	
+
+	private String userId; // 회원ID
+	private String userPw; // 회원비밀번호
+	private String userName; // 이름
+	private String userBirth; // 생년월일
+	private String userPhoneNo; // 전화번호
+	private String userRegDate; // 가입일
+
 	public Customer() {
-		
+
 	}
-	
+
 	/**
 	 * 고객 수정 생성자
-	 * */
-	
-	
+	 */
+
 	public Customer(String userId, String userPw, String userName, String userBirth, String userPhoneNo) {
 		this.userId = userId;
 		this.userPw = userPw;
 		this.userName = userName;
 		this.userBirth = userBirth;
 		this.userPhoneNo = userPhoneNo;
-		
+
 	}
 
 	public Customer(String userId, String userPw, String userName, String userBirth, String userPhoneNo,
 			String userRegDate) {
 		this(userId, userPw, userName, userBirth, userPhoneNo);
 		this.userRegDate = userRegDate;
-	}	
+	}
 
-	
 	public String getUserId() {
 		return userId;
 	}
@@ -109,18 +106,16 @@ public class Customer {
 
 	@Override
 	public boolean equals(Object obj) {
-		/*if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false; */
+		/*
+		 * if (this == obj) return true; if (obj == null) return false; if (getClass()
+		 * != obj.getClass()) return false;
+		 */
 		Customer other = (Customer) obj;
 		if (this.userId.equals(other.getUserId())) {
 			return true;
 		}
 		return false;
-		
+
 	}
 
 }

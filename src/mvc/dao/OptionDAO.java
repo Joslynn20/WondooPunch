@@ -3,8 +3,6 @@ package mvc.dao;
 import java.sql.SQLException;
 import java.util.List;
 
-import mvc.dto.CoffeeOption;
-import mvc.dto.DesertOption;
 import mvc.dto.Option;
 import mvc.exception.AddException;
 import mvc.exception.NotFoundException;
@@ -12,37 +10,57 @@ import mvc.exception.NotFoundException;
 public interface OptionDAO {
 	/**
 	 * 옵션 전체검색
+	 * 
+	 * @return List<Option> 옵션 리스트
+	 * @throws SQLException
+	 * @throws NotFoundException
 	 */
-	List<Option> optionSelect() throws SQLException, NotFoundException;
+	List<Option> selectAllOption() throws SQLException, NotFoundException;
 
 	/**
-	 * optionCode에 대한 정보검색
+	 * 옵션코드에 대한 옵션정보검색
+	 * 
+	 * @param optionCode
+	 * @return Option
+	 * @throws SQLException
 	 */
-	Option optionSelectByOptionCode(String optionCode) throws SQLException;
+	Option selectOptionByOptionCode(String optionCode) throws SQLException;
+
+	/**
+	 * 상품코드에 대한 옵션정보 검색
+	 * 
+	 * @param productCode
+	 * @return Option
+	 * @throws SQLException
+	 */
+	Option selectOptionByProductCode(String productCode) throws SQLException;
 
 	/**
 	 * 옵션추가
+	 * 
+	 * @param option
+	 * @return int
+	 * @throws SQLException
+	 * @throws AddException
 	 */
-	int optionInsert(Option option) throws SQLException, AddException;
+	int insertOption(Option option) throws SQLException, AddException;
 
 	/**
 	 * 옵션 수정
+	 * 
+	 * @param option
+	 * @return int
+	 * @throws SQLException
 	 */
-	int optionUpdate(Option option) throws SQLException;
+	int updateOption(Option option) throws SQLException;
 
 	/**
 	 * 옵션삭제
+	 * 
+	 * @param optionCode
+	 * @return int
+	 * @throws SQLException
 	 */
-	int optionDelete(String optionCode) throws SQLException;
-
-	/**
-	 * 고객 주문에서 커피옵션추가
-	 */
-	int orderCoffeeOption(CoffeeOption coffeeoption) throws SQLException, AddException;
-
-	/**
-	 * 고객 주문에서 디저트옵션추가
-	 */
-	int orderDesertOption(DesertOption desertoption) throws SQLException, AddException;
+	int deleteOption(String optionCode) throws SQLException;
 
 } // OptionDAO end

@@ -1,65 +1,57 @@
 package mvc.dto;
 
 public class Option {
-	private String optionCategory; // 옵션카테고리
 	private String optionCode; // 옵션코드
-	private String optionName;  // 옵션이름
+	private String optionName; // 옵션이름
 	private int optionPrice; // 옵션가격
-		
-	public Option() { }
+	private String productCode; // 상품코드
 
-	public Option(String optionCode, String optionName, int optionPrice, String optionCategory) {
+	public Option() {
+	}
+
+	public Option(String optionCode, String optionName, int optionPrice, String productCode) {
 		super();
-		this.optionCategory = optionCategory;
 		this.optionCode = optionCode;
 		this.optionName = optionName;
-		this.optionPrice = optionPrice;		
-	}	
-		
-	public String getOptionCategory() {
-		return optionCategory;
+		this.optionPrice = optionPrice;
+		this.productCode = productCode;
 	}
 
-	public void setOptionCategory(String optionCategory) {
-		this.optionCategory = optionCategory;
-	}
-
-	public String getOptionCode() {
+	String getOptionCode() {
 		return optionCode;
 	}
 
-	public void setOptionCode(String optionCode) {
+	void setOptionCode(String optionCode) {
 		this.optionCode = optionCode;
 	}
 
-	public String getOptionName() {
+	String getOptionName() {
 		return optionName;
 	}
 
-	public void setOptionName(String optionName) {
+	void setOptionName(String optionName) {
 		this.optionName = optionName;
 	}
 
-	public int getOptionPrice() {
+	int getOptionPrice() {
 		return optionPrice;
 	}
 
-	public void setOptionPrice(int optionPrice) {
+	void setOptionPrice(int optionPrice) {
 		this.optionPrice = optionPrice;
+	}
+
+	String getProductCode() {
+		return productCode;
+	}
+
+	void setProductCode(String productCode) {
+		this.productCode = productCode;
 	}
 
 	@Override
 	public String toString() {
-		return optionCode + " | " + optionName + " | " + optionPrice + " | " + optionCategory;
+		return optionCode + " | " + optionName + " | " + optionPrice + " | " + productCode;
 	}
-	 
+
 } // class end
-	
-	
-	
-
-	
-	
-	
-	
-
