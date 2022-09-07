@@ -32,51 +32,51 @@ public class OrderLine {
 		this.list = list;
 	}
 
-	int getOrderLineNo() {
+	public int getOrderLineNo() {
 		return orderLineNo;
 	}
 
-	void setOrderLineNo(int orderLineNo) {
+	public void setOrderLineNo(int orderLineNo) {
 		this.orderLineNo = orderLineNo;
 	}
 
-	int getOrderQty() {
+	public int getOrderQty() {
 		return orderQty;
 	}
 
-	void setOrderQty(int orderQty) {
+	public void setOrderQty(int orderQty) {
 		this.orderQty = orderQty;
 	}
 
-	int getOrderPrice() {
+	public int getOrderPrice() {
 		return orderPrice;
 	}
 
-	void setOrderPrice(int orderPrice) {
+	public void setOrderPrice(int orderPrice) {
 		this.orderPrice = orderPrice;
 	}
 
-	int getOrderNo() {
+	public int getOrderNo() {
 		return orderNo;
 	}
 
-	void setOrderNo(int orderNo) {
+	public void setOrderNo(int orderNo) {
 		this.orderNo = orderNo;
 	}
 
-	String getProductCode() {
+	public String getProductCode() {
 		return productCode;
 	}
 
-	void setProductCode(String productCode) {
+	public void setProductCode(String productCode) {
 		this.productCode = productCode;
 	}
 
-	List<DetailOption> getList() {
+	public List<DetailOption> getList() {
 		return list;
 	}
 
-	void setList(List<DetailOption> list) {
+	public void setList(List<DetailOption> list) {
 		this.list = list;
 	}
 
