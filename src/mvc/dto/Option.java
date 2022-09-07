@@ -9,24 +9,12 @@ public class Option {
 	public Option() {
 	}
 
-	/**
-	 * 옵션전체검색 & 옵션등록
-	 */
 	public Option(String optionCode, String optionName, int optionPrice, String productCode) {
 		super();
 		this.optionCode = optionCode;
 		this.optionName = optionName;
 		this.optionPrice = optionPrice;
 		this.productCode = productCode;
-	}
-
-	/**
-	 * 상품코드 & 옵션코드 검색으로 수정하기
-	 */
-	public Option(String optionCode, String optionName, int optionPrice) {
-		this.optionCode = optionCode;
-		this.optionName = optionName;
-		this.optionPrice = optionPrice;
 	}
 
 	public String getOptionCode() {
@@ -63,7 +51,7 @@ public class Option {
 
 	@Override
 	public String toString() {
-		return "옵션 목록 : " + optionCode + " | " + optionName + " | " + optionPrice + " | " + productCode;
+		return optionCode + " | " + optionName + " | " + optionPrice + " | " + productCode;
 	}
 
 } // class end
