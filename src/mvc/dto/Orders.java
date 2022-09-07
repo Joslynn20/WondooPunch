@@ -86,4 +86,25 @@ public class Orders {
 		this.orderLinelist = orderLinelist;
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("주문 [주문번호: ");
+		builder.append(orderNo);
+		builder.append(", 총 구매금액: ");
+		builder.append(orderTotalPrice);
+		builder.append(", 총 구매수량: ");
+		builder.append(orderTotalQty);
+		builder.append(", 구매일: ");
+		builder.append(orderDate);
+		builder.append(", 회원ID: ");
+		builder.append(userId);
+		builder.append(", 적용쿠폰코드: ");
+		builder.append(couponCode);
+		builder.append("]");
+		return builder.toString();
+	}
+	
+	
+
 }
