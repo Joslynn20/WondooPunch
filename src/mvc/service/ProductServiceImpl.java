@@ -16,9 +16,10 @@ public class ProductServiceImpl implements ProductService {
   	private ProductDAO productDAO  =  new ProductDAOImpl();
    
  	
-	
-	
-   	
+  	/**
+	 * 전체 상품 조회
+	 * 
+	 */
 	
 	@Override
 	public List<Product> selectAllProduct() throws SQLException, NotFoundException {
@@ -31,6 +32,11 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	
+	/**
+	 * 카테고리에 대한 상품조회
+	 * 
+	 */
+	
 	@Override
 	public List<Product> selectProductByCategoryName(String categoryName) throws SQLException, NotFoundException {
 	
@@ -41,6 +47,7 @@ public class ProductServiceImpl implements ProductService {
 		return list;
 	}
 
+	
 	@Override
 	public List<Product> selectProductByKeyword(String keyword) throws SQLException, NotFoundException {
 		
@@ -59,6 +66,13 @@ public class ProductServiceImpl implements ProductService {
 	
 	}
 
+	
+	/**
+	 * 키워드에 대한 상품조회
+	 * 
+	 */
+	
+	
 	@Override
 	public Product selectProductByProductCode(String productCode)throws SQLException, NotFoundException {
 		    
@@ -68,6 +82,11 @@ public class ProductServiceImpl implements ProductService {
 		return product;
 	}
 
+	/**
+	 *   상품추가
+	 * 
+	 */
+	
 	@Override
 	public void insertProduct(Product product) throws SQLException, AddException {
 		
@@ -79,6 +98,11 @@ public class ProductServiceImpl implements ProductService {
 	
 	}
 
+	/**
+	 *   상품삭제
+	 * 
+	 */
+	
 	@Override
 	public void deleteProduct(String productCode) throws SQLException, NotFoundException {
 	
@@ -88,6 +112,13 @@ public class ProductServiceImpl implements ProductService {
 	
 	}
 
+
+	/**
+	 *   상품수정
+	 * 
+	 */
+	
+	
 	@Override
 	public void updateProduct(Product product) throws SQLException, ModifyException {
 	
