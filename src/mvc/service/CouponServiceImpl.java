@@ -51,11 +51,11 @@ public class CouponServiceImpl implements CouponService {
 	/**
 	 * 관리자메뉴 - 쿠폰 코드에 대한 쿠폰 정보 검색
 	 */
-	public List<Coupon> selectCouponByCouponCodeByAdmin(String couponCode) throws NotFoundException, SQLException {
-		List<Coupon> list = coupondao.selectCouponByCouponCodeByAdmin(couponCode);
-		if (list.isEmpty() || list.size() == 0)
+	public Coupon selectCouponByCouponCodeByAdmin(String couponCode) throws NotFoundException, SQLException {
+		Coupon coupon = coupondao.selectCouponByCouponCodeByAdmin(couponCode);
+		if (coupon == null)
 			throw new NotFoundException("쿠폰목록이 없습니다");
-		return list;
+		return coupon;
 	}
 
 	/**
