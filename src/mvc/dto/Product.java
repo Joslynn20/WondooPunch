@@ -125,4 +125,22 @@ public class Product {
 		this.list = list;
 	}
 
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		 return "상품코드:"+productCode+"|상품이름:"+productName+"|상품가격:"+productPrice+""
+		 		+ "|상품설명:"+productDetail+"|상품 등록일:"+ productRegDate+"|카테고리 코드:"+categoryCode;		
+	
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 }

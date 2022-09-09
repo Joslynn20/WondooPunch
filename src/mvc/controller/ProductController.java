@@ -14,165 +14,152 @@ import mvc.view.FailView;
 public class ProductController {
          
 	   private static  ProductService productService =new ProductServiceImpl();
-	
-	   public  static void selectAllProduct() {
-		
-		  try {
+	 
+	   /**
+		 * 모든 상품 검색 
+		 *  
+		 * @param 
+		 *  
+		 */
+	     
+	   public  static void selectAllProduct() {		
+		  
+		 try {
+			 List<Product> list  =productService.selectAllProduct();      			 
 
-			 List<Product> list  =productService.selectAllProduct();
-                    
-			      
-			      
-			 
-		 }catch (SQLException e ) {
-			 
-			 e.printStackTrace();
-		 }catch(NotFoundException es) {
-			 
-			 FailView.errorMessage(es.getMessage());
-			 
-		 
-		 
+		 }catch (Exception e ) {		 
+			 FailView.errorMessage(e.getMessage());
 		 }
-		
-		
-	}
+	   
+	   }
 	
+	    
+	   /**
+		 * 카케고리 에 따른 상품을 조회
+		 * 
+		 * @param categoryName 
+		 */
+	    
 	   public  static void  selectProductByCategoryName(String categoryName){
 		    
 		   try {
 			   List<Product> list   = productService.selectProductByCategoryName(categoryName);
-		    
-			  
-		   
-		   }catch(SQLException e ) {
-			   
-			    e.printStackTrace();
-		   
-		   }catch( NotFoundException es) {
-			   
-			   FailView.errorMessage(es.getMessage());
-		  
-		   }   
-	   
+		     
+		   }catch (Exception e ) {		 
+				 FailView.errorMessage(e.getMessage());
+		  }
+	    
 	   }
+	  
 	   
+	   /**
+		 *  키워드로 상품을 조회
+		 * 
+		 * @param  keyword
+		 */
 	   
 	   public static void  selectProductByKeyword(String keyword) {
 		    try {
 		      List<Product>  list   = productService.selectProductByKeyword(keyword);
-	    
 		      
-		    }catch( SQLException e ) {
-		    	
-		    	e.printStackTrace();
-		    }catch( NotFoundException es) {
-		    	
-		    	FailView.errorMessage(es.getMessage());
-		    }
-	   
+		    }catch (Exception e ) {		 
+				 FailView.errorMessage(e.getMessage());
+		  }
 	   
 	   }
 	
+	   
+	   
+	   /**
+		 *  상픔의 이름으로 상품을 조회
+		 * 
+		 * @param  productName
+		 */
+	   
 	   public static void  selectProductByProductName(String productName){
 		   
 		    try {
 		      Product product  = productService.selectProductByProductName(productName);
 	   
-		    }catch(SQLException e ) {
-		    	
-		    	e.printStackTrace();
-		    }catch(NotFoundException es) {
-		    	 
-		    	FailView.errorMessage(es.getMessage()); 
-		    	
-		    }
+		     }catch (Exception e ) {		 
+				 FailView.errorMessage(e.getMessage());
+		  }
 	   
+	    }
+	 
 	   
-	   }
-	
+	   /**
+		 *  상픔을 등록
+		 * 
+		 * @param  product
+		 */
 	   
 	   public static void insertProduct(Product product)  {
 		
-        try { 
-		    productService.insertProduct(product);
-	     
-        }catch(SQLException e ) {
-        	 e.printStackTrace();
-        	
-        	
-        }catch(AddException es ) {
-        	
-        	FailView.errorMessage(es.getMessage());
-        }
+          try { 
+		    productService.insertProduct(product);    
+          }catch (Exception e ) {		 
+				 FailView.errorMessage(e.getMessage());
+		  }
 	  
-	
-	} 
+          
+	    } 
+	      
 	   
+	   /**
+		 *  상픔을 삭제
+		 * 
+		 * @param  productName
+		 */
 	   
 	   public static void deleteProduct(String productCode) {
-		        try {
-		                productService.deleteProduct(productCode);
+		        
+		    try {      
+		        productService.deleteProduct(productCode);
+		        
+		     }catch (Exception e ) {		 
+				 FailView.errorMessage(e.getMessage());
+		  }
 	   
-		        }catch(SQLException e) {
-		        	
-		        	e.printStackTrace();
-		        }catch(NotFoundException es ) {
-		        	
-		        	FailView.errorMessage(es.getMessage());
-		        }
-	   
-	   
-	   
+   
 	   }
 	    
 	   
-	  
+	   
+	    /**
+		 *  상픔을 삭제
+		 * 
+		 * @param  productName
+		 */
 	   public static void updateProduct( Product product) {
 		   
 		    try {
 		    
 		    	productService.updateProduct(product);
 		    	
-		    }catch(SQLException e  ) {
-		    	
-		           e.printStackTrace();	
-		    }catch( ModifyException es ) {
-		    	
-		    	FailView.errorMessage(es.getMessage());
-		    }
-		   
+		    }catch (Exception e ) {		 
+				 FailView.errorMessage(e.getMessage());
+		  }
 	   
 	   
 	   
 	   }
 	
-	   
+	   /**
+		 *  상픔을 코드로 검색
+		 * 
+		 * @param  productName
+		 */
 	   
 	   
 	   public static void selectProductByproductCode(String productCode) {
 		   
-		   
-		   try {
-			    
-			    
-			   Product product  =productService.selectProductByProductCode(productCode);
-			    
-			   
-		   }catch(SQLException e) {
-			   
-			   e.printStackTrace();
-			   
-		   }catch(NotFoundException es) {
-			   
-			   FailView.errorMessage(es.getMessage());
-			   
-			   
-		   }
-		   
-		   
-		   
-		   
+		  try {    
+			 Product product  =productService.selectProductByProductCode(productCode);   		   
+		   }catch (Exception e ) {		 
+				 FailView.errorMessage(e.getMessage());
+		  }
+		      
 	   }
 	   
 	   

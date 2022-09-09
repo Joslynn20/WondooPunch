@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import mvc.dto.Orders;
+import mvc.dto.Product;
 import mvc.exception.NotFoundException;
 import mvc.service.SalesService;
 import mvc.service.SalesServiceImpl;
@@ -11,150 +12,105 @@ import mvc.view.FailView;
 
 public class SalesController {
 
-	 private static SalesService salesService  =new SalesServiceImpl( ); 
+	  private static SalesService salesService  =new SalesServiceImpl( ); 
 	 
+	  
+	  /*
+	   * 해당하는 날짜에  판매 총액, 누적 주문 수량, 전체 주문 상품 갯수  
+	   * @param date
+	   * */
+	  
 	  public  static void selectSalesBydate(String date) {
-		  try {
-		 String result  =salesService.selectSalesBydate(date);
 		 
-		  
-	  }catch(SQLException e){
-		  
-		  
-		  e.printStackTrace();
-		  
-	  }catch(NotFoundException es ) {
-		  
-		  FailView.errorMessage(es.getMessage());
-		  
-	  }
+	   try {
+		 String result  =salesService.selectSalesBydate(date);  
+	   }catch(Exception e){
+		   FailView.errorMessage(e.getMessage());
+	   }
  
-  
-   }
+      }
 	   
-	   public static void selectSalesAll() {
+	  
+	  /*
+	   * 누적  판매 총액, 누적 주문 수량, 전체 주문 상품 갯수  
+	   * @param 
+	   * */	 
+	  
+	  public static void selectAllSales() {
 		   
-		   try {
-		  String result  =salesService.selectSalesAll();
-		   }catch(SQLException e) {
-			   
-			   e.printStackTrace();
-		   }catch(NotFoundException es) {
-			   FailView.errorMessage(es.getMessage());
-			   
+    	 try {
+	   	  String result  =salesService.selectAllSales();
+		  }catch(Exception e) {	   			 
+			FailView.errorMessage(e.getMessage());
+		  }
+	  
+	  }
+	  
+	  
+	  /*
+	   * 해당 날짜에 상품별 판매 수향 
+	   * @param date
+	   * */
+	  
+	   public static void  selectSalesRateBydate(String date) {
+		    
+		   try{ 
+			  List<String> list   =salesService.selectSalesRateBydate(date);
+		   }catch(Exception e){
+			   FailView.errorMessage(e.getMessage());
 		   }
 		   
-		   
-		   
-	   }
-	  
-	  
-	  
-	   public static void   selectSalesRateBydate(String date) {
-		    
-		   try{
-			   
-		    
-			  
-			   List<String> list   =salesService.selectSalesRateBydate(date);
-		   }catch(SQLException e ) {
-			   e.printStackTrace();
-			   
-			   
-		   }catch(NotFoundException es) {
-			   
-			   FailView.errorMessage(es.getMessage());
-		   }
-		   
+	   
 	   }
 	   
-	  public static void   selectSalesRankRateBydate(String date) {
-		  
-		  
+	    /*
+		 *   해당 날짜에 상품별 판매 순위 5위 까지
+		 * @param date
+		 * */
+	   
+	   public static void   selectSalesRankBydate(String date) {
+		    
 		  try{
-			   
-			    
-			  
-			   List<String> list   =salesService.selectSalesRankRateBydate(date);
-		   }catch(SQLException e ) {
-			   e.printStackTrace();
-			   
-			   
-		   }catch(NotFoundException es) {
-			   
-			   FailView.errorMessage(es.getMessage());
+			  List<Product> list   =salesService.selectSalesRankBydate(date);
+		   }catch(Exception e){
+			   FailView.errorMessage(e.getMessage());
 		   }
-		   
-	   }
+	  }
 		  
 		  
-		  
-	  public static void selectSalesRateByallDate() {
-		  
+	    /*
+		 *   누적 상품별 판매 
+		 * @param 
+		 * */
+	   
+	   public static void selectAllSalesRate() {
 		  
 		  try{
-			   
-			    
-			  
-			   List<String> list   =salesService.selectSalesRateByallDate();
-		   }catch(SQLException e ) {
-			   e.printStackTrace();
-			   
-			   
-		   }catch(NotFoundException es) {
-			   
-			   FailView.errorMessage(es.getMessage());
+			  List<String> list   =salesService.selectAllSalesRate();
+		   }catch(Exception e){
+			   FailView.errorMessage(e.getMessage());
 		   }
 		  
 		  
 	  }
 	   
-	  
-	  
-	  
-	  public static void  selectSalesRankRateByallDate() {
+	    /*
+		 *   누적 상품별 판매  순위 5위
+		 * @param 
+		 * */
+	   
+	  public static void  selectAllSalesRank() {
 		  
-		  
-		  try{
-			   
-			    
-			  
-			   List<String> list   =salesService.selectSalesRankRateByallDate();
-		   }catch(SQLException e ) {
-			   e.printStackTrace();
-			   
-			   
-		   }catch(NotFoundException es) {
-			   
-			   FailView.errorMessage(es.getMessage());
+		  try{  
+			   List<Product> list   =salesService.selectAllSalesRank();
+		   }catch(Exception e){
+			   FailView.errorMessage(e.getMessage());
 		   }
-		  
-		  
-		  
-		  
+		 	  
 	  }
 	  
 	  
-	 public static void   selectAllOrders() {
-		 
-		 
-
-		  try{
-			   
-			  
-			   List<Orders> list   =salesService.selectAllOrders();
-		   }catch(SQLException e ) {
-			   e.printStackTrace();
-			   
-			   
-		   }catch(NotFoundException es) {
-			   
-			   FailView.errorMessage(es.getMessage());
-		   }
-		 
-		 
-		 
-	 }
+	
 	  
 	  
 	  
