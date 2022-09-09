@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import mvc.dto.Cart;
+import mvc.dto.DetailOption;
 import mvc.exception.AddException;
 import mvc.exception.NotFoundException;
 
@@ -17,7 +18,7 @@ public interface CartDAO {
 	 * @throws AddException
 	 * @throws NotFoundException
 	 */
-	int insertCart(Cart cart) throws SQLException, AddException, NotFoundException;
+	int insertCart(Cart cart, List<DetailOption> list) throws AddException, SQLException, NotFoundException;
 
 	/**
 	 *  장바구니 조회
@@ -34,7 +35,7 @@ public interface CartDAO {
 	 * @return int
 	 * @throws SQLException
 	 */
-	int updateCart(int cartNo, int cartQty) throws SQLException;
+	int updateCart(Cart cart) throws SQLException;
 
 	/**
 	 *  카트번호로 장바구니 삭제
