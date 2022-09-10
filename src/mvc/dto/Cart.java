@@ -10,40 +10,38 @@ public class Cart {
 	private int cartPrice; // 장바구니에 담긴 상품 가격
 	private String productCode; // 상품 코드
 	private String userId; // 회원ID
-	private String productName;
-	private int productPrice;
 
 	List<DetailOption> list = new ArrayList<DetailOption>(); // 장바구니 상세 옵션
-	DetailOption detailOption = new DetailOption();
+	DetailOption detailOption;
 
 	public Cart() {
 
 	}
 
-	// 장바구니 담기
 	public Cart(int cartNo, int cartQty, int cartPrice, String productCode, String userId, List<DetailOption> list) {
+		super();
 		this.cartNo = cartNo;
 		this.cartQty = cartQty;
 		this.cartPrice = cartPrice;
 		this.productCode = productCode;
 		this.userId = userId;
 		this.list = list;
-
 	}
 
-	// 장바구니 조회
-		public Cart(int cartNo, String productName, int cartQty, int productPrice, int cartPrice) {
+	public Cart(int cartNo, int cartQty, int cartPrice, String productCode, String userId) {
 		this.cartNo = cartNo;
-		this.productName = productName;
 		this.cartQty = cartQty;
-		this.productPrice = productPrice;
 		this.cartPrice = cartPrice;
+		this.productCode = productCode;
+		this.userId = userId;
 	}
-			
-		
-	
 
-	// getter, setter
+	public Cart(int cartNo, int cartQty, int cartPrice, String productCode, String userId, List<DetailOption> list,
+			DetailOption detailOption) {
+		this(cartNo, cartQty, cartPrice, productCode, userId, list);
+		this.detailOption = detailOption;
+	}
+
 	public int getCartNo() {
 		return cartNo;
 	}
@@ -92,22 +90,6 @@ public class Cart {
 		this.list = list;
 	}
 
-	public String getProductName() {
-		return productName;
-	}
-
-	public void setProductName(String productName) {
-		this.productName = productName;
-	}
-
-	public int getProductPrice() {
-		return productPrice;
-	}
-
-	public void setProductPrice(int productPrice) {
-		this.productPrice = productPrice;
-	}
-
 	public DetailOption getDetailOption() {
 		return detailOption;
 	}
@@ -115,4 +97,5 @@ public class Cart {
 	public void setDetailOption(DetailOption detailOption) {
 		this.detailOption = detailOption;
 	}
+
 }

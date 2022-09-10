@@ -4,12 +4,13 @@ import java.sql.SQLException;
 import java.util.List;
 
 import mvc.dto.Cart;
-import mvc.dto.DetailOption;
 import mvc.exception.AddException;
 import mvc.exception.NotFoundException;
 
 public interface CartService {
-
+	
+	
+	
 	/**
 	 *  장바구니 등록
 	 * @param cart
@@ -17,7 +18,7 @@ public interface CartService {
 	 * @throws AddException
 	 * @throws NotFoundException
 	 */
-	 void insertCart(Cart cart, List<DetailOption> list) throws AddException, SQLException, NotFoundException;
+	void insertCart(Cart cart) throws SQLException, AddException, NotFoundException;
 
 	/**
 	 * 장바구니 조회
@@ -53,5 +54,5 @@ public interface CartService {
 	 * @throws NotFoundException
 	 */
 	void deleteCartByUserId(String userId) throws SQLException, NotFoundException;
-
+	
 }
