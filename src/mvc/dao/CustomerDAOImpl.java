@@ -45,7 +45,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 		Connection con = null;
 		PreparedStatement ps = null;
 		int result = 0;
-		String sql = "insert into member values( ?, ?, ?, ?, ?, SYSDATE)";
+		String sql = "insert into member values( ?, ?, ?, TO_DATE(?), ?, SYSDATE)";
 		
 		try {
 			

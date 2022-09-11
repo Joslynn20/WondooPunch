@@ -49,7 +49,7 @@ public class CustomerServiceImpl implements CustomerService {
 	 * 회원 탈퇴
 	 */
 	@Override
-	public void delete(String userId, String userPw) throws NotFoundException, SQLException {
+	public void deleteCustomer(String userId, String userPw) throws NotFoundException, SQLException {
 		int result = customerDao.deleteCustomer(userId, userPw);
 		if (result == 0)
 			throw new NotFoundException("비밀번호 입력 오류로 회원탈퇴에 실패했습니다.");
@@ -60,8 +60,8 @@ public class CustomerServiceImpl implements CustomerService {
 	 * 마이페이지 회원정보 조회
 	 */
 	@Override
-	public Customer searchCustomer(String userId, String userPw) throws NotFoundException, SQLException {
-		Customer customer = customerDao.searchCustomer(userId, userPw);
+	public Customer selectCustomer(String userId, String userPw) throws NotFoundException, SQLException {
+		Customer customer = customerDao.selectCustomer(userId, userPw);
 		if (customer == null)
 			throw new NotFoundException("비밀번호 입력 오류로 회원정보 조회에 실패했습니다.");
 		return customer;
@@ -82,8 +82,8 @@ public class CustomerServiceImpl implements CustomerService {
 	 * ID 찾기
 	 */
 	@Override
-	public String searchID(String userName, String userPhoneNo) throws NotFoundException, SQLException {
-		String userId = customerDao.searchID(userName, userPhoneNo);
+	public String selectID(String userName, String userPhoneNo) throws NotFoundException, SQLException {
+		String userId = customerDao.selectID(userName, userPhoneNo);
 		if (userId == null) {
 			throw new NotFoundException("입력하신 회원 정보에 해당하는 회원 ID가 존재하지 않습니다.");
 		}
@@ -94,8 +94,8 @@ public class CustomerServiceImpl implements CustomerService {
 	 * 비밀번호 찾기
 	 */
 	@Override
-	public String searchPw(String userId, String userPhoneNo) throws NotFoundException, SQLException {
-		String userPw = customerDao.searchPw(userId, userPhoneNo);
+	public String selectPw(String userId, String userPhoneNo) throws NotFoundException, SQLException {
+		String userPw = customerDao.selectPw(userId, userPhoneNo);
 		if (userPw == null) {
 			throw new NotFoundException("입력하신 회원 정보가 존재하지 않습니다.");
 		}

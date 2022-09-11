@@ -16,8 +16,9 @@ public class ProductDAOImpl implements ProductDAO {
 		// TODO Auto-generated constructor stub
 	}
  
-	
-	
+	/**
+	 * 전체 상품 조회
+	 */
 	@Override
 	public List<Product> selectAllProduct() throws SQLException {
 		// TODO Auto-generated method stub
@@ -82,7 +83,12 @@ public class ProductDAOImpl implements ProductDAO {
 	 }
 	
 	 
-	    ////버전1 정석 버전
+	    
+	   /**
+		 * 카테고리별 상품조회
+		 * 1)getCategoryCode  먼저 실행됨 
+		 */
+		
 		 public List<Product> selectProductByCategoryName(String categoryName)throws SQLException {
 				// TODO Auto-generated method stub
 				
@@ -130,8 +136,11 @@ public class ProductDAOImpl implements ProductDAO {
 	  
 		  
 		
-	
-	
+		 /**
+	       * 키워드에 따른 상품조회
+		   *
+		   */
+		
 	@Override
 	public List<Product> selectProductByKeyword (String keyword) throws SQLException  {
 		// TODO Auto-generated method stub
@@ -167,7 +176,12 @@ public class ProductDAOImpl implements ProductDAO {
 	 }
  
 	
-	 //수정했어요  !!
+	 
+	
+	 /**
+     * 상품이름에 따른 상품조회
+	 *
+	 */
 	@Override
 	public Product  selectProductByProductName(String productName)throws SQLException {
 		// TODO Auto-generated method stub
@@ -201,6 +215,11 @@ public class ProductDAOImpl implements ProductDAO {
 		
 	}
 
+	/**
+     * 상품코드에 따른 상품조회
+	 *
+	 */
+	
 	@Override
 	public Product selectProductByProductCode(String productCode) throws SQLException {
 		// TODO Auto-generated method stub

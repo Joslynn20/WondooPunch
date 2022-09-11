@@ -12,13 +12,18 @@ import mvc.dto.Product;
 
 public class SalesDAOImpl implements SalesDAO {
 
+	
+	
 	public SalesDAOImpl() {
 		// TODO Auto-generated constructor stub
 	}
-
-	/* 
-	 *  해당하는 날짜에 대한 , 판매 총액 ,주문 완료건수 ,  주문 상품 수량
-	 * */ 
+	
+	
+	/*
+	 *  해당날에  총판매액 , 주문  완료건수 , 주문 상품 총량
+	 *  
+	 * */
+	
 	public String selectSalesBydate(String date) throws SQLException {
 		// TODO Auto-generated method stub
 	 
@@ -28,14 +33,14 @@ public class SalesDAOImpl implements SalesDAO {
 	    String sales=null;
 		String sql="SELECT  SUM(ORDER_TOTAL_PRICE),COUNT(ORDER_NO), SUM(ORDER_TOTAL_QTY) \r\n"
 				+ "  FROM ORDERS \r\n"
-				+ "  WHERE TO_CHAR(ORDER_DATE,'YYYY-MM-DD')=?";
+				+ "  WHERE TRUNC(ORDER_DATE) = TO_DATE(?)";
 		try {
 		       con=DbUtil.getConnection();
 			   ps=con.prepareStatement(sql);
 			   ps.setString(1, date);
 			   rs=ps.executeQuery();
 			   if(rs.next()) {
-		         sales= date+"|| 1.일 매출 총액="+rs.getInt(1)+",  2.주문 완료 건수="+rs.getInt(2)+", 3.전체 주문 수량="+rs.getInt(3);		   
+		         sales= date+"|| 1.일 매출 총액="+rs.getInt("SUM(ORDER_TOTAL_PRICE)")+",  2.주문 완료 건수="+rs.getInt("COUNT(ORDER_NO)")+", 3.전체 주문 수량="+rs.getInt("SUM(ORDER_TOTAL_QTY)");		   
 				   
 			   }
 			   
@@ -50,11 +55,13 @@ public class SalesDAOImpl implements SalesDAO {
 		return sales;
 	}
 
-	/* 
-	 *   누적 판매 총액 , 누적 주문 완료건수 ,  누적 주문 상품 수량
-	 * */ 
 	
-
+	/*
+	 *  누적  총판매액 , 주문  완료건수 , 주문 상품 총량
+	 *  
+	 * */
+	
+	
 	public String selectAllSales() throws SQLException {
 		// TODO Auto-generated method stub
 		
@@ -88,11 +95,12 @@ public class SalesDAOImpl implements SalesDAO {
 		
 		
 		
-	/* 
-	 *   해당하는 날에 대한 상품별 판매 수량 
-	 * */ 
+	
 
-
+	/*
+	 *  해당날에 대한  상품별 판매 수량
+	 *  
+	 * */
 	public List<String> selectSalesRateBydate(String date) throws SQLException {
 		// TODO Auto-generated method stub
 	
@@ -100,11 +108,13 @@ public class SalesDAOImpl implements SalesDAO {
 		Connection  con =null;
 		PreparedStatement ps=null;
 		ResultSet rs =null;	 
-		String sql =" SELECT ROW_NUMBER() OVER( ORDER BY SUM(OD_QTY) DESC ) AS RANKS ,P_CODE ,SUM(OD_QTY)\r\n"
-				+ "                    FROM ORDERS JOIN ORDER_DETAIL\r\n"
-				+ "				    USING(ORDER_NO)\r\n"
-				+ "				    WHERE TO_CHAR (ORDER_DATE ,'YYYY-MM-DD')= ?\r\n"
-				+ "				    GROUP BY P_CODE";
+		String sql ="SELECT  CT_CODE, P_CODE,P_NAME, NVL(SUM(OD_QTY),0) AS TOATL_QTY   \r\n"
+				+ "         FROM \r\n"
+				+ "         (SELECT * FROM ORDERS WHERE TRUNC(ORDER_DATE)=TO_DATE(?) ) \r\n"
+				+ "          JOIN ORDER_DETAIL \r\n"
+				+ "          USING(ORDER_NO) RIGHT OUTER JOIN PRODUCT USING(P_CODE)   \r\n"
+				+ "          GROUP BY P_CODE,P_NAME,CT_CODE\r\n"
+				+ "          ORDER BY TOATL_QTY DESC";
 		
 		String result=null;
 		try {
@@ -112,8 +122,10 @@ public class SalesDAOImpl implements SalesDAO {
 			   ps=con.prepareStatement(sql);
 			   ps.setString(1, date);
 			   rs=ps.executeQuery();
+			   int count=1;
 			   while(rs.next()) {
-		         result= rs.getInt(1)+": 상품코드="+rs.getString(2)+", 주문 수량 합계="+rs.getInt(3);		   
+				 
+		         result=  (count++)+".카테고리 코드:"+rs.getString(1)+"  상품코드:"+rs.getString(2)+"   상품이름:"+rs.getString(3)+"상품 판매량:"+rs.getInt(4);   	   
 				 list.add(result);  
 		         
 			   }
@@ -129,28 +141,26 @@ public class SalesDAOImpl implements SalesDAO {
 		return list;
 	}
 
-	
-	/* 
-	 *   해당하는 날에 대한 상품별 판매 순위 상품 5위
-	 * */ 
-
+	/*
+	 *  해당날에 대한  상품 판매 순위 1-5위
+	 *  
+	 * */
 	public List<Product> selectSalesRankBydate(String date) throws SQLException {
 		// TODO Auto-generated method stub
 		List<Product> list = new ArrayList<Product>(); 
 		Connection  con =null;
 		PreparedStatement ps=null;
 		ResultSet rs =null;	 		
-	   String sql="SELECT * \r\n"
-	   		+ "  FROM PRODUCT\r\n"
-	   		+ "  WHERE P_CODE =ANY(\r\n"
-	   		+ "  SELECT P_CODE\r\n"
-	   		+ "  FROM(\r\n"
-	   		+ "  SELECT ROW_NUMBER() OVER (ORDER BY SUM(OD_QTY) DESC) AS RANKINGS , P_CODE\r\n"
-	   		+ "  FROM ORDER_DETAIL\r\n"
-	   		+ "  WHERE ORDER_NO  =ANY(SELECT ORDER_NO FROM ORDERS WHERE TO_CHAR(ORDER_DATE,'YYYY-MM-DD')=?)\r\n"
-	   		+ "  GROUP BY P_CODE\r\n"
-	   		+ "  ) WHERE RANKINGS<=5\r\n"
-	   		+ " )";
+	   String sql="SELECT * FROM PRODUCT \r\n"
+	   		+ "WHERE P_CODE=ANY(\r\n"
+	   		+ "SELECT P_CODE FROM ( \r\n"
+	   		+ "SELECT ROW_NUMBER() OVER( ORDER BY SUM(OD_QTY) DESC ) AS RANKINGS ,P_CODE\r\n"
+	   		+ "                     FROM ORDERS JOIN ORDER_DETAIL\r\n"
+	   		+ "                     USING(ORDER_NO)\r\n"
+	   		+ "                     GROUP BY TRUNC(ORDER_DATE),P_CODE\r\n"
+	   		+ "                     HAVING TRUNC(ORDER_DATE)  = TO_DATE(?)\r\n"
+	   		+ " )WHERE RANKINGS<=5)\r\n"
+	   		+ "";
 		   
 		 try {
 			     con =DbUtil.getConnection();
@@ -177,29 +187,31 @@ public class SalesDAOImpl implements SalesDAO {
 	
 	}
 
-	
-	/* 
-	 *   상품 누적 판매 량
-	 * */ 
-	
-	
+	/*
+	 *    상품별 누적 판매량
+	 *  
+	 * */
 	public List<String> selectAllSalesRate() throws SQLException {
 		// TODO Auto-generated method stub
 		List<String> list = new ArrayList<String>(); 
 		Connection  con =null;
 		PreparedStatement ps=null;
 		ResultSet rs =null;	 
-		String sql =" SELECT ROW_NUMBER() OVER( ORDER BY SUM(OD_QTY) DESC) AS RANKINGS , P_CODE ,SUM(OD_QTY)\r\n"
-				+ "   FROM ORDER_DETAIL\r\n"
-				+ "   GROUP BY P_CODE  ";
+		String sql =" SELECT CT_CODE, P_CODE,P_NAME,NVL(SUM(OD_QTY),0) AS TOTAL_QTY\r\n"
+				+ "FROM ORDER_DETAIL RIGHT OUTER JOIN PRODUCT\r\n"
+				+ "USING(P_CODE)\r\n"
+				+ "GROUP BY P_CODE,P_NAME,CT_CODE\r\n"
+				+ "ORDER BY TOTAL_QTY DESC \r\n"
+				+ "";
 		
 		String result=null;
 		try {
 		       con=DbUtil.getConnection();
 			   ps=con.prepareStatement(sql);
 			   rs=ps.executeQuery(); 
+			   int count=1;
 			   while(rs.next()) {
-		         result= rs.getInt(1)+" 상품코드="+rs.getString(2)+",  주문 수량 합계="+rs.getInt(3);		   
+				   result= (count++)+".카테고리 코드:"+rs.getString(1)+"  상품코드:"+rs.getString(2)+"   상품이름:"+rs.getString(3)+"상품 판매량:"+rs.getInt(4);
 				 list.add(result);  
 		         
 			   }
@@ -220,12 +232,10 @@ public class SalesDAOImpl implements SalesDAO {
 	
 	}
 
-	
-	/* 
-	 *   상품 누적 판매 순위 5위
-	 * */ 
-	
-	
+	/*
+	 *    누적 판매순위  1-5위 상품
+ 	 *  
+	 * */
 	public List<Product> selectAllSalesRank() throws SQLException {
 		// TODO Auto-generated method stub
 		List<Product> list = new ArrayList<Product>(); 
@@ -270,13 +280,12 @@ public class SalesDAOImpl implements SalesDAO {
 	}
 	
 	
+	 
+
 	
 	
 	
 	
-		
-		
-		
 	
 	
 

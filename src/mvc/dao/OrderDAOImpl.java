@@ -23,7 +23,10 @@ public class OrderDAOImpl implements OrderDAO {
 	CouponDAO couponDAO = new CouponDAOImpl();
 
 	/**
-	 * 주문하기 기능 1) Orders 테이블에 insert 2) Order_detail 테이블에 insert 3) 주문옵션 테이블에 insert
+	 * 주문하기 기능 
+	 * 1) Orders 테이블에 insert 
+	 * 2) Order_detail 테이블에 insert 
+	 * 3) 주문옵션 테이블에 insert
 	 */
 	@Override
 	public int insertOrder(Orders order) throws SQLException, AddException, NotFoundException {
@@ -46,26 +49,8 @@ public class OrderDAOImpl implements OrderDAO {
 			if (result != 1) {
 				con.rollback();
 				throw new AddException("주문을 등록할 수 없습니다.");
-			} else {
-				int[] orderLineResult = insertOrderLine(con, order);
-				for (int i : orderLineResult) {
-					if (i != 1) {
-						con.rollback();
-						throw new AddException("주문 상세를 등록할 수 없습니다.");
-					} else {
-						int[] optionResult = insertOrderOption(con, order);
-						for (int i1 : optionResult) { // 1이 아니면 주문 옵션 등록 실패 == 전체 rollback
-							if (i1 != 1) {
-								con.rollback();
-								throw new AddException("주문 옵션 등록 실패입니다.");
-							}
-						}
-					}
-
-				}
-
-				con.commit();
-			}
+			} else
+				insertOrderLine(con, order);
 
 		} finally {
 			con.commit();
@@ -86,20 +71,29 @@ public class OrderDAOImpl implements OrderDAO {
 		List<OrderLine> orderLineList = order.getOrderLinelist(); // 주문 상세 리스트
 
 		int totalPrice = 0; // 전체 총 구매가격
-		int optionTotalPrice = 0; // 옵션 총 가격
 		int dc = couponDAO.couponDC(order.getCouponCode()); // 쿠폰 할인율
 
 		for (OrderLine orderLine : orderLineList) { // 주문상세 리스트
 			String productCode = orderLine.getProductCode();
 			Product product = productDAO.selectProductByProductCode(productCode);
+			System.out.println(orderLine);
+			if (product == null)
+				throw new SQLException("잘못된 상품 코드입니다.");
 			int productPrice = orderLine.getOrderQty() * product.getProductPrice();
 
+			int optionTotalPrice = 0; // 옵션 총 가격
 			for (DetailOption detailOption : orderLine.getList()) { // 주문 상세 옵션 리스트
+				System.out.println(detailOption);
 				List<Option> optionList = optionDao.selectOptionByProductCode(productCode);
+				if (optionList == null || optionList.size() == 0)
+					throw new SQLException("잘못된 옵션 선택입니다.");
+
 				for (Option option : optionList) {
-					if (detailOption.getOptionCode().equals(option.getOptionCode())) { //주문상세옵션코드와 옵션테이블의 옵션코드 비교
-						
-						int optionPrice = option.getOptionPrice() * detailOption.getDetailOtionQty(); // 옵션가격*수량
+					if (detailOption.getOptionCode().equals(option.getOptionCode())) { // 주문상세옵션코드와 옵션테이블의 옵션코드 비교
+
+						int optionPrice = option.getOptionPrice() * detailOption.getDetailOtionQty()
+								* orderLine.getOrderQty(); // 옵션가격*수량
+
 						detailOption.setDetailOptionPrice(optionPrice); // 주문상세옵션에 옵션 가격 저장
 						optionTotalPrice += optionPrice;
 					}
@@ -107,6 +101,7 @@ public class OrderDAOImpl implements OrderDAO {
 			}
 
 			int orderPrice = productPrice + optionTotalPrice; // 주문상세 구매 가격
+
 			int dcPrice = orderPrice * dc / 100;
 			orderPrice -= dcPrice;
 
@@ -144,11 +139,11 @@ public class OrderDAOImpl implements OrderDAO {
 	 * @throws SQLException
 	 * @throws AddException
 	 */
-	private int[] insertOrderLine(Connection con, Orders order) throws SQLException, AddException {
+	private int insertOrderLine(Connection con, Orders order) throws SQLException, AddException {
 		PreparedStatement ps = null;
 		String sql = "insert into order_detail values(OD_NO_SEQ.NEXTVAL, ?, ?,  ORDER_NO_SEQ.CURRVAL, ?)";
 		// 리스트로 변경
-		int[] result = null;
+		int result = 0;
 
 		try {
 			ps = con.prepareStatement(sql);
@@ -157,10 +152,22 @@ public class OrderDAOImpl implements OrderDAO {
 				ps.setInt(2, orderLine.getOrderPrice()); // 구매 금액
 				ps.setString(3, orderLine.getProductCode()); // 상품코드
 
-				ps.addBatch();
-				ps.clearParameters();
-			}
-			result = ps.executeBatch();
+				result = ps.executeUpdate();
+
+				if (result != 1) {
+					con.rollback();
+					throw new AddException("주문 상세를 등록할 수 없습니다.");
+				}
+
+				int[] optionResult = insertOrderOption(con, orderLine);
+				for (int i1 : optionResult) { // 1이 아니면 주문 옵션 등록 실패 == 전체 rollback
+					if (i1 != 1) {
+						con.rollback();
+						throw new AddException("주문 옵션 등록 실패입니다.");
+					}
+				} // Inner for문
+
+			} // Outer for문
 
 		} finally {
 			DbUtil.dbClose(null, ps, null);
@@ -177,23 +184,21 @@ public class OrderDAOImpl implements OrderDAO {
 	 * @return int[] 실행 결과
 	 * @throws SQLException
 	 */
-	private int[] insertOrderOption(Connection con, Orders order) throws SQLException {
+	private int[] insertOrderOption(Connection con, OrderLine orderLine) throws SQLException {
 		PreparedStatement ps = null;
 		String detailOptionSql = "insert into order_option values (OO_NO_SEQ.NEXTVAL, OD_NO_SEQ.CURRVAL, ?, ?, ?)";
 		int result[] = null;
 
 		try {
 			ps = con.prepareStatement(detailOptionSql);
-			for (OrderLine orderLine : order.getOrderLinelist()) {
-				for (DetailOption detailOption : orderLine.getList()) {
+			for (DetailOption detailOption : orderLine.getList()) {
 
-					ps.setString(1, detailOption.getOptionCode()); // 옵션 코드
-					ps.setInt(2, detailOption.getDetailOtionQty()); // 옵션 수량
-					ps.setInt(3, detailOption.getDetailOptionNo()); // 옵션 금액
+				ps.setString(1, detailOption.getOptionCode()); // 옵션 코드
+				ps.setInt(2, detailOption.getDetailOtionQty()); // 옵션 수량
+				ps.setInt(3, detailOption.getDetailOptionPrice()); // 옵션 금액
 
-					ps.addBatch(); // 일괄처리할 작업에 추가
-					ps.clearParameters();
-				}
+				ps.addBatch(); // 일괄처리할 작업에 추가
+				ps.clearParameters();
 			}
 			result = ps.executeBatch(); // 일괄처리
 
@@ -212,7 +217,7 @@ public class OrderDAOImpl implements OrderDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		List<Orders> list = new ArrayList<Orders>();
-		String sql = "select * from orders where m_id = ? desc order_no";
+		String sql = "select * from orders where m_id = ? order by order_no desc";
 
 		try {
 			con = DbUtil.getConnection();
@@ -309,7 +314,7 @@ public class OrderDAOImpl implements OrderDAO {
 			con = DbUtil.getConnection();
 			ps = con.prepareStatement(Sql);
 			ps.setString(1, userId);
-			
+
 			rs = ps.executeQuery();
 
 			while (rs.next()) {

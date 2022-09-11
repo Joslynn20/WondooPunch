@@ -34,8 +34,7 @@ public class OrderController {
 	public static void QuickOrder(String userId) {
 		try {
 			List<Orders> list = orderService.selectQuickOrder(userId);
-			// EndView.printOrder(list);
-			// 주문하기 다시 호출
+			// EndView.QuickOrder(list);
 		} catch (Exception e) {
 			FailView.errorMessage(e.getMessage());
 		}
