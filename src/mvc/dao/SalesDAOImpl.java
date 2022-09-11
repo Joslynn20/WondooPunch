@@ -12,10 +12,11 @@ import mvc.dto.Product;
 
 public class SalesDAOImpl implements SalesDAO {
 
+	
+	
 	public SalesDAOImpl() {
 		// TODO Auto-generated constructor stub
 	}
-
 	
 	
 	/*
@@ -32,7 +33,7 @@ public class SalesDAOImpl implements SalesDAO {
 	    String sales=null;
 		String sql="SELECT  SUM(ORDER_TOTAL_PRICE),COUNT(ORDER_NO), SUM(ORDER_TOTAL_QTY) \r\n"
 				+ "  FROM ORDERS \r\n"
-				+ "  WHERE TO_CHAR(ORDER_DATE,'YYYY-MM-DD')=?";
+				+ "  WHERE TRUNC(ORDER_DATE) = TO_DATE(?)";
 		try {
 		       con=DbUtil.getConnection();
 			   ps=con.prepareStatement(sql);
@@ -107,14 +108,13 @@ public class SalesDAOImpl implements SalesDAO {
 		Connection  con =null;
 		PreparedStatement ps=null;
 		ResultSet rs =null;	 
-		String sql ="SELECT \r\n"
-				+ "   CT_CODE, P_CODE,P_NAME, NVL(SUM(OD_QTY),0) AS TOATL_QTY   \r\n"
-				+ "   FROM \r\n"
-				+ "   ( SELECT * FROM ORDERS WHERE TO_CHAR(ORDER_DATE,'YYYY-MM-DD')=?) \r\n"
-				+ "   JOIN ORDER_DETAIL \r\n"
-				+ "   USING(ORDER_NO) RIGHT OUTER JOIN PRODUCT USING(P_CODE)   \r\n"
-				+ "   GROUP BY P_CODE,P_NAME,CT_CODE\r\n"
-				+ "   ORDER BY TOATL_QTY DESC";
+		String sql ="SELECT  CT_CODE, P_CODE,P_NAME, NVL(SUM(OD_QTY),0) AS TOATL_QTY   \r\n"
+				+ "         FROM \r\n"
+				+ "         (SELECT * FROM ORDERS WHERE TRUNC(ORDER_DATE)=TO_DATE(?) ) \r\n"
+				+ "          JOIN ORDER_DETAIL \r\n"
+				+ "          USING(ORDER_NO) RIGHT OUTER JOIN PRODUCT USING(P_CODE)   \r\n"
+				+ "          GROUP BY P_CODE,P_NAME,CT_CODE\r\n"
+				+ "          ORDER BY TOATL_QTY DESC";
 		
 		String result=null;
 		try {
@@ -278,6 +278,13 @@ public class SalesDAOImpl implements SalesDAO {
 	
 	
 	}
+	
+	
+	 
+
+	
+	
+	
 	
 	
 	
