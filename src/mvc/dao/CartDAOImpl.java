@@ -11,6 +11,9 @@ import java.util.List;
 import mvc.dbutil.DbUtil;
 import mvc.dto.Cart;
 import mvc.dto.DetailOption;
+import mvc.dto.Option;
+import mvc.dto.OrderLine;
+import mvc.dto.Product;
 import mvc.exception.AddException;
 import mvc.exception.NotFoundException;
 
@@ -36,41 +39,98 @@ public class CartDAOImpl implements CartDAO {
 			String sql = "INSERT INTO CART VALUES (CART_NO_SEQ.NEXTVAL,?, ?, ?, ?)";
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, cart.getCartQty());
-			ps.setInt(2, cart.getCartPrice());
+			ps.setInt(2, getCartPrice(cart));
 			ps.setString(3, cart.getProductCode());
 			ps.setString(4, cart.getUserId());
 			result = ps.executeUpdate();
 
 			if (result < 1) { // 1보다 작을 때
+				con.rollback();
 				throw new AddException("상품을 장바구니에 담을 수 없습니다.");
 			}
-
-			// CART OPTION INSERT
-			if (cart.getList() != null && cart.getList().size() > 0) {
-
-				for (int i = 0; i < cart.getList().size(); i++) {
-					cart.getList().get(i);
-					sql = "INSERT INTO CART_OPTION VALUES (COO_NO_SEQ.NEXTVAL, CART_NO_SEQ.CURRVAL, ?, ?, ?)";
-					ps = con.prepareStatement(sql);
-					ps.setString(1, cart.getList().get(i).getOptionCode());
-					ps.setInt(2, cart.getList().get(i).getDetailOtionQty());
-					ps.setInt(3, cart.getList().get(i).getDetailOptionPrice());
-					result += ps.executeUpdate();
+			int[] optionResult = insertCartOption(con, cart);
+			for (int i1 : optionResult) { // 1이 아니면 장바구니 옵션 등록 실패 == 전체 rollback
+				if (i1 != 1) {
+					con.rollback();
+					throw new AddException("장바구니 옵션 등록 실패입니다.");
 				}
-
 			}
-
-			con.commit();
-		} catch (Exception e) {
-			con.rollback();
-			throw new AddException("상품을 장바구니에 담을 수 없습니다.");
-
 		} finally {
+			con.commit();
 			DbUtil.dbClose(con, ps);
 		}
 
 		return result;
 
+	}
+
+	/**
+	 * 장바구니 가격 구하기
+	 * 
+	 * @param productCode
+	 * @return 장바구니 가격
+	 * @throws SQLException
+	 */
+	private int getCartPrice(Cart cart) throws SQLException {
+
+		int cartPrice = 0; // 장바구니에 담긴 상품 가격
+
+		String productCode = cart.getProductCode();
+		Product product = productDAO.selectProductByProductCode(productCode);
+		if (product == null)
+			throw new SQLException("잘못된 상품 코드입니다.");
+		int productPrice = cart.getCartQty() * product.getProductPrice();
+
+		int optionTotalPrice = 0; // 옵션 총 가격
+		for (DetailOption detailOption : cart.getList()) { // 주문 상세 옵션 리스트
+			List<Option> optionList = optionDao.selectOptionByProductCode(productCode);
+			if (optionList == null || optionList.size() == 0)
+				throw new SQLException("잘못된 상품 코드입니다.");
+
+			for (Option option : optionList) {
+				if (detailOption.getOptionCode().equals(option.getOptionCode())) { // 주문상세옵션코드와 옵션테이블의 옵션코드 비교
+
+					int optionPrice = option.getOptionPrice() * detailOption.getDetailOtionQty() * cart.getCartQty(); // 옵션가격*옵션
+																														// 수량*제품
+																														// 수량
+
+					detailOption.setDetailOptionPrice(optionPrice); // 주문상세옵션에 옵션 가격 저장
+					optionTotalPrice += optionPrice;
+				}
+			}
+		}
+
+		cartPrice = productPrice + optionTotalPrice; // 주문상세 구매 가격
+
+		return cartPrice;
+
+	}
+
+	/**
+	 * 장바구니 상세 옵션 등록
+	 */
+	private int[] insertCartOption(Connection con, Cart cart) throws SQLException {
+		PreparedStatement ps = null;
+		String sql = "insert into cart_option values (COO_NO_SEQ.NEXTVAL, CART_NO_SEQ.CURRVAL, ?, ?, ?)";
+		int result[] = null;
+
+		try {
+			ps = con.prepareStatement(sql);
+			for (DetailOption detailOption : cart.getList()) {
+
+				ps.setString(1, detailOption.getOptionCode()); // 옵션 코드
+				ps.setInt(2, detailOption.getDetailOtionQty()); // 옵션 수량
+				ps.setInt(3, detailOption.getDetailOptionPrice()); // 옵션 금액
+
+				ps.addBatch();
+				ps.clearParameters();
+			}
+			result = ps.executeBatch();
+
+		} finally {
+			DbUtil.dbClose(null, ps);
+		}
+		return result;
 	}
 
 	/**
@@ -84,15 +144,7 @@ public class CartDAOImpl implements CartDAO {
 
 		Connection con = null;
 		PreparedStatement ps = null;
-		String sql = "select a.cart_no " + " , (select p_name from product where p_code = a.p_code) p_name "
-				+ "      , a.cart_qty "
-				// + " , (select p_price from product where p_code = a.p_code) * a.cart_qty AS
-				// p_price "
-				+ "      , (select p_price from product where p_code = a.p_code) p_price "
-				+ "      , (select p_price from product where p_code = a.p_code)* a.cart_qty+ b.co_qty * b.co_price as a.cart_price "
-				+ "      , b.co_code " + "      , (select o_name from OPTIONS  where o_code = b.co_code) o_name "
-				+ "      , b.co_qty " + "      , b.co_price " + "from CART a left outer join CART_OPTION b "
-				+ "  on a.cart_no = b.cart_no " + "  where m_id = ?";
+		String sql = "select * from cart where m_id = ?";
 
 		ResultSet rs = null;
 		List<Cart> list = new ArrayList<Cart>();
@@ -102,23 +154,15 @@ public class CartDAOImpl implements CartDAO {
 			ps = con.prepareStatement(sql); // 쿼리입력
 			ps.setString(1, userId); // 쿼리파라미터 입력
 			rs = ps.executeQuery();
+
 			while (rs.next()) {
 
-				Cart cart = new Cart(rs.getInt("cart_no"), rs.getInt("cart_qty"), rs.getInt("cart_price"),
-						rs.getString("p_code"), rs.getString("m_id"));
+				Cart cart = new Cart(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getString(4), rs.getString(5));
+				// 매핑된 데이터 리스트 추가
 
-				if (rs.getString("co_code") != null) {
-					DetailOption detailOption = new DetailOption(rs.getInt("coo_no"), rs.getInt("cart_no"), rs.getString("co_code"),
-							rs.getInt("co_qty"), rs.getInt("co_price"));
-					
-					cart.setDetailOption(detailOption);
-
-					// 매핑된 데이터 리스트 추가
-					list.add(cart);
-				}
+				cart.setList(selectCartOption(con, cart)); // 카트에 옵션 정보 넣기
+				list.add(cart);
 			}
-		} catch (Exception e) {
-			throw new NotFoundException("장바구니를 조회할 수 없습니다. ");
 
 		} finally {
 			DbUtil.dbClose(con, ps, rs);
@@ -126,6 +170,38 @@ public class CartDAOImpl implements CartDAO {
 		}
 
 		return list;
+	}
+
+	/**
+	 * 장바구니 옵션 가져오기
+	 * 
+	 * @param con
+	 * @param orderLine
+	 * @return
+	 * @throws SQLException
+	 */
+	private List<DetailOption> selectCartOption(Connection con, Cart cart) throws SQLException {
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		List<DetailOption> detailOption = new ArrayList<DetailOption>();
+		String sql = "select * from cart_option where CART_NO = ?";
+
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, cart.getCartNo());
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				DetailOption option = new DetailOption(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getInt(4),
+						rs.getInt(5));
+				detailOption.add(option);
+			}
+
+		} finally {
+			DbUtil.dbClose(null, ps, rs);
+		}
+
+		return detailOption;
 	}
 
 	/**
@@ -143,8 +219,8 @@ public class CartDAOImpl implements CartDAO {
 		Connection con = null;
 		PreparedStatement ps = null;
 
-		// 카트번호로 상품 가격을 가져온다.
-		String sql = "SELECT * FROM PRODUCT WHERE P_CODE = (select p_code from cart where cart_no = ?)";
+		// 카트번호로 장바구니 가격을 가져온다.
+		String sql = "SELECT * FROM CART WHERE CART_PRICE = (select CART_PRICE from cart where cart_no = ?)";
 		ResultSet rs = null;
 		Savepoint savepoint1 = null;
 		int result = 0;
@@ -152,36 +228,32 @@ public class CartDAOImpl implements CartDAO {
 			con = DbUtil.getConnection();
 			con.setAutoCommit(false);
 
-			savepoint1 = con.setSavepoint("Savepoint1");
-
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, cart.getCartNo());
 			rs = ps.executeQuery();
 
-			Integer productPrice = 0;
+			Integer cartPrice = 0;
 
 			while (rs.next()) {
-				productPrice = rs.getInt("P_PRICE");
+				cartPrice = rs.getInt("CART_PRICE");
 			}
 
 			sql = "UPDATE CART SET CART_QTY = ?, CART_PRICE = ?  WHERE CART_NO = ?"; // 카트번호 , 수량, 가격
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, cart.getCartQty());
-			ps.setInt(2, productPrice * cart.getCartQty());
+			ps.setInt(2, cartPrice * cart.getCartQty());
 			ps.setInt(3, cart.getCartNo());
 			result = ps.executeUpdate();
 
 			con.commit();
 
-		} catch (Exception e) {
-			System.out.println(e);
-			con.rollback(savepoint1);
 		} finally {
 			DbUtil.dbClose(con, ps, rs);
 		}
 
 		return result;
 	}
+
 
 	/**
 	 * 장바구니 개별 삭제 (카트 번호로 삭제)
@@ -197,16 +269,7 @@ public class CartDAOImpl implements CartDAO {
 			con = DbUtil.getConnection();
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, cartNo);
-			int rstCnt = ps.executeUpdate();
-
-			if (rstCnt < 0) {
-				throw new NotFoundException("해당 상품을 장바구니에서 삭제할 수 없습니다.");
-			}
-			if (rstCnt > 0) {
-
-				result = rstCnt;
-
-			}
+			result = ps.executeUpdate();
 
 		} finally {
 

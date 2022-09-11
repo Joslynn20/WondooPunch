@@ -12,7 +12,6 @@ public class Cart {
 	private String userId; // 회원ID
 
 	List<DetailOption> list = new ArrayList<DetailOption>(); // 장바구니 상세 옵션
-	DetailOption detailOption;
 
 	public Cart() {
 
@@ -34,12 +33,6 @@ public class Cart {
 		this.cartPrice = cartPrice;
 		this.productCode = productCode;
 		this.userId = userId;
-	}
-
-	public Cart(int cartNo, int cartQty, int cartPrice, String productCode, String userId, List<DetailOption> list,
-			DetailOption detailOption) {
-		this(cartNo, cartQty, cartPrice, productCode, userId, list);
-		this.detailOption = detailOption;
 	}
 
 	public int getCartNo() {
@@ -88,14 +81,6 @@ public class Cart {
 
 	public void setList(List<DetailOption> list) {
 		this.list = list;
-	}
-
-	public DetailOption getDetailOption() {
-		return detailOption;
-	}
-
-	public void setDetailOption(DetailOption detailOption) {
-		this.detailOption = detailOption;
 	}
 
 }

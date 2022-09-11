@@ -20,12 +20,12 @@ public class CartController {
 	 * @param cart
 	 */
 
-	public static void InsertCart(Cart cart) {
+	public static void insertCart(Cart cart) {
 
 		try {
 			cartService.insertCart(cart);
 
-			EndView.printMessage("장바구니에 담기에 성공했습니다.");
+			EndView.printMessage("상품을 장바구니에 성공적으로 담았습니다.");
 
 		} catch (Exception e) {
 			FailView.errorMessage(e.getMessage());
@@ -50,7 +50,7 @@ public class CartController {
 			}
 			System.out.println(userId + "님의 장바구니에 담긴 총 합계 금액은 : " + sum + "입니다.");
 
-			EndView.printMessage("장바구니 조회에 성공했습니다. ");
+			EndView.printMessage(userId + "님의 장바구니 조회에 성공했습니다. ");
 		} catch (Exception e) {
 
 			FailView.errorMessage(e.getMessage());
@@ -84,7 +84,7 @@ public class CartController {
 	 * @param cartNo
 	 */
 
-	public static void deleteByCartNo(int cartNo) {
+	public static void deleteCartByCartNo(int cartNo) {
 
 		try {
 			cartService.deleteCartByCartNo(cartNo);
