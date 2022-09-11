@@ -17,6 +17,13 @@ public class Cart {
 
 	}
 
+	public Cart(String userId, String productCode, int cartQty) {
+		super();
+		this.cartQty = cartQty;
+		this.productCode = productCode;
+		this.userId = userId;
+	}
+
 	public Cart(int cartNo, int cartQty, int cartPrice, String productCode, String userId, List<DetailOption> list) {
 		super();
 		this.cartNo = cartNo;
@@ -82,5 +89,24 @@ public class Cart {
 	public void setList(List<DetailOption> list) {
 		this.list = list;
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("장바구니 [장바구니번호: ");
+		builder.append(cartNo);
+		builder.append(", 회원ID: ");
+		builder.append(userId);
+		builder.append(", 상품코드: ");
+		builder.append(productCode);
+		builder.append(", 장바구니 수량: ");
+		builder.append(cartQty);
+		builder.append(", 장바구니 가격: ");
+		builder.append(cartPrice);
+		builder.append("]");
+		return builder.toString();
+	}
+	
+	
 
 }

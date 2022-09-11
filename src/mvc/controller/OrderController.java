@@ -34,7 +34,7 @@ public class OrderController {
 	public static void QuickOrder(String userId) {
 		try {
 			List<Orders> list = orderService.selectQuickOrder(userId);
-			// EndView.QuickOrder(list);
+			EndView.QuickOrder(list);
 		} catch (Exception e) {
 			FailView.errorMessage(e.getMessage());
 		}
@@ -49,7 +49,7 @@ public class OrderController {
 	public static void selectOrdersByUserId(String userId) {
 		try {
 			List<Orders> list = orderService.selectOrdersByUserId(userId);
-			// EndView.printOrder(list);
+			EndView.printOrder(list);
 		} catch (Exception e) {
 			FailView.errorMessage(e.getMessage());
 		}
@@ -62,11 +62,13 @@ public class OrderController {
 	public static void selectAllOrders() {
 		try {
 			List<Orders> list = orderService.selectAllOrders();
-			// EndView.printOrder(list);
+			EndView.printAllOrders(list);
 		} catch (Exception e) {
 			FailView.errorMessage(e.getMessage());
 		}
 
 	}
+	
+	
 
 }

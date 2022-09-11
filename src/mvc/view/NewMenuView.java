@@ -1,6 +1,7 @@
 package mvc.view;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -194,7 +195,7 @@ public class NewMenuView {
 						NewMenuView.printSalesVolume();
 						break;
 					case 3:// 주문조회 기능
-						SalesController.selectAllSales();
+						OrderController.selectAllOrders();
 						break;
 					}
 					break;
@@ -347,54 +348,48 @@ public class NewMenuView {
 
 		}
 	}
-	
-	
-	public static String getInputDate()  {
-		   Scanner sc = new Scanner(System.in);
-		   String date =null;
-       
-		   try { 
-		      System.out.print("년도 입력>");
-		      int year =Integer.parseInt(sc.nextLine());
-		      while(year<=2000) {
-		      System.out.println("2000년 이후의 네글자 년도 형태로 맞추어 주세요  ex)2020 ");    
-		      System.out.print("년도 입력>");
-		      year =Integer.parseInt(sc.nextLine());	     
-		       
-			  }
-			  
-			  System.out.print("월 입력>");
-			  int month = Integer.parseInt(sc.nextLine());
-			  while(month<=0 || month>12) {
-			  System.out.println("1과 12 사이에 월을 입력하세요" ); 
-			  System.out.print("월 입력>");
-			  month = Integer.parseInt(sc.nextLine());
-			  
-			  }
-			  System.out.print("일 입력>");
-		      int day= Integer.parseInt(sc.nextLine());	
-		      while(day<=0 || day>=32) {
-		    	System.out.println("1과 31 사이에 일을 입력하세요" );
-		    	System.out.print("일 입력>");
-		        day= Integer.parseInt(sc.nextLine());
-		        	
-		     }
-		      date=year+"-"+month+"-"+day;
-		      
-		     
-		   }catch(Exception e ) {
-			   System.out.println("잘못된 입력형식");
-			   getInputDate();
-				     
-		   }
-		   
 
-	   return date;   
-	 
-	 }
-	
-	
-	
+	public static String getInputDate() {
+		Scanner sc = new Scanner(System.in);
+		String date = null;
+
+		try {
+			System.out.print("년도 입력>");
+			int year = Integer.parseInt(sc.nextLine());
+			while (year <= 2000) {
+				System.out.println("2000년 이후의 네글자 년도 형태로 맞추어 주세요  ex)2020 ");
+				System.out.print("년도 입력>");
+				year = Integer.parseInt(sc.nextLine());
+
+			}
+
+			System.out.print("월 입력>");
+			int month = Integer.parseInt(sc.nextLine());
+			while (month <= 0 || month > 12) {
+				System.out.println("1과 12 사이에 월을 입력하세요");
+				System.out.print("월 입력>");
+				month = Integer.parseInt(sc.nextLine());
+
+			}
+			System.out.print("일 입력>");
+			int day = Integer.parseInt(sc.nextLine());
+			while (day <= 0 || day >= 32) {
+				System.out.println("1과 31 사이에 일을 입력하세요");
+				System.out.print("일 입력>");
+				day = Integer.parseInt(sc.nextLine());
+
+			}
+			date = year + "-" + month + "-" + day;
+
+		} catch (Exception e) {
+			System.out.println("잘못된 입력형식");
+			getInputDate();
+
+		}
+
+		return date;
+
+	}
 
 	/**
 	 * 매출조회단 이동 메소드
@@ -407,7 +402,7 @@ public class NewMenuView {
 			switch (menu) {
 			case 1:
 				// 1: 일 매출 총액, 전체 주문 완료 건수, 전체 주문 수량
-				String date   =getInputDate();
+				String date = getInputDate();
 				SalesController.selectSalesBydate(date);
 				break;
 			case 2:
@@ -434,7 +429,7 @@ public class NewMenuView {
 			switch (menu) {
 			case 1:
 				// 1: 일별 판매량: 제품별 일별 판매 수량, 제품별 일별 판매 순위 (5위)
-				String date   =getInputDate();
+				String date = getInputDate();
 
 				System.out.print("일별 판매순위 5위까지만 보시겠습니까? (yes or no) > ");
 				String answer = sc.nextLine();
@@ -542,11 +537,8 @@ public class NewMenuView {
 						break;
 					case 2:// 퀵오더
 						System.out.println("**** 최근 주문 내역 ****");
-						// OrderController.QuickOrder();
-						// 보경님과 상의.
-						System.out.print("주문선택 > ");
-						int choice = Integer.parseInt(sc.nextLine());
-						//NewMenuView.printPay(); // 결제하기 창으로 이동
+						OrderController.QuickOrder(userId);
+
 						break;
 					case 9:// 되돌아가기
 						break;
@@ -558,16 +550,24 @@ public class NewMenuView {
 					ch = Integer.parseInt(sc.nextLine());
 					switch (ch) {
 					case 1:// 장바구니 담기 ---->작성중
+
+						List<OrderLine> list = new ArrayList<OrderLine>();
 						while (true) {
-							NewMenuView.selectOrder();
-							System.out.println("1.  상품 추가하기  |  2. 결제하기  |  3. 장바구니 담기 취소");
+							Cart cart = NewMenuView.selectCart(userId);
+							OrderLine orderLine= new OrderLine(cart.getProductCode(), cart.getCartQty());
+							orderLine.setList(cart.getList());
+							list.add(orderLine);
+
+							System.out.println("1.  상품 추가하기  |  2. 결제하기  |  3. 되돌아가기");
 							System.out.print("입력 > ");
 							int choice = Integer.parseInt(sc.nextLine());
 							if (choice == 1) {
 								continue;
 							}
 							if (choice == 2) {
-								//NewMenuView.printPay();
+								Orders newOrder = new Orders(userId);
+								newOrder.setOrderLinelist(list);
+								NewMenuView.printPay(newOrder);
 							}
 							if (choice == 3) {
 								break;
@@ -575,19 +575,7 @@ public class NewMenuView {
 						}
 						break;
 					case 2:// 장바구니 조회하기
-						CartController.selectCart(userId); /// 오류
-						System.out.println("1. 결제하기    |    9. 되돌아가기");
-						try {
-							System.out.print("입력 > ");
-							int choice = Integer.parseInt(sc.nextLine());
-							if (choice == 1) {
-								//NewMenuView.printPay();
-							} else if (choice == 9) {
-								break;
-							}
-						} catch (NumberFormatException e) {
-							FailView.errorMessage("1, 9 중에서 선택하세요.");
-						}
+						CartController.selectCart(userId);
 						break;
 					case 3:// 장바구니 수정하기
 						CartController.selectCart(userId);
@@ -598,18 +586,17 @@ public class NewMenuView {
 						System.out.println("1. 수량 수정하기    |   2. 삭제하기");
 						System.out.print("입력 > ");
 						int cartQty = Integer.parseInt(sc.nextLine());
-
+					
 						if (cartQty == 1) { // ------------------> 인수로 cart받으면 관계없는쪽도 cart 생성하라고 해요 ㅠㅠ
-							// CartController.updateCart(); //보경님과 상의!!!
+							System.out.print("수량 수정 > ");
+							int modifyCartQty = Integer.parseInt(sc.nextLine());
 
-							// 요런 형식???
-							Cart updateCartRequest = new Cart();
-							updateCartRequest.setCartNo(Integer.valueOf(cartNo));
-							updateCartRequest.setCartQty(cartQty);
+							Cart updateCartRequest = new Cart(cartNo,modifyCartQty,0,null,null);
+							
 							CartController.updateCart(updateCartRequest);
 
 						} else if (cartQty == 2) {
-							CartController.deleteByCartNo(cartNo);
+							CartController.deleteCartByCartNo(cartNo);
 						}
 						break;
 					case 4:// 장바구니 비우기
@@ -671,7 +658,7 @@ public class NewMenuView {
 						break;
 					case 3:// 총주문내역
 						System.out.println("****** 총 주문내역 ******");
-						// OrderController.selectOrdersByUserId(); //보경님과 상의
+						OrderController.selectOrdersByUserId(userId); // 보경님과 상의
 						break;
 					case 4:// 쿠폰조회
 						System.out.println("****** 총 쿠폰내역 ******");
@@ -759,7 +746,7 @@ public class NewMenuView {
 			break;
 		}
 		if (no != 1 || no != 9) {
-			FailView.errorMessage("1과 9만 입력을 선택하세요.");
+			FailView.errorMessage("입력 양식을 다시 확인해주세요.");
 			NewMenuView.enterMenu();
 		}
 	}
@@ -786,7 +773,7 @@ public class NewMenuView {
 			if (usingCoupons.toUpperCase().equals("YES")) {
 				System.out.print("쿠폰코드 입력 > ");
 				String enterCouponCode = sc.nextLine();
-				//쿠폰 코드 오류 확인 
+				// 쿠폰 코드 오류 확인
 				System.out.print("결제하시겠습니까? Yes or No > ");
 				String answer = sc.nextLine();
 				if (answer.toUpperCase().equals("YES")) {
@@ -810,12 +797,7 @@ public class NewMenuView {
 		} catch (Exception e) {
 			FailView.errorMessage("입력 양식을 확인하세요");
 		}
-
 	}
-
-	// OrderController.insertOrder(order);
-
-	// 두영님과 상의
 
 	/**
 	 * 주문하기/장바구니 중복관련 기능 ////////////////////////////기능수정 필요함!!!!!
@@ -849,21 +831,18 @@ public class NewMenuView {
 		try {
 			String plus = sc.nextLine();
 			if (plus.toUpperCase().equals("YES")) {
-				while (true) {
-					System.out.print("옵션코드 > ");
-					String optionCode = sc.nextLine();
-					newOrderLine.getList().add(new DetailOption(optionCode, 1)); // 수량 1 ==있다, 수량 0 == 없다
+				boolean run = true;
+				while (run) {
+					NewMenuView.test(newOrderLine);
 
 					System.out.print("옵션을 더 추가하시겠습니까?  (yes or no) > ");
 					String plusOption = sc.nextLine();
 					if (plusOption.toUpperCase().equals("YES")) {
-						continue;
+						NewMenuView.test(newOrderLine);
 					} else if (plusOption.toUpperCase().equals("NO")) {
 						break;
 					}
 				}
-			} else if(plus.toUpperCase().equals("NO")) {
-				newOrderLine = new OrderLine(productCode, qty);
 			}
 		} catch (Exception e) {
 			System.out.println("입력을 확인하세요!");
@@ -871,6 +850,75 @@ public class NewMenuView {
 
 		return newOrderLine;
 
+	}
+
+	public static void test(OrderLine newOrderLine) {
+		System.out.print("옵션코드 > ");
+		String optionCode = sc.nextLine();
+		DetailOption newDetailOption = new DetailOption(optionCode, 1);
+		newOrderLine.getList().add(newDetailOption); // 수량 1 ==있다, 수량 0 == 없다
+	}
+////
+
+	
+	/**
+	 * 장바구니
+	 * */
+	public static Cart selectCart(String userId) throws SQLException, NotFoundException {
+		Cart cart = null;
+		// 카테고리에 따른 상품출력
+		String[] categoryNames = { "빈칸", "Beverage", "Dessert" };
+		System.out.println("1." + categoryNames[1] + "2." + categoryNames[2]);
+		System.out.print("선택 > ");
+		int choice = Integer.parseInt(sc.nextLine());
+		while (choice <= 0 || choice >= 3) {
+			System.out.println("1과 2 중에 하나만 고르세요. ");
+			System.out.print("선택 > ");
+			choice = Integer.parseInt(sc.nextLine());
+		}
+		ProductController.selectProductByCategoryName(categoryNames[choice]);
+
+		System.out.print("상품코드 > ");
+		String productCode = sc.nextLine();
+		System.out.print("수량 > ");
+		int qty = Integer.parseInt(sc.nextLine());
+		cart = new Cart(userId, productCode, qty);
+		// 상품코드에 따른 옵션 띄워주기
+		OptionController.selectOptionByProductCode(productCode);
+
+		System.out.print("추가 옵션 선택 : yes or no? > ");
+		try {
+			String plus = sc.nextLine();
+			if (plus.toUpperCase().equals("YES")) {
+				boolean run = true;
+				while (run) {
+					NewMenuView.addCartOption(cart);
+
+					System.out.print("옵션을 더 추가하시겠습니까?  (yes or no) > ");
+					String plusOption = sc.nextLine();
+					if (plusOption.toUpperCase().equals("YES")) {
+						NewMenuView.addCartOption(cart);
+					} else if (plusOption.toUpperCase().equals("NO")) {
+						CartController.insertCart(cart);
+						break;
+					}
+				}
+			} else if (plus.toUpperCase().equals("NO")) {
+				CartController.insertCart(cart);
+			}
+		} catch (Exception e) {
+			System.out.println("입력을 확인하세요!");
+		}
+
+		return cart;
+
+	}
+
+	public static void addCartOption(Cart cart) {
+		System.out.print("옵션코드 > ");
+		String optionCode = sc.nextLine();
+		DetailOption newDetailOption = new DetailOption(optionCode, 1);
+		cart.getList().add(newDetailOption); // 수량 1 ==있다, 수량 0 == 없다
 	}
 
 }

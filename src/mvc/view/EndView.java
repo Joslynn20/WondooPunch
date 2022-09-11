@@ -1,9 +1,13 @@
 package mvc.view;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
+import mvc.dto.Cart;
 import mvc.dto.Coupon;
 import mvc.dto.Customer;
+import mvc.dto.DetailOption;
 import mvc.dto.IssuedCoupon;
 import mvc.dto.Option;
 import mvc.dto.OrderLine;
@@ -11,6 +15,7 @@ import mvc.dto.Orders;
 import mvc.dto.Product;
 
 public class EndView {
+	static Scanner sc = new Scanner(System.in);
 	/**
 	 * 성공메시지 출력
 	 */
@@ -27,20 +32,40 @@ public class EndView {
 		System.out.println(customer);
 	}
 
+
 	/**
 	 * 주문내역 조회
 	 */
 	public static void printOrder(List<Orders> orderList) {
+		int count = 1;
 		System.out.println("--------총 " + orderList.size() + "건의 주문 내역--------\n");
 		for (Orders order : orderList) {
-			System.out.println(order + "\n");
+			System.out.print(count++ +".");
+			System.out.println(order);
 			for (OrderLine orderLine : order.getOrderLinelist()) {
-				System.out.println("  ▶ " + orderLine);
+				System.out.println("\n  ▶ " + orderLine);		
+				for(DetailOption detailOption : orderLine.getList()){
+					System.out.println("  ▶ " + detailOption);
+					
+				}
 			}
-			System.out.println();
+			System.out.println("\n");
 		}
 
 	}
+	
+	/**
+	 * 퀵오더
+	 */
+	public static void QuickOrder(List<Orders> orderList) {
+		printOrder(orderList);
+		System.out.print("주문선택 > ");
+		int choice = Integer.parseInt(sc.nextLine());
+		Orders order = orderList.get(choice-1);
+		NewMenuView.printPay(order); // 결제하기 창으로 이동
+
+	}
+	
 	/**
 	 * 관리자메뉴 - 쿠폰 전체 목록 조회
 	 * 
@@ -157,68 +182,70 @@ public class EndView {
 			
 			
 		}
+		
+		
+		public static void printAllOrders(List<Orders>  list ) {
+			 for(  Orders  order   :   list ) {	 
+		      System.out.println(order.getOrderNo()+". ID:"+order.getUserId()+" 주문 시간: "+order.getOrderDate()+"  구매 총액:"+order.getOrderTotalPrice()+"  사용 쿠폰코드:"+order.getCouponCode() ) ;  
+		      System.out.println("*******주문번호:"+order.getOrderNo()+"에 대한 상세내역********");  
+		       List<OrderLine> orderLineList  = order.getOrderLinelist();    		   
+		       for( OrderLine ol  : orderLineList) {
+		            
+		    	   System.out.println("상품 코드:"+ol.getProductCode()+" 상품수량:"+ol.getOrderQty()+" 가격:"+ol.getOrderPrice()); 
+		      
+		    	   for( DetailOption  detailOption :ol.getList()) {
+		    		   
+		    	    System.out.print(" 옵션 코드:"+detailOption.getOptionCode());
+		    	    System.out.print(" 옵션 수량:"+detailOption.getDetailOtionQty()); 
+		    	    System.out.print(" 옵션 가격:"+detailOption.getDetailOptionPrice());
+		            System.out.println();
+		            	   
+		    	   }
+		    	  
+		    	System.out.println();  
+		    	       
+		    	  
+		    	  
+		      }
+			 }
+		}
+		 
+		public static void printCartList(List <Cart> cartList) { 
+			int count = 1;
+			String userId = null;
+			List<OrderLine> list = new ArrayList<OrderLine>();
+			System.out.println("--------총 " + cartList.size() + "건의 장바구니 내역--------\n");
 
-	
-	
-	/**
-	 * 장바구니 추가 뷰 단 참고 
-	 *//*
-		 * Cart addCartRequest = new Cart(); addCartRequest.setUserId(userId); //필수
-		 * addCartRequest.setProductCode(productCode); //필수
-		 * addCartRequest.setCartQty(cartQty);//필수
-		 * 
-		 * addCartRequest.setShotQty(shotQty); addCartRequest.setCreamQty(creamQty);
-		 * addCartRequest.setSyrupQty(syrupQty);
-		 * 
-		 * addCartRequest.setHotQty(hotQty); addCartRequest.setCheeseQty(cheeseQty);
-		 * 
-		 * cartController.addCart(addCartRequest);
-		 * 
-		 * 
-		 * 
-		 * 
-		 * 
-		 * 
-		 * 
-		 * public static void printCart(String userId, String userPw, String
-		 * categoryName, String productName, String keyword) throws SQLException,
-		 * Throwable {
-		 * 
-		 * 
-		 * 
-		 * Scanner sc = new Scanner(System.in); System.out.
-		 * println("1.장바구니 조회하기  |  2. 장바구니 수정하기   |   3. 장바구니 비우기  |  9. 되돌아가기");
-		 * System.out.print("입력 > "); int menu = Integer.parseInt(sc.nextLine()); switch
-		 * (menu) { case 1: // 리스트 출력 == 장바구니 조회 cartController.getCart(userId);
-		 * 
-		 * 
-		 * System.out.println("1. 결제하기    |    2. 되돌아가기"); System.out.print("입력 > ");
-		 * int no = Integer.parseInt(sc.nextLine()); switch (no) { case 1:
-		 * MenuView.printPay(userId); break; case 2: MenuView.printAllOrders(userId,
-		 * userPw, categoryName, productName, keyword); break; } break; case 2: // 2번기능
-		 * // 리스트 출력 cartController.getCart(userId);
-		 * System.out.print("수정할 장바구니 카트코드 입력 > "); String cartNo = sc.nextLine();
-		 * 
-		 * 
-		 * System.out.print("수정하실 상품 정보가 맞습니까? (Yes or No)"); String answer =
-		 * sc.nextLine();
-		 * 
-		 * if (answer.equals("Yes")) { System.out.println("1. 수량 수정하기    |   2. 삭제하기");
-		 * System.out.print("입력 > "); int choice = Integer.parseInt(sc.nextLine());
-		 * 
-		 * if (choice == 1) { System.out.print("수정 수량 > "); int cartQty =
-		 * Integer.parseInt(sc.nextLine());
-		 * 
-		 * // 장바구니 카트 번호로 수정 update Cart updateCartRequest = new Cart();
-		 * updateCartRequest.setCartNo(Integer.valueOf(cartNo));
-		 * updateCartRequest.setCartQty(cartQty);
-		 * cartController.updateCart(updateCartRequest); } else if (choice == 2) {
-		 * 
-		 * // 장바구니 개별 삭제하기 cartController.removeCart(Integer.valueOf(cartNo));
-		 * 
-		 * } }
-		 * 
-		 * break; case 3: //장바구니 비우기 cartController.removeAllCart(userId); } }
-		 */
+				for (Cart cart : cartList) {
+					System.out.print(count++ +".");
+					System.out.println(cart);		
+					for(DetailOption detailOption : cart.getList()){
+						System.out.println("  ▶ " + detailOption);
+					}
+					userId = cart.getUserId();
+					OrderLine orderLine= new OrderLine(cart.getProductCode(), cart.getCartQty());
+					orderLine.setList(cart.getList());
+					list.add(orderLine);
+				}
+				System.out.println("\n");
 
+
+		 System.out.println("1. 결제하기    |    9. 되돌아가기");
+			try {
+				System.out.print("입력 > ");
+				int choice = Integer.parseInt(sc.nextLine());
+				if (choice == 1) {
+					Orders newOrder = new Orders(userId);
+					newOrder.setOrderLinelist(list);
+					NewMenuView.printPay(newOrder);
+				} else if (choice == 9) {
+				
+				}
+			} catch (NumberFormatException e) {
+				FailView.errorMessage("1, 9 중에서 선택하세요.");
+			}
+			
+		}
+	
+		
 }

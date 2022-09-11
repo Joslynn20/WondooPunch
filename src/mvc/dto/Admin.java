@@ -4,14 +4,14 @@ public class Admin {
  
 	
 	
-	private final String ADMINID ="WONDOPUNCH";
-	private final String ADMINPW="12345";
-	private final String ADMINNAME="박원두";
+	private final static String ADMINID ="WONDOPUNCH";
+	private final static String ADMINPW="12345";
+	private final static String ADMINNAME="박원두";
 	
-	public String getADMINID() {
+	public static String getADMINID() {
 		return ADMINID;
 	}
-	public String getADMINPW() {
+	public static String getADMINPW() {
 		return ADMINPW;
 	}
 	public String getADMINNAME() {

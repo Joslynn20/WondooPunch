@@ -5,6 +5,7 @@ import mvc.service.CustomerService;
 import mvc.service.CustomerServiceImpl;
 import mvc.view.EndView;
 import mvc.view.FailView;
+import mvc.view.NewMenuView;
 
 public class CustomerController {
 	private static CustomerService customerService = new CustomerServiceImpl();
@@ -103,6 +104,7 @@ public class CustomerController {
 		try {
 			Customer customer = customerService.login(userId, userPw);
 			EndView.printMessage("\n\n" + customer.getUserName() + "님이 로그인하셨습니다.");
+			NewMenuView.showUserMenu(userId, userPw);
 		} catch (Exception e) {
 			FailView.errorMessage(e.getMessage());
 		}

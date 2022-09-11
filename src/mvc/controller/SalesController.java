@@ -8,6 +8,7 @@ import mvc.dto.Product;
 import mvc.exception.NotFoundException;
 import mvc.service.SalesService;
 import mvc.service.SalesServiceImpl;
+import mvc.view.EndView;
 import mvc.view.FailView;
 
 public class SalesController {
@@ -23,7 +24,8 @@ public class SalesController {
 	  public  static void selectSalesBydate(String date) {
 		 
 	   try {
-		 String result  =salesService.selectSalesBydate(date);  
+		 String result  =salesService.selectSalesBydate(date); 
+		 EndView.printMessage(result);
 	   }catch(Exception e){
 		   FailView.errorMessage(e.getMessage());
 	   }
@@ -40,6 +42,7 @@ public class SalesController {
 		   
     	 try {
 	   	  String result  =salesService.selectAllSales();
+	   	EndView.printMessage(result);
 		  }catch(Exception e) {	   			 
 			FailView.errorMessage(e.getMessage());
 		  }
@@ -56,6 +59,7 @@ public class SalesController {
 		    
 		   try{ 
 			  List<String> list   =salesService.selectSalesRateBydate(date);
+			  EndView.printSalesRate(list);
 		   }catch(Exception e){
 			   FailView.errorMessage(e.getMessage());
 		   }
@@ -72,6 +76,7 @@ public class SalesController {
 		    
 		  try{
 			  List<Product> list   =salesService.selectSalesRankBydate(date);
+			  EndView.printSalesRank(list);
 		   }catch(Exception e){
 			   FailView.errorMessage(e.getMessage());
 		   }
@@ -87,6 +92,8 @@ public class SalesController {
 		  
 		  try{
 			  List<String> list   =salesService.selectAllSalesRate();
+			  EndView.printSalesRate(list);
+			  
 		   }catch(Exception e){
 			   FailView.errorMessage(e.getMessage());
 		   }
@@ -103,6 +110,7 @@ public class SalesController {
 		  
 		  try{  
 			   List<Product> list   =salesService.selectAllSalesRank();
+			   EndView.printSalesRank(list);
 		   }catch(Exception e){
 			   FailView.errorMessage(e.getMessage());
 		   }

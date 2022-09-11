@@ -92,12 +92,12 @@ public class OrderLine {
 		builder.append(orderLineNo);
 		builder.append(", 주문번호: ");
 		builder.append(orderNo);
+		builder.append(", 상품 코드: ");
+		builder.append(productCode);
 		builder.append(", 수량: ");
 		builder.append(orderQty);
 		builder.append(", 가격: ");
 		builder.append(orderPrice);
-		builder.append(", 상품 코드: ");
-		builder.append(productCode);
 		builder.append("]");
 		return builder.toString();
 	}

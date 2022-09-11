@@ -9,6 +9,7 @@ import mvc.exception.ModifyException;
 import mvc.exception.NotFoundException;
 import mvc.service.ProductService;
 import mvc.service.ProductServiceImpl;
+import mvc.view.EndView;
 import mvc.view.FailView;
 
 public class ProductController {
@@ -25,7 +26,8 @@ public class ProductController {
 	   public  static void selectAllProduct() {		
 		  
 		 try {
-			 List<Product> list  =productService.selectAllProduct();      			 
+			 List<Product> list  =productService.selectAllProduct();   
+			 EndView.printProductList(list);
 
 		 }catch (Exception e ) {		 
 			 FailView.errorMessage(e.getMessage());
@@ -44,7 +46,8 @@ public class ProductController {
 		    
 		   try {
 			   List<Product> list   = productService.selectProductByCategoryName(categoryName);
-		     
+			   EndView.printProductList(list);
+		      
 		   }catch (Exception e ) {		 
 				 FailView.errorMessage(e.getMessage());
 		  }
@@ -61,6 +64,7 @@ public class ProductController {
 	   public static void  selectProductByKeyword(String keyword) {
 		    try {
 		      List<Product>  list   = productService.selectProductByKeyword(keyword);
+		      EndView.printProductList(list);
 		      
 		    }catch (Exception e ) {		 
 				 FailView.errorMessage(e.getMessage());
@@ -80,6 +84,7 @@ public class ProductController {
 		   
 		    try {
 		      Product product  = productService.selectProductByProductName(productName);
+		      EndView.printProduct(product);
 	   
 		     }catch (Exception e ) {		 
 				 FailView.errorMessage(e.getMessage());
@@ -97,7 +102,8 @@ public class ProductController {
 	   public static void insertProduct(Product product)  {
 		
           try { 
-		    productService.insertProduct(product);    
+		    productService.insertProduct(product); 
+		    EndView.printMessage(product.getProductCode()+"등록이 완료되었습니다.");
           }catch (Exception e ) {		 
 				 FailView.errorMessage(e.getMessage());
 		  }
@@ -116,7 +122,7 @@ public class ProductController {
 		        
 		    try {      
 		        productService.deleteProduct(productCode);
-		        
+		        EndView.printMessage(productCode+"에 대한 삭제가 완료되었습니다.");
 		     }catch (Exception e ) {		 
 				 FailView.errorMessage(e.getMessage());
 		  }
@@ -136,6 +142,7 @@ public class ProductController {
 		    try {
 		    
 		    	productService.updateProduct(product);
+		    	 EndView.printMessage(product.getProductCode()+"에 대한 수정이 완료되었습니다.");
 		    	
 		    }catch (Exception e ) {		 
 				 FailView.errorMessage(e.getMessage());
@@ -155,7 +162,8 @@ public class ProductController {
 	   public static void selectProductByproductCode(String productCode) {
 		   
 		  try {    
-			 Product product  =productService.selectProductByProductCode(productCode);   		   
+			 Product product  =productService.selectProductByProductCode(productCode);   
+			 EndView.printProduct(product);
 		   }catch (Exception e ) {		 
 				 FailView.errorMessage(e.getMessage());
 		  }
