@@ -42,15 +42,8 @@ public class CartController {
 	public static void selectCart(String userId) {
 
 		try {
-			int sum = 0;
 			List<Cart> list = cartService.selectCart(userId);
-			for (Cart c : list) {
-				System.out.println(c);
-				sum = sum + c.getCartPrice();
-			}
-			System.out.println(userId + "님의 장바구니에 담긴 총 합계 금액은 : " + sum + "입니다.");
-
-			EndView.printMessage(userId + "님의 장바구니 조회에 성공했습니다. ");
+			EndView.printCartList(list);
 		} catch (Exception e) {
 
 			FailView.errorMessage(e.getMessage());

@@ -144,7 +144,7 @@ public class CartDAOImpl implements CartDAO {
 
 		Connection con = null;
 		PreparedStatement ps = null;
-		String sql = "select * from cart where m_id = ?";
+		String sql = "select * from cart where m_id = ? cart by cart_no desc";
 
 		ResultSet rs = null;
 		List<Cart> list = new ArrayList<Cart>();
