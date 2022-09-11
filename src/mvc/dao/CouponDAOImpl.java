@@ -187,14 +187,12 @@ public class CouponDAOImpl implements CouponDAO {
 		PreparedStatement ps = null;
 		int result = 0;
 		int count = 1;
-		String sql = "INSERT INTO issuedcoupon (? , ? ,?, sysdate , ADD_month(sysdate, +1), 15)";
-
+		String sql = "INSERT INTO issuedcoupon values (?, ? ,'CP01', sysdate, to_char(add_months(sysdate,+1)), 15)";
 		try {
 			con = DbUtil.getConnection();
 			ps = con.prepareStatement(sql);
-			ps.setString(1, "IC0" + count++);// 발행쿠폰코드
+			ps.setString(1, "IC0" + ++count);// 발행쿠폰코드
 			ps.setString(2, userId);
-			ps.setString(3, "CP01");// 쿠폰코드
 
 			result = ps.executeUpdate();
 
