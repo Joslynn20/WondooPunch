@@ -218,11 +218,9 @@ public class CartDAOImpl implements CartDAO {
 
 		Connection con = null;
 		PreparedStatement ps = null;
-
 		// 카트번호로 장바구니 가격을 가져온다.
-		String sql = "SELECT * FROM CART WHERE CART_PRICE = (select CART_PRICE from cart where cart_no = ?)";
+		String sql = "SELECT CART_QTY ,CART_PRICE  FROM CART WHERE CART_PRICE = (select CART_PRICE from cart where cart_no = ?)";
 		ResultSet rs = null;
-		Savepoint savepoint1 = null;
 		int result = 0;
 		try {
 			con = DbUtil.getConnection();
@@ -232,16 +230,19 @@ public class CartDAOImpl implements CartDAO {
 			ps.setInt(1, cart.getCartNo());
 			rs = ps.executeQuery();
 
-			Integer cartPrice = 0;
+			int remaincartPrice = 0;
+			int remaincartQty = 0;
 
 			while (rs.next()) {
-				cartPrice = rs.getInt("CART_PRICE");
+				remaincartPrice = rs.getInt("CART_PRICE");
+				remaincartQty = rs.getInt("CART_QTY");
 			}
+			int onePrice = (int) (remaincartPrice / remaincartQty);
 
 			sql = "UPDATE CART SET CART_QTY = ?, CART_PRICE = ?  WHERE CART_NO = ?"; // 카트번호 , 수량, 가격
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, cart.getCartQty());
-			ps.setInt(2, cartPrice * cart.getCartQty());
+			ps.setInt(2, onePrice * cart.getCartQty());
 			ps.setInt(3, cart.getCartNo());
 			result = ps.executeUpdate();
 
@@ -253,7 +254,6 @@ public class CartDAOImpl implements CartDAO {
 
 		return result;
 	}
-
 
 	/**
 	 * 장바구니 개별 삭제 (카트 번호로 삭제)
