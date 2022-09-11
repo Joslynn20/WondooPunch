@@ -21,7 +21,7 @@ public class CouponServiceImpl implements CouponService {
 	public List<Coupon> selectAllCoupon() throws SQLException, NotFoundException {
 		List<Coupon> list = coupondao.selectAllCoupon();
 		if (list.isEmpty() || list.size() == 0)
-			throw new NotFoundException();
+			throw new NotFoundException("쿠폰목록이 없습니다");
 		return list;
 	} // couponSelect end
 
@@ -34,7 +34,7 @@ public class CouponServiceImpl implements CouponService {
 	public List<IssuedCoupon> selectCouponByUserId(String userId) throws NotFoundException, SQLException {
 		List<IssuedCoupon> list = coupondao.selectCouponByUserId(userId);
 		if (list.isEmpty() || list.size() == 0)
-			throw new NotFoundException();
+			throw new NotFoundException("쿠폰목록이 없습니다");
 		return list;
 	}
 
@@ -44,7 +44,7 @@ public class CouponServiceImpl implements CouponService {
 	public Coupon selectCouponByCouponCode(String couponCode) throws NotFoundException, SQLException {
 		Coupon coupon = coupondao.selectCouponByCouponCode(couponCode);
 		if (coupon == null)
-			throw new NotFoundException("쿠폰이 없습니다");
+			throw new NotFoundException("쿠폰목록이 없습니다");
 		return coupon;
 	}
 
@@ -66,7 +66,7 @@ public class CouponServiceImpl implements CouponService {
 	public void insertCoupon(Coupon coupon) throws SQLException, AddException {
 		int result = coupondao.insertCoupon(coupon);
 		if (result == 0)
-			throw new AddException();
+			throw new AddException("쿠폰등록할 수 없습니다");
 
 	}// couponCode end
 
@@ -79,7 +79,7 @@ public class CouponServiceImpl implements CouponService {
 	public void deletecoupon(String couponCode) throws SQLException, NotFoundException {
 		int result = coupondao.deleteCoupon(couponCode);
 		if (result == 0)
-			throw new NotFoundException();
+			throw new NotFoundException("쿠폰 삭제할 수 없습니다");
 
 	}
 
@@ -90,7 +90,7 @@ public class CouponServiceImpl implements CouponService {
 	public void insertJoinCoupon(String userId) throws SQLException, AddException {
 		int result = coupondao.insertJoinCoupon(userId);
 		if (result == 0)
-			throw new AddException();
+			throw new AddException("쿠폰발행 할 수 없습니다");
 
 	}
 }

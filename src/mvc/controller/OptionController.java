@@ -27,7 +27,7 @@ public class OptionController {
 	public static void selectAllOption() throws SQLException, NotFoundException {
 		try {
 			List<Option> list = optionservice.selectAllOption();
-			EndView.printSelectAllOption(list);
+			EndView. printOptionList(list);
 		} catch (NotFoundException e) {
 
 			FailView.errorMessage(e.getMessage());
@@ -43,7 +43,7 @@ public class OptionController {
 	public static void optionSelectByOptionCode(String optionCode) throws NotFoundException, SQLException {
 		try {
 			Option option = optionservice.optionSelectByOptionCode(optionCode);
-			EndView.printOptionSelectByOptionCode(option);
+			EndView.printOptionListByCode(option);
 
 		} catch (NotFoundException e) {
 			FailView.errorMessage(e.getMessage());
@@ -58,7 +58,7 @@ public class OptionController {
 	public static void selectOptionByProductCode(String productCode) throws SQLException, NotFoundException {
 		try {
 			List<Option> list = optionservice.selectOptionByProductCode(productCode);
-			EndView.printSelectOptionByProductCode(list);
+			EndView. printOptionList(list);
 
 		} catch (NotFoundException e) {
 			FailView.errorMessage(e.getMessage());
@@ -74,7 +74,7 @@ public class OptionController {
 	public static void insertOption(Option option) throws SQLException, AddException {
 		try {
 			optionservice.insertOption(option);
-			EndView.printInSert();
+			System.out.println("옵션추가됐습니다");
 
 		} catch (AddException e) {
 			FailView.errorMessage(e.getMessage());
@@ -91,6 +91,8 @@ public class OptionController {
 
 		try {
 			optionservice.updateOption(option);
+			
+			System.out.println("옵션수정됐습니다");
 
 		} catch (ModifyException e) {
 			FailView.errorMessage(e.getMessage());
@@ -106,7 +108,7 @@ public class OptionController {
 	public static void deleteOption(String optionCode) throws SQLException, NotFoundException {
 		try {
 			optionservice.deleteOption(optionCode);
-			EndView.printDelete();
+			System.out.println("옵션삭제됐습니다");
 
 		} catch (SQLException e) {
 			e.printStackTrace();

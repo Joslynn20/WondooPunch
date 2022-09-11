@@ -22,7 +22,7 @@ public class OptionServiceImpl implements OptionService {
 	public List<Option> selectAllOption() throws SQLException, NotFoundException {
 		List<Option> list = optiondao.selectAllOption();
 		if (list.isEmpty() || list.size() == 0)
-			throw new NotFoundException();
+			throw new NotFoundException("옵션 목록이 없습니다");
 		return list;
 	}// optionSelect end
 
@@ -35,7 +35,7 @@ public class OptionServiceImpl implements OptionService {
 	public Option optionSelectByOptionCode(String optionCode) throws NotFoundException, SQLException {
 		Option option = optiondao.optionSelectByOptionCode(optionCode);
 		if (option == null)
-			throw new NotFoundException();
+			throw new NotFoundException("옵션 목록이 없습니다");
 		return option;
 
 	}
@@ -49,7 +49,7 @@ public class OptionServiceImpl implements OptionService {
 	public List<Option> selectOptionByProductCode(String productCode) throws SQLException, NotFoundException {
 		List<Option> list = optiondao.selectOptionByProductCode(productCode);
 		if (list.isEmpty() || list.size() == 0)
-			throw new NotFoundException();
+			throw new NotFoundException("옵션 목록이 없습니다");
 		return list;
 	}
 
@@ -61,7 +61,7 @@ public class OptionServiceImpl implements OptionService {
 	public void insertOption(Option option) throws SQLException, AddException {
 		int result = optiondao.insertOption(option);
 		if (result == 0)
-			throw new AddException();
+			throw new AddException("옵션등록 실패했습니다");
 
 	}// optinInsert end
 
@@ -72,7 +72,7 @@ public class OptionServiceImpl implements OptionService {
 	 */
 	public void updateOption(Option option) throws SQLException, ModifyException {
 		if (optiondao.updateOption(option) == 0)
-			throw new ModifyException();
+			throw new ModifyException("옵션수정 실패했습니다");
 	}
 
 	/**
@@ -83,7 +83,7 @@ public class OptionServiceImpl implements OptionService {
 	public void deleteOption(String optionCode) throws SQLException, NotFoundException {
 		int result = optiondao.deleteOption(optionCode);
 		if (result == 0)
-			throw new NotFoundException();
+			throw new NotFoundException("옵션삭제 실패했습니다");
 
 	}
 }

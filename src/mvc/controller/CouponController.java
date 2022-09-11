@@ -26,7 +26,7 @@ public class CouponController {
 	public static void selectAllCoupon() throws SQLException, NotFoundException {
 		try {
 			List<Coupon> list = couponservice.selectAllCoupon();
-			EndView.printSelectAllCoupon(list);
+			EndView.printCouponList(list);
 
 		} catch (NotFoundException e) {
 
@@ -41,7 +41,7 @@ public class CouponController {
 	public static void selectCouponByUserId(String userId) throws SQLException, NotFoundException {
 		try {
 			List<IssuedCoupon> list = couponservice.selectCouponByUserId(userId);
-			EndView.printSelectCouponByUserId(list);
+			EndView.printIssuedCouponList(list);
 
 		} catch (NotFoundException e) {
 			FailView.errorMessage(e.getMessage());
@@ -68,7 +68,7 @@ public class CouponController {
 		try {
 			Coupon coupon = couponservice.selectCouponByCouponCodeByAdmin(couponCode);
 
-			EndView.printSelectCouponByCouponCodeByAdmin(coupon);
+			EndView.printCouponListByCode(coupon);
 
 		} catch (NotFoundException e) {
 			FailView.errorMessage(e.getMessage());
@@ -83,7 +83,7 @@ public class CouponController {
 	public static void insertCoupon(Coupon coupon) throws SQLException, AddException {
 		try {
 			couponservice.insertCoupon(coupon);
-			EndView.printInSert();
+			System.out.println("쿠폰등록됐습니다");
 
 		} catch (AddException e) {
 
@@ -100,7 +100,7 @@ public class CouponController {
 	public static void deleteCoupon(String couponCode) throws SQLException, NotFoundException {
 		try {
 			couponservice.deletecoupon(couponCode);
-			EndView.printDelete();
+			System.out.println("쿠폰삭제됐습니다");
 
 		} catch (SQLException e) {
 			FailView.errorMessage(e.getMessage());
@@ -115,6 +115,7 @@ public class CouponController {
 	public static void insertJoinCoupon(String userId) throws SQLException, AddException {
 		try {
 			couponservice.insertJoinCoupon(userId);
+			System.out.println("쿠폰발행됐습니다");
 		} catch (AddException e) {
 			FailView.errorMessage(e.getMessage());
 		}

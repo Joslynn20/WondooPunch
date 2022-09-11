@@ -134,11 +134,12 @@ public class OptionDAOImpl implements OptionDAO {
 		Connection con = null;
 		PreparedStatement ps = null;
 		int result = 0;
-		String sql = "UPDATE OPTIONS SET O_CODE = ?, O_NAME = ? O_PRICE = ? WHERE O_CODE = ?";
+		String sql = "UPDATE OPTIONS SET O_CODE = ?, O_NAME = ?, O_PRICE = ? WHERE O_CODE = ?";
 
 		try {
 			con = DbUtil.getConnection();
 			ps = con.prepareStatement(sql);
+			
 			ps.setString(1, option.getOptionCode());// 옵션코드
 			ps.setString(2, option.getOptionName()); // 옵션이름
 			ps.setInt(3, option.getOptionPrice()); // 옵션가격
