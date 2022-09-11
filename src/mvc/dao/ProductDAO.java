@@ -10,7 +10,7 @@ public interface ProductDAO {
 	/**
 	 * 전체 상품 조회
 	 * 
-	 * @return
+	 * @return List<Product>
 	 * @throws SQLException
 	 */
 	List<Product> selectAllProduct() throws SQLException;
@@ -19,7 +19,7 @@ public interface ProductDAO {
 	 * 카테고리 별 상품 조회
 	 * 
 	 * @param categoryName
-	 * @return
+	 * @return List<Product>
 	 * @throws SQLException
 	 */
 	List<Product> selectProductByCategoryName(String categoryName) throws SQLException;
@@ -28,7 +28,7 @@ public interface ProductDAO {
 	 * 키워드로 상품 검색
 	 * 
 	 * @param keyword
-	 * @return
+	 * @return List<Product>
 	 * @throws SQLException
 	 */
 	List<Product> selectProductByKeyword(String keyword) throws SQLException;
@@ -37,7 +37,7 @@ public interface ProductDAO {
 	 * 상품명으로 상품 검색
 	 * 
 	 * @param productName
-	 * @return
+	 * @return Product
 	 * @throws SQLException
 	 */
 	Product selectProductByProductName(String productName) throws SQLException;
@@ -46,7 +46,7 @@ public interface ProductDAO {
 	 * 상품 코드로 상품 검색
 	 * 
 	 * @param productCode
-	 * @return
+	 * @return Product
 	 * @throws SQLException
 	 */
 	Product selectProductByProductCode(String productCode) throws SQLException;
@@ -55,7 +55,7 @@ public interface ProductDAO {
 	 * 상품 등록
 	 * 
 	 * @param product
-	 * @return
+	 * @return int
 	 * @throws SQLException
 	 */
 	int insertProduct(Product product) throws SQLException;
@@ -73,7 +73,7 @@ public interface ProductDAO {
 	 * 상품 수정
 	 * 
 	 * @param product
-	 * @return
+	 * @return int
 	 * @throws SQLException
 	 */
 	int updateProduct(Product product) throws SQLException;

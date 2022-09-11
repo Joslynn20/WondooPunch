@@ -11,7 +11,7 @@ public interface SalesDAO {
 	 * 일별 판매 총액, 주문 완료 건수 조회
 	 * 
 	 * @param date
-	 * @return
+	 * @return String
 	 * @throws SQLException
 	 */
 	String selectSalesBydate(String date) throws SQLException;
@@ -19,7 +19,7 @@ public interface SalesDAO {
 	/**
 	 * 누적 판매총액, 주문 완료 건수 조회
 	 * 
-	 * @return
+	 * @return String
 	 * @throws SQLException
 	 */
 	String selectAllSales() throws SQLException;
@@ -28,7 +28,7 @@ public interface SalesDAO {
 	 * 제품별 일별 판매 갯수
 	 * 
 	 * @param date
-	 * @return
+	 * @return List<String>
 	 * @throws SQLException
 	 */
 	List<String> selectSalesRateBydate(String date) throws SQLException;
@@ -37,7 +37,7 @@ public interface SalesDAO {
 	 * 일별 제품 판매순위 (5위까지)
 	 * 
 	 * @param date
-	 * @return
+	 * @return List<Product>
 	 * @throws SQLException
 	 */
 	List<Product> selectSalesRankBydate(String date) throws SQLException;
@@ -45,7 +45,7 @@ public interface SalesDAO {
 	/**
 	 * 제품별 누적 판매 갯수
 	 * 
-	 * @return
+	 * @return List<String>
 	 * @throws SQLException
 	 */
 	List<String> selectAllSalesRate() throws SQLException;
@@ -53,7 +53,7 @@ public interface SalesDAO {
 	/**
 	 * 누적 제품 판매순위(5위까지)
 	 * 
-	 * @return
+	 * @return List<Product>
 	 * @throws SQLException
 	 */
 	List<Product> selectAllSalesRank() throws SQLException;
