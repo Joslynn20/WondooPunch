@@ -76,23 +76,21 @@ public class OrderDAOImpl implements OrderDAO {
 		for (OrderLine orderLine : orderLineList) { // 주문상세 리스트
 			String productCode = orderLine.getProductCode();
 			Product product = productDAO.selectProductByProductCode(productCode);
-			System.out.println(orderLine);
 			if (product == null)
 				throw new SQLException("잘못된 상품 코드입니다.");
 			int productPrice = orderLine.getOrderQty() * product.getProductPrice();
 
 			int optionTotalPrice = 0; // 옵션 총 가격
 			for (DetailOption detailOption : orderLine.getList()) { // 주문 상세 옵션 리스트
-				System.out.println(detailOption);
 				List<Option> optionList = optionDao.selectOptionByProductCode(productCode);
 				if (optionList == null || optionList.size() == 0)
-					throw new SQLException("잘못된 옵션 선택입니다.");
+					throw new SQLException("잘못된 상품 코드입니다.");
 
 				for (Option option : optionList) {
 					if (detailOption.getOptionCode().equals(option.getOptionCode())) { // 주문상세옵션코드와 옵션테이블의 옵션코드 비교
 
 						int optionPrice = option.getOptionPrice() * detailOption.getDetailOtionQty()
-								* orderLine.getOrderQty(); // 옵션가격*수량
+								* orderLine.getOrderQty(); // 옵션가격*옵션 수량*제품 수량
 
 						detailOption.setDetailOptionPrice(optionPrice); // 주문상세옵션에 옵션 가격 저장
 						optionTotalPrice += optionPrice;
