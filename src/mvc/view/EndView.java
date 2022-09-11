@@ -41,13 +41,12 @@ public class EndView {
 		}
 
 	}
-	
 	/**
 	 * 관리자메뉴 - 쿠폰 전체 목록 조회
 	 * 
 	 * @param list
 	 */
-	public static void printSelectAllCoupon(List<Coupon> list) {
+	public static void printCouponList(List<Coupon> list) {
 		System.out.println("---쿠폰목록 리스트---");
 		for (Coupon coupon : list) {
 			System.out.println(coupon);
@@ -59,29 +58,13 @@ public class EndView {
 	/**
 	 * 관리자메뉴 - 쿠폰 코드에 대한 쿠폰 정보 검색
 	 * 
-	 * @param coupon2
+	 * @param coupon
 	 */
-	public static void printSelectCouponByCouponCodeByAdmin(Coupon coupon) {
+	public static void printCouponListByCode(Coupon coupon) {
 		System.out.println("---쿠폰목록 리스트---");
 		
-			System.out.println(coupon);
-		
-	}
-
-	/**
-	 * 관리자메뉴 - 쿠폰등록 안내
-	 */
-
-	public static void printInSert() {
-		System.out.println("등록됐습니다");
-	}
-
-	/**
-	 * 관리자메뉴 - 쿠폰삭제 안내
-	 */
-	public static void printDelete() {
-		System.out.println("삭제됐습니다");
-	}
+			System.out.println(coupon);	
+	}	
 
 	/**
 	 * 고객 - 쿠폰조회
@@ -89,7 +72,7 @@ public class EndView {
 	 * @param list
 	 */
 
-	public static void printSelectCouponByUserId(List<IssuedCoupon> list) {
+	public static void printIssuedCouponList(List<IssuedCoupon> list) {
 		System.out.println("---쿠폰목록 리스트---");
 		for (IssuedCoupon issuedcoupon : list) {
 			System.out.println(issuedcoupon);
@@ -104,7 +87,7 @@ public class EndView {
 	 * @param list
 	 */
 
-	public static void printSelectAllOption(List<Option> list) {
+	public static void  printOptionList(List<Option> list) {
 		System.out.println("---옵션목록 리스트---");
 		for (Option option : list) {
 			System.out.println(option);
@@ -117,25 +100,12 @@ public class EndView {
 	 * @param option2
 	 */
 
-	public static void printOptionSelectByOptionCode(Option option) {
+	public static void printOptionListByCode(Option option) {
 		System.out.println("---옵션목록 리스트---");
 		
 			System.out.println(option);
 		}
 	
-
-	/**
-	 * 상품코드에 대한 옵션정보검색
-	 * 
-	 * @param list
-	 */
-
-	public static void printSelectOptionByProductCode(List<Option> list) {
-		System.out.println("---옵션목록 리스트---");
-		for (Option option : list) {
-			System.out.println(option);
-		}
-	}
 	
 	
 	/**
@@ -157,6 +127,37 @@ public class EndView {
 	     }
 		
 	}
+	
+	public static void printProduct(Product product ) {
+		
+		
+		System.out.println(product);
+		
+	}
+	
+	
+
+	   public static void printSalesRate(List<String> list  ){
+			System.out.println("*******************상품 :"+list.size()+"개에 대한 판매량 입니다*****************"); 
+			for( String  d  :list  ) {
+			   System.out.println(d); 
+			  
+			}
+		
+		}
+		
+		
+		public static void printSalesRank(List<Product> list) {
+			
+			
+			for( Product p  :list  ) {
+				   System.out.println(p); 
+				  
+				}
+			
+			
+		}
+
 	
 	
 	/**
