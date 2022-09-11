@@ -3,13 +3,18 @@ package mvc.dto;
 public class DetailOption {
 
 	private int detailOptionNo; // 상세옵션번호
-	private int superNo; //장바구니 or 주문상세번호
+	private int superNo; // 장바구니 or 주문상세번호
 	private String optionCode; // 옵션코드
 	private int detailOtionQty; // 옵션수량
 	private int detailOptionPrice; // 옵션 총 가격
 
 	public DetailOption() {
 
+	}
+
+	public DetailOption(String optionCode, int detailOtionQty) {
+		this.optionCode = optionCode;
+		this.detailOtionQty = detailOtionQty;
 	}
 
 	public DetailOption(int detailOptionNo, int superNo, String optionCode, int detailOtionQty, int detailOptionPrice) {
@@ -75,7 +80,5 @@ public class DetailOption {
 		builder.append("]");
 		return builder.toString();
 	}
-
-
 
 }

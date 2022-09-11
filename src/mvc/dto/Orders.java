@@ -4,20 +4,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Orders {
-	
-	private int orderNo; //주문정보
-	private int orderTotalPrice; //총 구매금액
-	private int orderTotalQty; //총 구매수량
-	private String orderDate; //주문일
-	private String userId; //회원 ID
-	private String couponCode; //발행쿠폰코드
-	
+
+	private int orderNo; // 주문정보
+	private int orderTotalPrice; // 총 구매금액
+	private int orderTotalQty; // 총 구매수량
+	private String orderDate; // 주문일
+	private String userId; // 회원 ID
+	private String couponCode; // 발행쿠폰코드
+
 	private List<OrderLine> orderLinelist = new ArrayList<OrderLine>();
-	
+
 	public Orders() {
-		
+
 	}
-	
+
+	public Orders(String userId) {
+		this.userId = userId;
+	}
+
 	public Orders(int orderNo, int orderTotalPrice, int orderTotalQty, String orderDate, String userId,
 			String couponCode) {
 		super();
@@ -76,7 +80,6 @@ public class Orders {
 	public void setCouponCode(String couponCode) {
 		this.couponCode = couponCode;
 	}
-	
 
 	public List<OrderLine> getOrderLinelist() {
 		return orderLinelist;
@@ -104,7 +107,5 @@ public class Orders {
 		builder.append("]");
 		return builder.toString();
 	}
-	
-	
 
 }

@@ -16,6 +16,11 @@ public class OrderLine {
 	public OrderLine() {
 
 	}
+	
+	public OrderLine(String productCode, int orderQty) {
+		this.orderQty = orderQty;
+		this.productCode = productCode;
+	}
 
 	public OrderLine(int orderLineNo, int orderQty, int orderPrice, int orderNo, String productCode) {
 		super();
