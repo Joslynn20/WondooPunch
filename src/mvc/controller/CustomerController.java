@@ -18,8 +18,7 @@ public class CustomerController {
 		try {
 			customerService.insertCustomer(customer);
 			EndView.printMessage("\n" + customer.getUserName() + "님의 회원가입이 완료됐습니다.");
-			// 추가예정
-			// CouponController.joinCoupon(customer);
+			CouponController.insertJoinCoupon(customer.getUserId());
 		} catch (Exception e) {
 			FailView.errorMessage(e.getMessage());
 		}
