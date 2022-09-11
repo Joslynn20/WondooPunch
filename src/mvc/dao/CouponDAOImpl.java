@@ -79,18 +79,18 @@ public class CouponDAOImpl implements CouponDAO {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		Coupon coupon = null;		
-		String sql = "SELECT * FROM COUPON WHERE CP_CODE = ?";
+		Coupon coupon = null;
+		String sql = "SELECT * FROM ISSUEDCOUPON WHERE CP_CODE = ?";
 
 		try {
 			con = DbUtil.getConnection();
 			ps = con.prepareStatement(sql);
-			ps.setString(1, cuponCode);			
+			ps.setString(1, cuponCode);
 
 			rs = ps.executeQuery();
 			if (rs.next()) {
 				coupon = new Coupon(rs.getString(1), rs.getString(2), rs.getInt(3), rs.getString(4));
-				
+
 			} // if end
 		} finally {
 			DbUtil.dbClose(con, ps, rs);
@@ -101,12 +101,12 @@ public class CouponDAOImpl implements CouponDAO {
 	/**
 	 * 관리자 - 쿠폰 코드에 대한 쿠폰 정보 검색
 	 */
-	public List<Coupon> selectCouponByCouponCodeByAdmin(String cuponCode) throws SQLException {
+	public Coupon selectCouponByCouponCodeByAdmin(String cuponCode) throws SQLException {
 		Connection con = null;
 		PreparedStatement ps = null;
-		ResultSet rs = null;		
-		List<Coupon> list = new ArrayList<>();
-		String sql = "SELECT * FROM ISSUEDCOUPON WHERE CP_CODE = ?";
+		ResultSet rs = null;
+		Coupon coupon = null;
+		String sql = "SELECT * FROM COUPON WHERE CP_CODE = ?";
 
 		try {
 			con = DbUtil.getConnection();
@@ -116,13 +116,14 @@ public class CouponDAOImpl implements CouponDAO {
 
 			rs = ps.executeQuery();
 			if (rs.next()) {
-			Coupon coupon = new Coupon(rs.getString(1), rs.getString(2), rs.getInt(3), rs.getString(4));
-				list.add(coupon);
+				coupon = new Coupon(rs.getString(1), rs.getString(2), rs.getInt(3), rs.getString(4));
+
 			} // if end
 		} finally {
 			DbUtil.dbClose(con, ps, rs);
 		} // finally end
-		return list;
+
+		return coupon;
 	}
 
 	/**

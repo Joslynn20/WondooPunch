@@ -32,11 +32,11 @@ public class OptionServiceImpl implements OptionService {
 	 * @throws SQLException
 	 * @throws NotFoundException
 	 */
-	public List<Option> optionSelectByOptionCode(String optionCode) throws NotFoundException, SQLException {
-		List<Option> list = optiondao.optionSelectByOptionCode(optionCode);
-		if (list.isEmpty() || list.size() == 0)
+	public Option optionSelectByOptionCode(String optionCode) throws NotFoundException, SQLException {
+		Option option = optiondao.optionSelectByOptionCode(optionCode);
+		if (option == null)
 			throw new NotFoundException();
-		return list;
+		return option;
 
 	}
 

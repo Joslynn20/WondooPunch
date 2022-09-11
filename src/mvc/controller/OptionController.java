@@ -10,6 +10,8 @@ import mvc.exception.ModifyException;
 import mvc.exception.NotFoundException;
 import mvc.service.OptionService;
 import mvc.service.OptionServiceImpl;
+import mvc.view.EndView;
+import mvc.view.FailView;
 
 public class OptionController {
 	public static OptionService optionservice = new OptionServiceImpl();
@@ -25,11 +27,10 @@ public class OptionController {
 	public static void selectAllOption() throws SQLException, NotFoundException {
 		try {
 			List<Option> list = optionservice.selectAllOption();
-			System.out.println(list);
-
+			EndView.printSelectAllOption(list);
 		} catch (NotFoundException e) {
 
-			System.out.println(e.getMessage());
+			FailView.errorMessage(e.getMessage());
 		} // catch end
 	} // optionSelect end
 
@@ -41,11 +42,11 @@ public class OptionController {
 	 */
 	public static void optionSelectByOptionCode(String optionCode) throws NotFoundException, SQLException {
 		try {
-			List<Option> list = optionservice.optionSelectByOptionCode(optionCode);
-			System.out.println(list);
+			Option option = optionservice.optionSelectByOptionCode(optionCode);
+			EndView.printOptionSelectByOptionCode(option);
 
 		} catch (NotFoundException e) {
-			System.out.println(e.getMessage());
+			FailView.errorMessage(e.getMessage());
 		}
 	}
 
@@ -57,10 +58,10 @@ public class OptionController {
 	public static void selectOptionByProductCode(String productCode) throws SQLException, NotFoundException {
 		try {
 			List<Option> list = optionservice.selectOptionByProductCode(productCode);
-			System.out.println(list);
+			EndView.printSelectOptionByProductCode(list);
 
 		} catch (NotFoundException e) {
-			System.out.println(e.getMessage());
+			FailView.errorMessage(e.getMessage());
 		}
 	}
 
@@ -73,9 +74,10 @@ public class OptionController {
 	public static void insertOption(Option option) throws SQLException, AddException {
 		try {
 			optionservice.insertOption(option);
+			EndView.printInSert();
 
 		} catch (AddException e) {
-			System.out.println(e.getMessage());
+			FailView.errorMessage(e.getMessage());
 
 		}
 	} // optionInsert end
@@ -91,7 +93,7 @@ public class OptionController {
 			optionservice.updateOption(option);
 
 		} catch (ModifyException e) {
-			System.out.println(e.getMessage());
+			FailView.errorMessage(e.getMessage());
 
 		}
 	}// optionUpdate end
@@ -104,10 +106,11 @@ public class OptionController {
 	public static void deleteOption(String optionCode) throws SQLException, NotFoundException {
 		try {
 			optionservice.deleteOption(optionCode);
+			EndView.printDelete();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println(e.getMessage());
+			FailView.errorMessage(e.getMessage());
 		}
 	} // optionDelete
 

@@ -47,8 +47,8 @@ public interface CouponService {
 	 * @throws SQLException
 	 * @throws NotFoundException
 	 */
-	 
-	List<Coupon> selectCouponByCouponCodeByAdmin(String couponCode) throws SQLException, NotFoundException;
+
+	Coupon selectCouponByCouponCodeByAdmin(String couponCode) throws SQLException, NotFoundException;
 
 	/**
 	 * 쿠폰등록
@@ -76,7 +76,5 @@ public interface CouponService {
 	 * @throws AddException
 	 */
 	void insertJoinCoupon(String userId) throws SQLException, AddException;
-	
-	
 
 } // CouponService end

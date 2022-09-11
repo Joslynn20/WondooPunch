@@ -9,11 +9,8 @@ import java.util.List;
 
 import mvc.dbutil.DbUtil;
 import mvc.dto.Option;
-import mvc.dto.Product;
 
 public class OptionDAOImpl implements OptionDAO {
-	public Product product;
-	public Option option;
 
 	/**
 	 * 옵션 전체검색
@@ -30,7 +27,7 @@ public class OptionDAOImpl implements OptionDAO {
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				option = new Option(rs.getString(1), rs.getString(2), rs.getInt(3), rs.getString(4));
+				Option option = new Option(rs.getString(1), rs.getString(2), rs.getInt(3), rs.getString(4));
 				list.add(option);
 
 			} // while end
@@ -45,12 +42,12 @@ public class OptionDAOImpl implements OptionDAO {
 	 * optionCode에 대한 정보검색
 	 */
 	@Override
-	public List<Option> optionSelectByOptionCode(String optionCode) throws SQLException {
+	public Option optionSelectByOptionCode(String optionCode) throws SQLException {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		List<Option> list = new ArrayList<Option>();
-		
+		Option option = null;
+
 		String sql = "SELECT * FROM OPTIONS WHERE O_CODE = ?";
 
 		try {
@@ -59,14 +56,14 @@ public class OptionDAOImpl implements OptionDAO {
 			ps.setString(1, optionCode);
 
 			rs = ps.executeQuery();
-			while (rs.next()) {
-				option = new Option(rs.getString(1), rs.getString(2), rs.getInt(3));
-				list.add(option);
+			if (rs.next()) {
+				option = new Option(rs.getString(1), rs.getString(2), rs.getInt(3), rs.getString(4));
+
 			} // if end
 		} finally {
 			DbUtil.dbClose(con, ps, rs);
 		} // finally end
-		return list;
+		return option;
 	}
 
 	/**
@@ -77,9 +74,9 @@ public class OptionDAOImpl implements OptionDAO {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		List<Option> list = new ArrayList<>();
-		;
-		String sql = "SELECT O_CODE, O_NAME, O_PRICE FROM OPTIONS WHERE P_CODE LIKE ?";
+		List<Option> list = new ArrayList<Option>();
+
+		String sql = "SELECT * FROM OPTIONS WHERE P_CODE = ?";
 
 		try {
 			con = DbUtil.getConnection();
@@ -88,15 +85,12 @@ public class OptionDAOImpl implements OptionDAO {
 
 			rs = ps.executeQuery();
 
-			if (rs.next()) {
+			while (rs.next()) {
 
-				if (product.getCategoryCode().equals("B")) { // B는 음료
-					option = new Option(rs.getString(1), rs.getString(2), rs.getInt(3));
-					list.add(option);
+				Option option = new Option(rs.getString(1), rs.getString(2), rs.getInt(3), rs.getString(4));
 
-				} else
-					option = new Option(rs.getString(1), rs.getString(2), rs.getInt(3));
-					list.add(option);
+				list.add(option);
+
 			} // if end
 		} finally {
 			DbUtil.dbClose(con, ps, rs);
@@ -122,7 +116,7 @@ public class OptionDAOImpl implements OptionDAO {
 			ps.setString(1, option.getOptionCode()); // 옵션코드
 			ps.setString(2, option.getOptionName()); // 옵션이름
 			ps.setInt(3, option.getOptionPrice()); // 옵션가격
-			ps.setString(4, product.getProductCode()); // 상품코드
+			ps.setString(4, option.getProductCode()); // 상품코드
 
 			result = ps.executeUpdate();
 

@@ -10,6 +10,8 @@ import mvc.exception.AddException;
 import mvc.exception.NotFoundException;
 import mvc.service.CouponService;
 import mvc.service.CouponServiceImpl;
+import mvc.view.EndView;
+import mvc.view.FailView;
 
 public class CouponController {
 	public static CouponService couponservice = new CouponServiceImpl();
@@ -24,11 +26,11 @@ public class CouponController {
 	public static void selectAllCoupon() throws SQLException, NotFoundException {
 		try {
 			List<Coupon> list = couponservice.selectAllCoupon();
-			System.out.println(list);
+			EndView.printSelectAllCoupon(list);
 
 		} catch (NotFoundException e) {
 
-			System.out.println(e.getMessage());
+			FailView.errorMessage(e.getMessage());
 
 		} // catch end
 	} // optionSelect end
@@ -39,17 +41,10 @@ public class CouponController {
 	public static void selectCouponByUserId(String userId) throws SQLException, NotFoundException {
 		try {
 			List<IssuedCoupon> list = couponservice.selectCouponByUserId(userId);
-
-			/*
-			 * EndView.selectCouponByUserId(list);
-			 * EndView.selectCouponByUserId(list.size());
-			 */
-
-			System.out.println(list); // endview에서 출력할 예정 // 쿠폰내역
-			System.out.println(list.size());// endview에서 출력할 예정 // 쿠폰수 출력
+			EndView.printSelectCouponByUserId(list);
 
 		} catch (NotFoundException e) {
-			System.out.println(e.getMessage());
+			FailView.errorMessage(e.getMessage());
 		}
 	}
 
@@ -62,7 +57,7 @@ public class CouponController {
 			System.out.println(coupon); // 메뉴단에서 수정 출력
 
 		} catch (NotFoundException e) {
-			System.out.println(e.getMessage());
+			FailView.errorMessage(e.getMessage());
 		}
 	}
 
@@ -71,18 +66,12 @@ public class CouponController {
 	 */
 	public static void selectCouponByCouponCodeByAdmin(String couponCode) throws SQLException, NotFoundException {
 		try {
-			List<Coupon> list = couponservice.selectCouponByCouponCodeByAdmin(couponCode);
+			Coupon coupon = couponservice.selectCouponByCouponCodeByAdmin(couponCode);
 
-			/*
-			 * EndView.selectCouponByUserId(list);
-			 * EndView.selectCouponByUserId(list.size());
-			 */
-
-			System.out.println(list); // endview에서 출력할 예정 // 쿠폰내역
-			System.out.println(list.size());// endview에서 출력할 예정 // 쿠폰수 출력
+			EndView.printSelectCouponByCouponCodeByAdmin(coupon);
 
 		} catch (NotFoundException e) {
-			System.out.println(e.getMessage());
+			FailView.errorMessage(e.getMessage());
 		}
 	}
 
@@ -94,12 +83,11 @@ public class CouponController {
 	public static void insertCoupon(Coupon coupon) throws SQLException, AddException {
 		try {
 			couponservice.insertCoupon(coupon);
-			System.out.println("등록됐습니다");
+			EndView.printInSert();
 
 		} catch (AddException e) {
 
-			System.out.println(e.getMessage());
-
+			FailView.errorMessage(e.getMessage());
 		}
 	} // couponInsert end
 
@@ -112,10 +100,10 @@ public class CouponController {
 	public static void deleteCoupon(String couponCode) throws SQLException, NotFoundException {
 		try {
 			couponservice.deletecoupon(couponCode);
-			System.out.println("쿠폰 삭제됐습니다");
+			EndView.printDelete();
 
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+			FailView.errorMessage(e.getMessage());
 		}
 	} // couponDelete end
 
@@ -128,8 +116,8 @@ public class CouponController {
 		try {
 			couponservice.insertJoinCoupon(userId);
 		} catch (AddException e) {
-			System.out.println(e.getMessage());
+			FailView.errorMessage(e.getMessage());
 		}
-	}	
+	}
 
 }

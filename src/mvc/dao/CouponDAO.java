@@ -40,7 +40,7 @@ public interface CouponDAO {
 	/**
 	 * 관리자 - 쿠폰 코드에 대한 쿠폰 정보 검색
 	 */
-	List<Coupon> selectCouponByCouponCodeByAdmin(String couponCode) throws SQLException;
+	Coupon selectCouponByCouponCodeByAdmin(String couponCode) throws SQLException;
 
 	/**
 	 * 쿠폰등록
@@ -70,12 +70,13 @@ public interface CouponDAO {
 	 * @throws AddException
 	 */
 	int insertJoinCoupon(String userId) throws SQLException;
-	
-	/** 쿠폰코드 검색후 할인율 갖고오기
+
+	/**
+	 * 쿠폰코드 검색후 할인율 갖고오기
 	 * 
 	 * @return
-	 * @throws SQLException 
-	 */	 
-	
-	int couponDC(String couponCode) throws SQLException ;
+	 * @throws SQLException
+	 */
+
+	int couponDC(String couponCode) throws SQLException;
 }
