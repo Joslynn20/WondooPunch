@@ -24,13 +24,9 @@ public class DbUtil {
 
 		try {
 
-			System.out.println("dbInfo.properties 존재 여부 :" + new File("resources/dbInfo.properties").exists() + "\n");
 			profile.load(new FileInputStream("resources/dbInfo.properties"));
 
-			System.out.println("profile 연결 완료!!\n");
-
 			Class.forName(profile.getProperty("driverName"));
-			System.out.println("드라이버 이름:" + profile.getProperty("driverName"));
 
 		} catch (Exception e) {
 			e.printStackTrace();

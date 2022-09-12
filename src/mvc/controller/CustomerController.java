@@ -86,8 +86,7 @@ public class CustomerController {
 	public static void selectCustomer(String userId, String userPw) {
 		try {
 			Customer customer = customerService.selectCustomer(userId, userPw);
-			// 추가예정
-			// EndView.printCustomer(customer);
+			EndView.printCustomer(customer);
 		} catch (Exception e) {
 			FailView.errorMessage(e.getMessage());
 		}

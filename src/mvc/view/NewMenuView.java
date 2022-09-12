@@ -30,8 +30,8 @@ public class NewMenuView {
 	private static SessionSetImpl sessionSet = (SessionSetImpl) SessionSetImpl.getInstance();
 
 	public static void enterMenu() {
-		System.out.println("==== WondooPunch ====");
-		System.out.println(" 1. 개인회원 로그인   |  2. 관리자 로그인   |  3. 회원가입    |  9. 종료");
+		System.out.println("\n=============================== WondooPunch ===============================");
+		System.out.println(" 1. 개인회원 로그인   |   2. 관리자 로그인   |   3. 회원가입   |   9. 종료");
 		System.out.print("입력 > ");
 	}
 
@@ -44,7 +44,7 @@ public class NewMenuView {
 					ch = Integer.parseInt(sc.nextLine());
 					switch (ch) {
 					case 1:
-						System.out.println(" 1. ID/PW 입력하기  |  2. 아이디 찾기  |   3. 비밀번호 찾기  |   9. 되돌아가기 ");
+						System.out.println("\n1. ID/PW 입력하기  |  2. 아이디 찾기  |   3. 비밀번호 찾기  |   9. 되돌아가기 ");
 						System.out.print("입력 > ");
 
 						int menu = Integer.parseInt(sc.nextLine());
@@ -65,7 +65,7 @@ public class NewMenuView {
 						break;
 
 					case 2:// 관리자로그인
-						System.out.println("1. ID/PW 입력하기  |   9. 되돌아가기");
+						System.out.println("\n1. ID/PW 입력하기  |   9. 되돌아가기");
 						System.out.print("입력 > ");
 						int choice = Integer.parseInt(sc.nextLine());
 						switch (choice) {
@@ -81,11 +81,11 @@ public class NewMenuView {
 						NewMenuView.register();
 						break;
 					case 9:// 종료
-						System.out.println("프로그램을 종료합니다.");
+						System.out.println("\n프로그램을 종료합니다.");
 						System.exit(0);
 					}
 				} catch (Exception e) {
-					FailView.errorMessage("입력양식을 확인하세요.");
+					FailView.errorMessage("\n입력양식을 확인하세요.");
 					NewMenuView.showDefaultMenu();
 					return false;
 				}
@@ -108,16 +108,15 @@ public class NewMenuView {
 	public static boolean showAdminMenu(String adminId) throws SQLException, NotFoundException, AddException {
 		System.out.println("관리자 : " + adminId + "님이 로그인했습니다.");
 		while (true) {
-			System.out.println("\n===원하시는 메뉴를 고르시오===");
 			int ch;
-			System.out.println("\n===관리자 메뉴===");
+			System.out.println("\n===============================관리자 메뉴===============================");
 			System.out.println("1. 상품 관리  |  2. 매출관리   |   3. 쿠폰관리   |   9. 로그아웃");
 			try {
 				System.out.print("입력 > ");
 				ch = Integer.parseInt(sc.nextLine());
 				switch (ch) {
 				case 1:// 상품관리
-					System.out.println("1. 상품 목록  |  2. 상품 등록  |   3. 상품 수정  |   4. 상품 삭제  |  5. 옵션 관리  |  9. 되돌아가기");
+					System.out.println("\n1. 상품 목록  |  2. 상품 등록  |   3. 상품 수정  |   4. 상품 삭제  |  5. 옵션 관리  |  9. 되돌아가기");
 					System.out.print("입력 > ");
 					ch = Integer.parseInt(sc.nextLine());
 					switch (ch) {
@@ -125,8 +124,6 @@ public class NewMenuView {
 						ProductController.selectAllProduct();
 						break;
 					case 2:// 상품 등록
-						System.out.print("등록할 상품정보 입력 > ");
-						String regCode = sc.nextLine();
 						System.out.print("상품코드 > ");
 						String regProductCode = sc.nextLine();
 						System.out.print("상품명 > ");
@@ -185,7 +182,7 @@ public class NewMenuView {
 					}
 					break;
 				case 2:// 매출관리
-					System.out.println("1. 매출 조회  |  2. 판매량 조회   |   3. 주문 조회   |   9. 되돌아가기");
+					System.out.println("\n1. 매출 조회  |  2. 판매량 조회   |   3. 주문 조회   |   9. 되돌아가기");
 					System.out.print("입력 > ");
 					ch = Integer.parseInt(sc.nextLine());
 					switch (ch) {
@@ -201,7 +198,7 @@ public class NewMenuView {
 					}
 					break;
 				case 3:// 쿠폰관리
-					System.out.println("1. 쿠폰 목록  |  2. 쿠폰 등록   |  3. 쿠폰 삭제  |  9. 되돌아가기");
+					System.out.println("\n1. 쿠폰 목록  |  2. 쿠폰 등록   |  3. 쿠폰 삭제  |  9. 되돌아가기");
 					System.out.print("입력 > ");
 					ch = Integer.parseInt(sc.nextLine());
 					switch (ch) {
@@ -226,9 +223,9 @@ public class NewMenuView {
 						couponCode = sc.nextLine();
 
 						// 해당 쿠폰정보 띄워주기 기능
-						CouponController.selectCouponByCouponCode(couponCode);
+						CouponController.selectCouponByCouponCodeByAdmin(couponCode);
 
-						System.out.print("삭제하실 쿠폰 정보가 맞습니까? (Yes or No) > ");
+						System.out.print("\n삭제하실 쿠폰 정보가 맞습니까? (Yes or No) > ");
 						String answer = sc.nextLine();
 						if (answer.toUpperCase().equals("YES")) {
 							// 쿠폰삭제기능
@@ -264,7 +261,7 @@ public class NewMenuView {
 	 */
 	public static void adminLogin() throws SQLException, NotFoundException, AddException {
 
-		System.out.print("아이디 > ");
+		System.out.print("\n아이디 > ");
 		String inputId = sc.nextLine();
 		System.out.print("비밀번호 > ");
 		String inputPw = sc.nextLine();
@@ -282,17 +279,16 @@ public class NewMenuView {
 	 * @throws AddException
 	 */
 	public static void printOption() throws SQLException, NotFoundException, AddException {
-		System.out.println("1. 옵션 목록  |  2. 옵션 등록   |   3. 옵션 수정  |   4. 옵션 삭제  |  9. 되돌아가기");
+		System.out.println("\n1. 옵션 목록  |  2. 옵션 등록   |   3. 옵션 수정  |   4. 옵션 삭제  |  9. 되돌아가기");
 		try {
 			System.out.print("입력 > ");
 			int menu = Integer.parseInt(sc.nextLine());
 			switch (menu) {
-			case 1:
-				// 옵션 목록 리스트 출력 기능
-				OptionController.selectAllOption(); // 다 뜨는게 맞나요???
+			case 1:// 옵션 목록 리스트 출력 기능
+				OptionController.selectAllOption();
 				break;
-			case 2:
-				System.out.println("등록할 옵션 정보 입력");
+			case 2://옵션등록
+				System.out.println("\n등록할 옵션 정보 입력");
 				System.out.print("옵션코드 > ");
 				String optionCode = sc.nextLine();
 				System.out.print("옵션명 > ");
@@ -304,35 +300,33 @@ public class NewMenuView {
 
 				OptionController.insertOption(new Option(optionCode, optionName, optionPrice, productCode));
 				break;
-			case 3:// 옵션수정--------안바뀌어요...ㅜㅜ
+			case 3:// 옵션수정
 
-				System.out.print("수정할 옵션코드 입력 > ");
+				System.out.print("\n수정할 옵션코드 입력 > ");
 				String modifyCode = sc.nextLine();
 
 				OptionController.optionSelectByOptionCode(modifyCode);
 
-				System.out.print("수정하실 옵션 정보가 맞습니까? (Yes or No) > ");
+				System.out.print("\n수정하실 옵션 정보가 맞습니까? (Yes or No) > ");
 				String modifyOption = sc.nextLine();
 				if (modifyOption.toUpperCase().equals("YES")) {
-					System.out.print("수정 코드 > ");
-					String modifyOptionCode = sc.nextLine();
-					System.out.print("수정 옵션명 > ");
+					System.out.print("\n수정 옵션명 > ");
 					String modifyOptionName = sc.nextLine();
 					System.out.print("수정 옵션가격 > ");
 					int modifyOptionPrice = Integer.parseInt(sc.nextLine());
 
-					OptionController.updateOption(new Option(modifyCode, modifyOptionName, modifyOptionPrice));
+					OptionController.updateOption(new Option(modifyOptionName, modifyOptionPrice, modifyCode));
 				} else {
 					break;
 				}
 				break;
 			case 4:
-				System.out.print("삭제하실 옵션 코드 입력 > ");
+				System.out.print("\n삭제하실 옵션 코드 입력 > ");
 				String delete = sc.nextLine();
 
 				OptionController.optionSelectByOptionCode(delete);
 
-				System.out.print("삭제하실 옵션 정보가 맞습니까? (Yes or No) > ");
+				System.out.print("\n삭제하실 옵션 정보가 맞습니까? (Yes or No) > ");
 				String deleteOption = sc.nextLine();
 				if (deleteOption.toUpperCase().equals("YES")) {
 
@@ -355,7 +349,7 @@ public class NewMenuView {
 		String date = null;
 
 		try {
-			System.out.print("년도 입력>");
+			System.out.print("\n년도 입력>");
 			int year = Integer.parseInt(sc.nextLine());
 			while (year <= 2000) {
 				System.out.println("2000년 이후의 네글자 년도 형태로 맞추어 주세요  ex)2020 ");
@@ -396,7 +390,7 @@ public class NewMenuView {
 	 * 매출조회단 이동 메소드
 	 */
 	public static void printSalesCheck() {
-		System.out.println("1. 일별 매출 조회  |  2. 누적 매출 조회   |   9. 되돌아가기");
+		System.out.println("\n1. 일별 매출 조회  |  2. 누적 매출 조회   |   9. 되돌아가기");
 		try {
 			System.out.print("입력 > ");
 			int menu = Integer.parseInt(sc.nextLine());
@@ -423,7 +417,7 @@ public class NewMenuView {
 	 * 판매량조회단 이동 메소드
 	 */
 	public static void printSalesVolume() {
-		System.out.println("1. 일별 판매량 조회    2. 누적 판매량 조회   9. 되돌아가기");
+		System.out.println("\n1. 일별 판매량 조회    2. 누적 판매량 조회   9. 되돌아가기");
 		try {
 			System.out.print("입력 > ");
 			int menu = Integer.parseInt(sc.nextLine());
@@ -432,7 +426,7 @@ public class NewMenuView {
 				// 1: 일별 판매량: 제품별 일별 판매 수량, 제품별 일별 판매 순위 (5위)
 				String date = getInputDate();
 
-				System.out.print("일별 판매순위 5위까지만 보시겠습니까? (yes or no) > ");
+				System.out.print("\n일별 판매순위 5위까지만 보시겠습니까? (yes or no) > ");
 				String answer = sc.nextLine();
 				if (answer.toUpperCase().equals("YES")) {
 					SalesController.selectSalesRankBydate(date);
@@ -442,7 +436,7 @@ public class NewMenuView {
 				break;
 			case 2:
 				// 2: 누적 판매량: 제품별 누적 판매 수량, 제품별 누적 판매 순위(5위)
-				System.out.println("누적 판매순위 5위까지만 보시겠습니까? (yes or no) ");
+				System.out.println("\n누적 판매순위 5위까지만 보시겠습니까? (yes or no) ");
 				System.out.print("입력 > ");
 				answer = sc.nextLine();
 				if (answer.toUpperCase().equals("YES")) {
@@ -455,7 +449,7 @@ public class NewMenuView {
 				break;
 			}
 		} catch (Exception e) {
-			System.out.println("숫자를 골라라");
+			System.out.println("숫자를 골라주세요.");
 		}
 	}
 
@@ -468,16 +462,15 @@ public class NewMenuView {
 	 */
 	public static boolean showUserMenu(String userId) throws SQLException, NotFoundException {
 		while (true) {
-			System.out.println("\n===원하시는 메뉴를 고르시오===");
 			int ch;
-			System.out.println("\n===사용자 메뉴===");
+			System.out.println("\n===============================사용자 메뉴===============================");
 			System.out.println("1.상품검색  |   2. 주문하기  |   3. 장바구니   |   4. 마이페이지  |   9. 로그아웃");
 			try {
 				System.out.print("입력 > ");
 				ch = Integer.parseInt(sc.nextLine());
 				switch (ch) {
 				case 1:// 상품검색
-					System.out.println("1.전체검색  |   2. 카테고리 검색  |   3. 상품명 검색  |   4. 키워드 검색  |   9. 되돌아가기");
+					System.out.println("\n1.전체검색  |   2. 카테고리 검색  |   3. 상품명 검색  |   4. 키워드 검색  |   9. 되돌아가기");
 					System.out.print("입력 > ");
 					ch = Integer.parseInt(sc.nextLine());
 					switch (ch) {
@@ -490,20 +483,20 @@ public class NewMenuView {
 						System.out.print("입력 > ");
 						int choice = Integer.parseInt(sc.nextLine());
 						while (choice <= 0 || choice >= 3) {
-							System.out.println("1과 2 중에 하나만 고르세요. ");
+							System.out.println("\n1과 2 중에 하나만 고르세요. ");
 							System.out.print("입력 > ");
 							choice = Integer.parseInt(sc.nextLine());
 						}
 						ProductController.selectProductByCategoryName(categoryNames[choice]);
 						break;
 					case 3:// 상품명검색
-						System.out.print("상품명을 입력해주세요 > ");
+						System.out.print("\n상품명을 입력해주세요 > ");
 						String searchProductName = sc.nextLine();
 
 						ProductController.selectProductByProductName(searchProductName);
 						break;
 					case 4:// 키워드검색
-						System.out.print("상품의 키워드를 입력하세요 > ");
+						System.out.print("\n상품의 키워드를 입력하세요 > ");
 						String keyword = sc.nextLine();
 						ProductController.selectProductByKeyword(keyword);
 						break;
@@ -512,7 +505,7 @@ public class NewMenuView {
 					}
 					break;
 				case 2:// 주문하기
-					System.out.println("1.주문하기  |   2. 퀵오더    |   9. 되돌아가기");
+					System.out.println("\n1.주문하기  |   2. 퀵오더    |   9. 되돌아가기");
 					System.out.print("입력 > ");
 					ch = Integer.parseInt(sc.nextLine());
 					switch (ch) {
@@ -522,7 +515,7 @@ public class NewMenuView {
 							OrderLine newOrderLine = NewMenuView.selectOrder();
 							newOrder.getOrderLinelist().add(newOrderLine);
 
-							System.out.println("1.  상품 추가하기  |  2. 결제하기  |  3. 주문취소");
+							System.out.println("\n1. 상품 추가하기  |  2. 결제하기  |  3. 주문취소");
 							System.out.print("입력 > ");
 							int choice = Integer.parseInt(sc.nextLine());
 							if (choice == 1) {
@@ -537,7 +530,7 @@ public class NewMenuView {
 						}
 						break;
 					case 2:// 퀵오더
-						System.out.println("**** 최근 주문 내역 ****");
+						System.out.println("\n**** 최근 주문 내역 ****");
 						OrderController.QuickOrder(userId);
 
 						break;
@@ -546,7 +539,7 @@ public class NewMenuView {
 					}
 					break;
 				case 3:
-					System.out.println("1.장바구니 담기  |  2. 장바구니 조회하기  |  3. 장바구니 수정하기   |   4. 장바구니 비우기  |  9. 되돌아가기");
+					System.out.println("\n1.장바구니 담기  |  2. 장바구니 조회하기  |  3. 장바구니 수정하기   |   4. 장바구니 비우기  |  9. 되돌아가기");
 					System.out.print("입력 > ");
 					ch = Integer.parseInt(sc.nextLine());
 					switch (ch) {
@@ -559,7 +552,7 @@ public class NewMenuView {
 							orderLine.setList(cart.getList());
 							list.add(orderLine);
 
-							System.out.println("1.  상품 추가하기  |  2. 결제하기  |  3. 되돌아가기");
+							System.out.println("\n1.  상품 추가하기  |  2. 결제하기  |  3. 되돌아가기");
 							System.out.print("입력 > ");
 							int choice = Integer.parseInt(sc.nextLine());
 							if (choice == 1) {
@@ -579,17 +572,17 @@ public class NewMenuView {
 						CartController.selectCart(userId);
 						break;
 					case 3:// 장바구니 수정하기
-						CartController.selectCart(userId);
+						CartController.selectUpdateCart(userId);
 
-						System.out.print("수정할 장바구니 번호 입력 > ");
+						System.out.print("\n수정할 장바구니 번호 입력 > ");
 						int cartNo = Integer.parseInt(sc.nextLine());
 
-						System.out.println("1. 수량 수정하기    |   2. 삭제하기");
+						System.out.println("\n1. 수량 수정하기    |   2. 삭제하기");
 						System.out.print("입력 > ");
 						int cartQty = Integer.parseInt(sc.nextLine());
 					
 						if (cartQty == 1) { 
-							System.out.print("수량 수정 > ");
+							System.out.print("\n수정할 수량 > ");
 							int modifyCartQty = Integer.parseInt(sc.nextLine());
 
 							Cart updateCartRequest = new Cart(cartNo,modifyCartQty,0,null,null);
@@ -609,7 +602,7 @@ public class NewMenuView {
 					break;
 
 				case 4:// 마이페이지
-					System.out.println("1. 개인정보조회   |   2. 개인정보 변경   |  3. 주문 내역   |  4. 쿠폰 조회   |  9. 되돌아가기");
+					System.out.println("\n1. 개인정보조회   |   2. 개인정보 변경   |  3. 주문 내역   |  4. 쿠폰 조회   |  9. 되돌아가기");
 					System.out.print("입력 > ");
 					ch = Integer.parseInt(sc.nextLine());
 					switch (ch) {
@@ -622,31 +615,27 @@ public class NewMenuView {
 						System.out.print("비밀번호 입력 > ");
 						pass = sc.nextLine();
 
-						System.out.println("변경하실 정보를 선택하세요.");
-						System.out.println("1. 비밀번호 변경   |    2. 전화번호 변경    |    3. 회원 탈퇴");
+						System.out.println("\n변경하실 정보를 선택하세요.");
+						System.out.println("\n1. 비밀번호 변경   |    2. 전화번호 변경    |    3. 회원 탈퇴");
 						System.out.print("선택 > ");
 						ch = Integer.parseInt(sc.nextLine());
 						switch (ch) {
 						case 1:// 비밀번호 변경
-							System.out.print("아이디를 입력하세요 > ");
-							String id = sc.nextLine();
-							System.out.print("비밀번호를 입력하세요 > ");
+							System.out.print("\n현재 비밀번호 입력 > ");
 							String pw = sc.nextLine();
-							System.out.print("변경할 비밀번호를 입력하세요 > ");
+							System.out.print("변경 비밀번호 입력 > ");
 							String newPw = sc.nextLine();
-							CustomerController.updateCustomerPw(id, pw, newPw);
+							CustomerController.updateCustomerPw(userId, pw, newPw);
 							break;
 						case 2:// 전화번호 변경
-							System.out.print("아이디를 입력하세요 > ");
-							id = sc.nextLine();
-							System.out.print("비밀번호를 입력하세요 > ");
+							System.out.print("\n비밀번호 입력 > ");
 							pw = sc.nextLine();
-							System.out.print("변경할 전화번호를 입력하세요 > ");
+							System.out.print("변경 전화번호 입력 > ");
 							String newPhone = sc.nextLine();
-							CustomerController.updateCustomerPhoneNo(id, pw, newPhone);
+							CustomerController.updateCustomerPhoneNo(userId, pw, newPhone);
 							break;
 						case 3:
-							System.out.print("회원탈퇴를 진행하시겠습니까? (입력: yes or no) > ");
+							System.out.print("\n회원탈퇴를 진행하시겠습니까? (입력: yes or no) > ");
 							String answer = sc.nextLine();
 							if (answer.toUpperCase().equals("YES")) {
 								CustomerController.deleteCustomer(userId, pass);
@@ -658,12 +647,12 @@ public class NewMenuView {
 						}
 						break;
 					case 3:// 총주문내역
-						System.out.println("****** 총 주문내역 ******");
+						System.out.println("\n****** 총 주문내역 ******");
 						OrderController.selectOrdersByUserId(userId);
 						break;
 					case 4:// 쿠폰조회
-						System.out.println("****** 총 쿠폰내역 ******");
-						CouponController.selectAllCoupon();
+						System.out.println("\n****** 총 쿠폰내역 ******");
+						CouponController.selectCouponByUserId(userId);
 						break;
 					case 9:// 되돌아가기
 						break;
@@ -691,7 +680,7 @@ public class NewMenuView {
 	 * @throws SQLException
 	 */
 	public static void login() throws SQLException, Exception {
-		System.out.print("아이디 > ");
+		System.out.print("\n아이디 > ");
 		String userId = sc.nextLine();
 		System.out.print("비밀번호 > ");
 		String userPw = sc.nextLine();
@@ -702,7 +691,7 @@ public class NewMenuView {
 	 * 아이디 찾기
 	 */
 	public static void findId() {
-		System.out.print("회원가입 시 입력하신 성함 > ");
+		System.out.print("\n회원가입 시 입력하신 성함 > ");
 		String userName = sc.nextLine();
 		System.out.print("회원가입 시 입력하신 휴대폰 번호 > ");
 		String userPhoneNo = sc.nextLine();
@@ -713,7 +702,7 @@ public class NewMenuView {
 	 * 비밀번호 찾기
 	 */
 	public static void findPassword() {
-		System.out.print("아이디 > ");
+		System.out.print("\n아이디 > ");
 		String userId = sc.nextLine();
 		System.out.print("회원가입 시 입력하신 휴대폰 번호 > ");
 		String userPhoneNo = sc.nextLine();
@@ -724,12 +713,12 @@ public class NewMenuView {
 	 * 회원가입 정보 입력하기
 	 */
 	public static void register() {
-		System.out.println("1. 회원가입 정보 입력하기  |   9. 되돌아가기");
+		System.out.println("\n1. 회원가입 정보 입력하기  |   9. 되돌아가기");
 		System.out.print("입력 > ");
 		int no = Integer.parseInt(sc.nextLine());
 		switch (no) {
 		case 1:
-			System.out.print("가입 아이디 > ");
+			System.out.print("\n가입 아이디 > ");
 			String userId = sc.nextLine();
 			System.out.print("가입 비밀번호 > ");
 			String userPw = sc.nextLine();
@@ -757,7 +746,7 @@ public class NewMenuView {
 
 		String usingCoupons = "";
 		try {
-			System.out.print("카드사 > ");
+			System.out.print("\n카드사 > ");
 			String cardCompany = sc.nextLine();
 
 			System.out.print("결제하실 카드번호 > ");
@@ -766,29 +755,29 @@ public class NewMenuView {
 			System.out.print("카드 비밀번호 4자리 > ");
 			int cardPw = Integer.parseInt(sc.nextLine());
 
-			System.out.print("사용하실 쿠폰이 있습니까? Yes or No > ");
+			System.out.print("\n사용하실 쿠폰이 있습니까? Yes or No > ");
 			usingCoupons = sc.nextLine();
 
 			if (usingCoupons.toUpperCase().equals("YES")) {
 				System.out.print("쿠폰코드 입력 > ");
 				String enterCouponCode = sc.nextLine();
 				// 쿠폰 코드 오류 확인
-				System.out.print("결제하시겠습니까? Yes or No > ");
+				System.out.print("\n결제하시겠습니까? Yes or No > ");
 				String answer = sc.nextLine();
 				if (answer.toUpperCase().equals("YES")) {
 					order.setCouponCode(enterCouponCode);
-					System.out.println("결제가 완료되었습니다.");
+					System.out.println("\n결제가 완료되었습니다.\n");
 				} else if (answer.toUpperCase().equals("NO")) {
-					System.out.println("결제가 취소되었습니다.");
+					System.out.println("\n결제가 취소되었습니다.\n");
 				}
 			}
 
 			if (usingCoupons.toUpperCase().equals("NO")) {
-				System.out.println("쿠폰 없이 결제를 진행합니다.");
-				System.out.print("결제하시겠습니까? Yes or No > ");
+				System.out.println("\n쿠폰 없이 결제를 진행합니다.");
+				System.out.print("\n결제하시겠습니까? Yes or No > ");
 				String pay = sc.nextLine();
 				if (pay.toUpperCase().equals("YES")) {
-					System.out.println("쿠폰없이 결제가 완료되었습니다.");
+					System.out.println("\n쿠폰없이 결제가 완료되었습니다.\n");
 				}
 			}
 			OrderController.insertOrder(order);
@@ -808,7 +797,7 @@ public class NewMenuView {
 		OrderLine newOrderLine = null;
 		// 카테고리에 따른 상품출력
 		String[] categoryNames = { "빈칸", "Beverage", "Dessert" };
-		System.out.println("1." + categoryNames[1] + "2." + categoryNames[2]);
+		System.out.println("1." + categoryNames[1] + "\t2." + categoryNames[2]);
 		System.out.print("선택 > ");
 		int choice = Integer.parseInt(sc.nextLine());
 		while (choice <= 0 || choice >= 3) {
@@ -818,7 +807,7 @@ public class NewMenuView {
 		}
 		ProductController.selectProductByCategoryName(categoryNames[choice]);
 
-		System.out.print("상품코드 > ");
+		System.out.print("\n상품코드 > ");
 		String productCode = sc.nextLine();
 		System.out.print("수량 > ");
 		int qty = Integer.parseInt(sc.nextLine());
@@ -826,18 +815,19 @@ public class NewMenuView {
 		// 상품코드에 따른 옵션 띄워주기
 		OptionController.selectOptionByProductCode(productCode);
 
-		System.out.print("추가 옵션 선택 : yes or no? > ");
+		System.out.print("\n추가 옵션 선택 : yes or no? > ");
 		try {
 			String plus = sc.nextLine();
 			if (plus.toUpperCase().equals("YES")) {
 				boolean run = true;
 				while (run) {
-					NewMenuView.test(newOrderLine);
+					NewMenuView.addOrderOption(newOrderLine);
 
-					System.out.print("옵션을 더 추가하시겠습니까?  (yes or no) > ");
+					System.out.print("\n옵션을 더 추가하시겠습니까?  (yes or no) > ");
 					String plusOption = sc.nextLine();
 					if (plusOption.toUpperCase().equals("YES")) {
-						NewMenuView.test(newOrderLine);
+						NewMenuView.addOrderOption(newOrderLine);
+						break;
 					} else if (plusOption.toUpperCase().equals("NO")) {
 						break;
 					}
@@ -851,7 +841,7 @@ public class NewMenuView {
 
 	}
 
-	public static void test(OrderLine newOrderLine) {
+	public static void addOrderOption(OrderLine newOrderLine) {
 		System.out.print("옵션코드 > ");
 		String optionCode = sc.nextLine();
 		DetailOption newDetailOption = new DetailOption(optionCode, 1);
@@ -867,7 +857,7 @@ public class NewMenuView {
 		Cart cart = null;
 		// 카테고리에 따른 상품출력
 		String[] categoryNames = { "빈칸", "Beverage", "Dessert" };
-		System.out.println("1." + categoryNames[1] + "2." + categoryNames[2]);
+		System.out.println("1." + categoryNames[1] + "\t2." + categoryNames[2]);
 		System.out.print("선택 > ");
 		int choice = Integer.parseInt(sc.nextLine());
 		while (choice <= 0 || choice >= 3) {
@@ -877,7 +867,7 @@ public class NewMenuView {
 		}
 		ProductController.selectProductByCategoryName(categoryNames[choice]);
 
-		System.out.print("상품코드 > ");
+		System.out.print("\n상품코드 > ");
 		String productCode = sc.nextLine();
 		System.out.print("수량 > ");
 		int qty = Integer.parseInt(sc.nextLine());
@@ -885,7 +875,7 @@ public class NewMenuView {
 		// 상품코드에 따른 옵션 띄워주기
 		OptionController.selectOptionByProductCode(productCode);
 
-		System.out.print("추가 옵션 선택 : yes or no? > ");
+		System.out.print("\n추가 옵션 선택 : yes or no? > ");
 		try {
 			String plus = sc.nextLine();
 			if (plus.toUpperCase().equals("YES")) {
@@ -893,10 +883,11 @@ public class NewMenuView {
 				while (run) {
 					NewMenuView.addCartOption(cart);
 
-					System.out.print("옵션을 더 추가하시겠습니까?  (yes or no) > ");
+					System.out.print("\n옵션을 더 추가하시겠습니까?  (yes or no) > ");
 					String plusOption = sc.nextLine();
 					if (plusOption.toUpperCase().equals("YES")) {
 						NewMenuView.addCartOption(cart);
+						break;
 					} else if (plusOption.toUpperCase().equals("NO")) {
 						CartController.insertCart(cart);
 						break;
@@ -906,7 +897,7 @@ public class NewMenuView {
 				CartController.insertCart(cart);
 			}
 		} catch (Exception e) {
-			System.out.println("입력을 확인하세요!");
+			System.out.println("\n입력을 확인하세요!");
 		}
 
 		return cart;

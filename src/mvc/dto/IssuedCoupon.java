@@ -71,9 +71,20 @@ public class IssuedCoupon {
 
 	@Override
 	public String toString() {
-		return  icCode + " | " + couponIssuedDate + " | " + couponExpDate + " | " + couponDC;
+		StringBuilder builder = new StringBuilder();
+		builder.append("[ 쿠폰코드: ");
+		builder.append(icCode);
+		builder.append(", 쿠폰 발행일: ");
+		builder.append(couponIssuedDate);
+		builder.append(", 유효기간: ");
+		builder.append(couponExpDate);
+		builder.append(", 할인율: ");
+		builder.append(couponDC);
+		builder.append("]");
+		return builder.toString();
 	}
-	
+
+
 	
 	
 

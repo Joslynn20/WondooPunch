@@ -51,6 +51,23 @@ public class CartController {
 	}
 
 	/**
+	 * 장바구니 수정시 조회하기
+	 * 
+	 * @param userId
+	 */
+
+	public static void selectUpdateCart(String userId) {
+
+		try {
+			List<Cart> list = cartService.selectCart(userId);
+			EndView.updateCartList(list);
+		} catch (Exception e) {
+
+			FailView.errorMessage(e.getMessage());
+		}
+	}
+
+	/**
 	 * 장바구니 번호로 수량 수정하기
 	 * 
 	 * @param cartNo

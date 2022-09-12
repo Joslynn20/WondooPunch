@@ -29,7 +29,7 @@ public class EndView {
 	 * 고객 정보 조회
 	 */
 	public static void printCustomer(Customer customer) {
-		System.out.println("\n------------" + customer.getUserName() + "님의 회원정보------------");
+		System.out.println("\n************************" + customer.getUserName() + "님의 회원정보************************");
 		System.out.println(customer);
 	}
 
@@ -38,7 +38,7 @@ public class EndView {
 	 */
 	public static void printOrder(List<Orders> orderList) {
 		int count = 1;
-		System.out.println("--------총 " + orderList.size() + "건의 주문 내역--------\n");
+		System.out.println("\n************************총 " + orderList.size() + "건의 주문 내역************************\n");
 		for (Orders order : orderList) {
 			System.out.print(count++ + ".");
 			System.out.println(order);
@@ -72,11 +72,11 @@ public class EndView {
 	 * @param list
 	 */
 	public static void printCouponList(List<Coupon> list) {
-		System.out.println("---쿠폰목록 리스트---");
+		
+		System.out.println("************************총 " + list.size() + "건의 쿠폰내역************************");
 		for (Coupon coupon : list) {
 			System.out.println(coupon);
 		}
-		System.out.println("----쿠폰 총: " + list.size() + "장----");
 
 	}
 
@@ -86,7 +86,7 @@ public class EndView {
 	 * @param coupon
 	 */
 	public static void printCouponListByCode(Coupon coupon) {
-		System.out.println("---쿠폰목록 리스트---");
+		System.out.println("\n************************쿠폰정보************************");
 
 		System.out.println(coupon);
 	}
@@ -98,11 +98,10 @@ public class EndView {
 	 */
 
 	public static void printIssuedCouponList(List<IssuedCoupon> list) {
-		System.out.println("---쿠폰목록 리스트---");
+		System.out.println("************************총 " + list.size() + "건의 쿠폰내역************************");
 		for (IssuedCoupon issuedcoupon : list) {
 			System.out.println(issuedcoupon);
 		}
-		System.out.println("----쿠폰 총: " + list.size() + "장----");
 
 	}
 
@@ -113,7 +112,7 @@ public class EndView {
 	 */
 
 	public static void printOptionList(List<Option> list) {
-		System.out.println("---옵션목록 리스트---");
+		System.out.println("\n************************옵션목록************************");
 		for (Option option : list) {
 			System.out.println(option);
 		}
@@ -126,7 +125,7 @@ public class EndView {
 	 */
 
 	public static void printOptionListByCode(Option option) {
-		System.out.println("---옵션목록 리스트---");
+		System.out.println("\n************************옵션정보************************");
 
 		System.out.println(option);
 	}
@@ -136,7 +135,7 @@ public class EndView {
 	 */
 	public static void printProductList(List<Product> list) {
 
-		System.out.println("******************상품의 갯수:" + list.size() + "************************");
+		System.out.println("\n************************총 " + list.size() + "건의 상품************************");
 		System.out.println("카테고리       상품코드       상품이름        상품가격      상품설명");
 		for (Product p : list) {
 			String categoryName = null;
@@ -159,7 +158,7 @@ public class EndView {
 	}
 
 	public static void printSalesRate(List<String> list) {
-		System.out.println("*******************상품 :" + list.size() + "개에 대한 판매량 입니다*****************");
+		System.out.println("\n************************상품 :" + list.size() + "개에 대한 판매량************************");
 		for (String d : list) {
 			System.out.println(d);
 
@@ -180,7 +179,7 @@ public class EndView {
 		for (Orders order : list) {
 			System.out.println(order.getOrderNo() + ". ID:" + order.getUserId() + " 주문 시간: " + order.getOrderDate()
 					+ "  구매 총액:" + order.getOrderTotalPrice() + "  사용 쿠폰코드:" + order.getCouponCode());
-			System.out.println("*******주문번호:" + order.getOrderNo() + "에 대한 상세내역********");
+			System.out.println("\n*******주문번호:" + order.getOrderNo() + "에 대한 상세내역********");
 			List<OrderLine> orderLineList = order.getOrderLinelist();
 			for (OrderLine ol : orderLineList) {
 
@@ -211,7 +210,7 @@ public class EndView {
 		int count = 1;
 		String userId = null;
 		List<OrderLine> list = new ArrayList<OrderLine>();
-		System.out.println("--------총 " + cartList.size() + "건의 장바구니 내역--------\n");
+		System.out.println("\n************************총 " + cartList.size() + "건의 장바구니 내역************************\n");
 
 		int sum = 0;
 		for (Cart cart : cartList) {
@@ -228,8 +227,7 @@ public class EndView {
 			list.add(orderLine);
 
 		}
-		System.out.println("\n"+userId + "님의 장바구니를 성공적으로 가져왔습니다.");
-		System.out.println("\n"+userId + "님의 장바구니에 담긴 총 합계 금액은 : " + sum + "입니다.");
+		System.out.println("\n" + userId + "님의 장바구니에 담긴 총 합계 금액은 : " + sum + "입니다.");
 
 		System.out.println("\n");
 
@@ -245,10 +243,38 @@ public class EndView {
 
 			}
 		} catch (NumberFormatException e) {
-			FailView.errorMessage("1, 9 중에서 선택하세요.");
+			FailView.errorMessage("\n1, 9 중에서 선택하세요.");
 		}
 
 	}
 
+	/**
+	 * 장바구니 수정 조회 출력
+	 * 
+	 * @param cartList
+	 */
+	public static void updateCartList(List<Cart> cartList) {
+		int count = 1;
+		String userId = null;
+		List<OrderLine> list = new ArrayList<OrderLine>();
+		System.out.println("\n************************총 " + cartList.size() + "건의 장바구니 내역************************\n");
+
+		int sum = 0;
+		for (Cart cart : cartList) {
+			sum = sum + cart.getCartPrice();
+			System.out.print(count++ + ".");
+			System.out.println(cart);
+			for (DetailOption detailOption : cart.getList()) {
+				System.out.println("  ▶ " + detailOption);
+			}
+
+			userId = cart.getUserId();
+
+		}
+		System.out.println("\n" + userId + "님의 장바구니에 담긴 총 합계 금액은 : " + sum + "입니다.");
+
+		System.out.println("\n");
+
+	}
 
 }

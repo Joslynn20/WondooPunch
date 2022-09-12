@@ -23,10 +23,10 @@ public class Option {
 	/**
 	 * 상품코드 & 옵션코드 검색으로 수정하기
 	 */
-	public Option(String optionCode, String optionName, int optionPrice) {
-		this.optionCode = optionCode;
+	public Option(String optionName, int optionPrice, String optionCode) {
 		this.optionName = optionName;
 		this.optionPrice = optionPrice;
+		this.optionCode = optionCode;
 	}
 
 	public String getOptionCode() {
