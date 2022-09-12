@@ -91,6 +91,7 @@ public class NewMenuView {
 				}
 
 			} while (ch != 1 || ch != 2 || ch != 9);
+			
 		}
 
 	}
@@ -465,7 +466,7 @@ public class NewMenuView {
 	 * @throws NotFoundException
 	 * @throws SQLException
 	 */
-	public static boolean showUserMenu(String userId, String userPw) throws SQLException, NotFoundException {
+	public static boolean showUserMenu(String userId) throws SQLException, NotFoundException {
 		while (true) {
 			System.out.println("\n===원하시는 메뉴를 고르시오===");
 			int ch;
@@ -587,7 +588,7 @@ public class NewMenuView {
 						System.out.print("입력 > ");
 						int cartQty = Integer.parseInt(sc.nextLine());
 					
-						if (cartQty == 1) { // ------------------> 인수로 cart받으면 관계없는쪽도 cart 생성하라고 해요 ㅠㅠ
+						if (cartQty == 1) { 
 							System.out.print("수량 수정 > ");
 							int modifyCartQty = Integer.parseInt(sc.nextLine());
 
@@ -612,10 +613,10 @@ public class NewMenuView {
 					System.out.print("입력 > ");
 					ch = Integer.parseInt(sc.nextLine());
 					switch (ch) {
-					case 1:// 개인정보조회 -------------------------->>>>> 보경님이 수정하신 후 잘 되는지 다시 확인!!!!!
+					case 1:// 개인정보조회
 						System.out.print("비밀번호 입력 > ");
 						String pass = sc.nextLine();
-						CustomerController.selectCustomer(userId, userPw);
+						CustomerController.selectCustomer(userId, pass);
 						break;
 					case 2:// 개인정보 변경
 						System.out.print("비밀번호 입력 > ");
@@ -648,7 +649,7 @@ public class NewMenuView {
 							System.out.print("회원탈퇴를 진행하시겠습니까? (입력: yes or no) > ");
 							String answer = sc.nextLine();
 							if (answer.toUpperCase().equals("YES")) {
-								CustomerController.deleteCustomer(userId, userPw);
+								CustomerController.deleteCustomer(userId, pass);
 								NewMenuView.showDefaultMenu();
 							} else {
 								break;
@@ -658,7 +659,7 @@ public class NewMenuView {
 						break;
 					case 3:// 총주문내역
 						System.out.println("****** 총 주문내역 ******");
-						OrderController.selectOrdersByUserId(userId); // 보경님과 상의
+						OrderController.selectOrdersByUserId(userId);
 						break;
 					case 4:// 쿠폰조회
 						System.out.println("****** 총 쿠폰내역 ******");
@@ -726,27 +727,25 @@ public class NewMenuView {
 		System.out.println("1. 회원가입 정보 입력하기  |   9. 되돌아가기");
 		System.out.print("입력 > ");
 		int no = Integer.parseInt(sc.nextLine());
-
 		switch (no) {
 		case 1:
+			System.out.print("가입 아이디 > ");
+			String userId = sc.nextLine();
+			System.out.print("가입 비밀번호 > ");
+			String userPw = sc.nextLine();
 			System.out.print("가입자 이름 > ");
 			String userName = sc.nextLine();
 			System.out.print("가입자 생년월일 > "); // TO_DATE로 쿼리문 추가필요!!!
 			String userBirth = sc.nextLine();
 			System.out.print("가입자 휴대폰번호 > ");
 			String userPhoneNo = sc.nextLine();
-			System.out.print("가입 아이디 > ");
-			String userId = sc.nextLine();
-			System.out.print("가입 비밀번호 > ");
-			String userPw = sc.nextLine();
-			CustomerController.insertCustomer(new Customer(userName, userBirth, userPhoneNo, userId, userPw));
+			
+			CustomerController.insertCustomer(new Customer(userId, userPw, userName, userBirth, userPhoneNo));
 			break;
 		case 9:
-			NewMenuView.enterMenu();
 			break;
 		}
 		if (no != 1 || no != 9) {
-			FailView.errorMessage("입력 양식을 다시 확인해주세요.");
 			NewMenuView.enterMenu();
 		}
 	}
@@ -922,3 +921,4 @@ public class NewMenuView {
 	}
 
 }
+
