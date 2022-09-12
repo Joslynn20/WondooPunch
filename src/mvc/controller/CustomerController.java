@@ -104,7 +104,7 @@ public class CustomerController {
 		try {
 			Customer customer = customerService.login(userId, userPw);
 			EndView.printMessage("\n\n" + customer.getUserName() + "님이 로그인하셨습니다.");
-			NewMenuView.showUserMenu(userId, userPw);
+			NewMenuView.showUserMenu(userId);
 		} catch (Exception e) {
 			FailView.errorMessage(e.getMessage());
 		}

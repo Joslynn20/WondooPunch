@@ -7,6 +7,7 @@ import mvc.service.OrderService;
 import mvc.service.OrderServiceImpl;
 import mvc.view.EndView;
 import mvc.view.FailView;
+import mvc.view.NewMenuView;
 
 public class OrderController {
 	private static OrderService orderService = new OrderServiceImpl();
@@ -20,6 +21,7 @@ public class OrderController {
 		try {
 			orderService.insertOrder(order);
 			EndView.printMessage("주문에 성공했습니다.");
+			NewMenuView.showUserMenu(order.getUserId());
 		} catch (Exception e) {
 			FailView.errorMessage(e.getMessage());
 		}
